@@ -31,7 +31,7 @@
                 android:background="@drawable/circle"
                 android:padding="3dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_perfilUsuario" />
+                android:src="@drawable/ic_perfil_usuario" />
 
         </RelativeLayout>
 
@@ -49,15 +49,14 @@
             android:textSize="32sp" />
 
 
-        <EditText
-            android:id="@+id/tv_address"
+        <TextView
+            android:id="@+id/tv_address2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_name"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
             android:text="Encanador"
-            android:drawableRight="@drawable/ic_edit_dark"
             android:textAllCaps="true"
             android:textColor="@color/grey"
             android:textSize="14sp" />
@@ -174,7 +173,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Email"
-                    android:textColor="@color/colorRatingActive"
+                    android:textColor="@color/colorTextSecondary"
                     android:textStyle="bold"
                     android:textSize="13sp" />
 
@@ -205,7 +204,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Telefone"
-                    android:textColor="@color/colorRatingActive"
+                    android:textColor="@color/colorTextSecondary"
                     android:textStyle="bold"
                     android:textSize="13sp" />
 
@@ -238,7 +237,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/bg_btn"
                     android:gravity="center"
-                    android:text="Editar Perfil"
+                    android:text="Salvar Perfil"
                     android:layout_gravity="center"
                     android:textColor="@color/colorAccent"
                     android:textSize="18dp"

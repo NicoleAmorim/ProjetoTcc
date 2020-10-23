@@ -17,11 +17,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.projetotcc.Controller;
+import com.example.projetotcc.controllers.SelecionarServico;
+import com.example.projetotcc.models.CallBacks;
 import com.example.projetotcc.InfoServico;
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
-import com.example.projetotcc.Servico;
+import dominio.entidade.Servico;
 import com.xwray.groupie.GroupAdapter;
 import com.xwray.groupie.Item;
 import com.xwray.groupie.OnItemClickListener;
@@ -32,38 +33,20 @@ public class ListaCategoriasFragment extends Fragment {
     public static GroupAdapter adapter;
     public static RecyclerView rv;
     public static Servico servico;
-    private Controller controller;
+    private static CallBacks callBacks;
+    private static SelecionarServico selecionarServico;
     int i;
     private MainViewModel mViewModel;
 
-    public static ListaCategoriasFragment newInstance() {
-        return new ListaCategoriasFragment();
-    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        controller = new Controller();
+        callBacks = new CallBacks();
+        selecionarServico = new SelecionarServico();
         adapter = new GroupAdapter();
-        this.controller.idUltimo(new Controller.VolleyCallback(){
+        selecionarServico.IdUltimoServico();
 
-            @Override
-            public void onSuccess(final String ultimo) {
-                ListaCategoriasFragment.this.controller.idPrimeiro(new Controller.VolleyCallback(){
-
-                    @Override
-                    public void onSuccess(String primeiro) {
-                        try {
-                            ListarByCategorias(Integer.parseInt(ultimo), Integer.parseInt(primeiro), PaginaUsuario.tipo);
-                        }
-                        catch (NumberFormatException numberFormatException) {
-                            numberFormatException.printStackTrace();
-                        }
-                    }
-                }, PaginaUsuario.tipo);
-            }
-
-        }, PaginaUsuario.tipo);
         View view;
         view = inflater.inflate(R.layout.fragment_lista, container, false);
         rv = view.findViewById(R.id.recyclerListaPrestador);
@@ -94,9 +77,16 @@ public class ListaCategoriasFragment extends Fragment {
 
     public static class ServicoItem extends Item<ViewHolder> {
         private final Servico servico;
+        private final int ultimo;
 
-        public ServicoItem(Servico servico1) {
-            this.servico = servico1;
+        public ServicoItem(Servico servico, int ultimo) {
+            this.servico = servico;
+            this.ultimo = ultimo;
+
+            if(servico.getID() != ultimo)
+            {
+                selecionarServico.SelecionarServicoByTipo(ultimo,servico.getID()+1, servico.getTipo());
+            }
         }
 
         @Override
@@ -114,20 +104,5 @@ public class ListaCategoriasFragment extends Fragment {
         public int getLayout() {
             return R.layout.item_servico;
         }
-    }
-    public void ListarByCategorias(int ultimo, int primeiro, String tipo) {
-        i = primeiro;
-        do{
-            controller.Listar(new Controller.VolleyCallbackProduto() {
-                @Override
-                public void onSuccess(String result, Servico p) {
-                    servico = p;
-                    adapter.add(new ListaCategoriasFragment.ServicoItem(servico));
-                    adapter.notifyDataSetChanged();
-                    i = servico.getID();
-                }
-            }, String.valueOf(i), tipo);
-            i++;
-        }while(i <= ultimo);
     }
 }

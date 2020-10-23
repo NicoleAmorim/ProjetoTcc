@@ -1,4 +1,4 @@
-package com.example.projetotcc.ManterLogado;
+package database;
 
 public class ScriptDLL {
     public static String getCreateTableCliente(){
@@ -16,6 +16,20 @@ public class ScriptDLL {
         sql.append("telefone_usuario VARCHAR(50),");
         sql.append("cpf_usuario VARCHAR(50),");
         sql.append("idade_usuario INT );");
+
+        return sql.toString();
+    }
+
+    public static String getCreateTableMensagem(){
+
+        StringBuilder sql = new StringBuilder();
+
+        sql.append("CREATE TABLE IF NOT EXISTS tbl_mensagem (");
+        sql.append("id_mensage integer primary key autoincrement not null,");
+        sql.append("texto VARCHAR(40) NOT NULL,");
+        sql.append("hora long NOT NULL,");
+        sql.append("remetenteID INT NOT NULL," );
+        sql.append("destinatarioID INT NOT NULL);");
 
         return sql.toString();
     }

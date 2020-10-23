@@ -12,16 +12,21 @@
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ListaCategorias"></activity>
+        <activity android:name=".ChatUsuario" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InfoServico"/>
+        </activity>
         <activity android:name=".InfoServico" />
-        <activity android:name=".CadastroServico.CadastroServico" />
-        <activity android:name=".CadastroUsuario.Cadastro5" />
-        <activity android:name=".CadastroUsuario.Cadastro4" />
-        <activity android:name=".CadastroUsuario.Cadastro3" />
-        <activity android:name=".CadastroUsuario.Cadastro2" />
-        <activity android:name=".CadastroUsuario.Cadastro1" />
+        <activity android:name=".cadastroServico.CadastroServico1" />
+        <activity android:name=".cadastroUsuario.Cadastro5" />
+        <activity android:name=".cadastroUsuario.Cadastro4" />
+        <activity android:name=".cadastroUsuario.Cadastro3" />
+        <activity android:name=".cadastroUsuario.Cadastro2" />
+        <activity android:name=".cadastroUsuario.Cadastro1" />
         <activity
             android:name=".PaginaUsuario"
             android:label="@string/title_activity_pagina_usuario"

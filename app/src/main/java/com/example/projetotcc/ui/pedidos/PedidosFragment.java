@@ -17,9 +17,6 @@ public class PedidosFragment extends Fragment {
 
     private PedidosViewModel mViewModel;
 
-    public static PerfilFragment newInstance() {
-        return new PerfilFragment();
-    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,

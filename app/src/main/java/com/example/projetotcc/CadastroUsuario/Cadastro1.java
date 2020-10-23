@@ -1,60 +1,45 @@
-package com.example.projetotcc.CadastroUsuario;
+package com.example.projetotcc.cadastroUsuario;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
-import com.example.projetotcc.Usuario;
+import com.example.projetotcc.controllers.ValidarCadastroUsuario;
 
 public class Cadastro1 extends AppCompatActivity {
-    private static String Nome;
-    private static String Sobrenome;
-    private static String CPF;
-    public static Usuario usuario;
-    private EditText cpf;
-    private EditText nome;
-    private EditText sobrenome;
-    Intent it = null;
+    private static String Nome, Sobrenome, CPF;
+    private EditText cpf, nome, sobrenome;
+    private ValidarCadastroUsuario validarCadastroUsuario;
+    public static Context context;
+    private Intent it;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_1);
-        usuario = new Usuario();
+        validarCadastroUsuario = new ValidarCadastroUsuario();
+
+        context = this;
+
         this.nome = (EditText)this.findViewById(R.id.nomeUserCadastro);
         this.sobrenome = (EditText)this.findViewById(R.id.sobrenomeUserCadastro);
         this.cpf = (EditText)this.findViewById(R.id.cpfUserCadastro);
     }
 
-    public void Cadastrar(View view)
-    {
+    public void Cadastrar(View view) {
         Nome = nome.getText().toString() + "";
         Sobrenome = sobrenome.getText().toString() + "";
         CPF = cpf.getText().toString() + "";
 
-        if (Nome != "" && Sobrenome != "")
+        if(validarCadastroUsuario.ValidarCadastro1(Nome, Sobrenome, CPF))
         {
-            if (CPF == "")
-            {
-                Toast.makeText(this, " cpf esta vazio", Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
-                usuario.setNome(Nome + " " + Sobrenome);
-                usuario.setCpf(CPF);
-                it = new Intent(this, Cadastro2.class);
-                this.startActivity(it);
-            }
-        }
-        else
-        {
-            Toast.makeText(this, " nome ou sobrenome está vazio", Toast.LENGTH_SHORT).show();
+            it = new Intent(this, Cadastro2.class);
+            this.startActivity(it);
         }
     }
 }

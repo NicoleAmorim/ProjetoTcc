@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    tools:context=".CadastroUsuario.Cadastro4">
+    tools:context=".cadastroUsuario.Cadastro4">
 
     <TextView
         android:id="@+id/textView17"

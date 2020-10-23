@@ -1,4 +1,6 @@
-package com.example.projetotcc.CadastroUsuario;
+package com.example.projetotcc.cadastroUsuario;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,29 +14,27 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.projetotcc.R;
-import com.example.projetotcc.Usuario;
+import dominio.entidade.Usuario;
+import com.example.projetotcc.controllers.ValidarCadastroUsuario;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Cadastro2 extends AppCompatActivity {
-    private static String data;
-    private static String sexo;
     public static Usuario usuario;
-    private String ano, dia, mes;
+    private String ano, dia, mes, data, sexo;
     private Intent it = null;
-    private Context context;
+    private ValidarCadastroUsuario validarCadastroUsuario;
+    public static Context context;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_2);
 
+        validarCadastroUsuario = new ValidarCadastroUsuario();
         context = this;
-        usuario = Cadastro1.usuario;
 
         String[] StringSexo = new String[]{
                 "SEXO",
@@ -84,7 +84,7 @@ public class Cadastro2 extends AppCompatActivity {
                 if (position > 0) {
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append("Sexo : ");
-                    stringBuilder.append(Cadastro2.sexo);
+                    stringBuilder.append(sexo);
                     Toast.makeText(context, stringBuilder.toString(), Toast.LENGTH_SHORT).show();
                 }
 
@@ -161,18 +161,10 @@ public class Cadastro2 extends AppCompatActivity {
     }
     public void Cadastrar(View view) {
 
-        if (ano == "Ano" || mes == "Mês" || dia == "Dia") {
-            Toast.makeText(this, "data está vazio", Toast.LENGTH_SHORT).show();
-        } else {
-            if (sexo == "SEXO") {
-                Toast.makeText(this, "sexo está vazio", Toast.LENGTH_SHORT).show();
-            } else {
-                usuario.setSexo(sexo);
-                data = dia + mes + ano;
-                usuario.setIdade(Integer.parseInt(data));
-                it = new Intent(this, Cadastro3.class);
-                this.startActivity(it);
-            }
+        if(validarCadastroUsuario.ValidarCadastro2(ano, mes, dia, sexo))
+        {
+            it = new Intent(this, Cadastro3.class);
+            this.startActivity(it);
         }
     }
 }

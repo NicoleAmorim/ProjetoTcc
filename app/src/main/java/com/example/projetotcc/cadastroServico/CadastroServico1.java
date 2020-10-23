@@ -1,4 +1,4 @@
-package com.example.projetotcc.CadastroServico;
+package com.example.projetotcc.cadastroServico;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,14 +19,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.example.projetotcc.Controller;
+import com.example.projetotcc.controllers.ValidarCadastroServico;
+import com.example.projetotcc.models.CadastroServicoModel;
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
-import com.example.projetotcc.Usuario;
+import dominio.entidade.Usuario;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -34,14 +34,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-public class CadastroServico extends AppCompatActivity {
+public class CadastroServico1 extends AppCompatActivity {
     public static Uri filePath;
     public static RequestQueue requestQueue;
     private int PICK_IMAGE_REQUEST = 1;
-    private Context context;
-    private Controller controller;
+    public static Context context;
+    protected CadastroServicoModel cadastroServicoModel;
+    private ValidarCadastroServico validarCadastroServico;
     private EditText descricao;
     private String image;
     private ImageView imageView;
@@ -59,9 +59,10 @@ public class CadastroServico extends AppCompatActivity {
         this.preco = (EditText)this.findViewById(R.id.precoServico);
         this.descricao = (EditText)this.findViewById(R.id.descricaoServico);
         this.imageView = (ImageView)this.findViewById(R.id.imgProduto);
-        this.controller = new Controller();
+
         context = this;
         usuario = PaginaUsuario.usuario;
+        validarCadastroServico = new ValidarCadastroServico();
         Spinner spinner = (Spinner)this.findViewById(R.id.tipoProduto);
 
         String[] StringTipo = new String[]{
@@ -92,17 +93,7 @@ public class CadastroServico extends AppCompatActivity {
         final String nome = this.nome.getText().toString();
         final String preco = this.preco.getText().toString();
         final String descricao = this.descricao.getText().toString();
-        controller.CadastrarServico(new Controller.VolleyCallback() {
-            @Override
-            public void onSuccess(String result) {
-
-                Intent it = new Intent(CadastroServico.this, PaginaUsuario.class);
-
-                it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                context.startActivity(it);
-            }
-        }, nome, preco, descricao, tipo, usuario, image);
+        validarCadastroServico.ValidarCadastroServico(nome, tipo, preco, descricao,image, usuario);
     }
 
     public void SelecionarImagem(View view) {

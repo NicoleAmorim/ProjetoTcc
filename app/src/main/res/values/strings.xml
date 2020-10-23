@@ -65,5 +65,7 @@
     <string name="menu_perfil">Perfil</string>
     <string name="menu_sair">Sair</string>
     <string name="menu_listar">Lista</string>
-    <string name="avaliacoesRecebidas">avaliações recebidas</string>
+    <string name="txt_edit_message">Digite sua mensagem aqui</string>
+    <string name="menu_endereco">Endereço</string>
+    <string name="menu_editar_perfil">Editar Perfil</string>
 </resources>

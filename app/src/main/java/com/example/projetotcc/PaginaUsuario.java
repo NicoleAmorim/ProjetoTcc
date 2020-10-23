@@ -7,30 +7,27 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.example.projetotcc.CadastroServico.CadastroServico;
-import com.example.projetotcc.CadastroUsuario.Cadastro5;
-import com.example.projetotcc.ManterLogado.DadosOpenHelper;
-import com.example.projetotcc.ManterLogado.ManterLogadoRepositorio;
-import com.example.projetotcc.ui.categorias.CategoriasFragment;
-import com.example.projetotcc.ui.home.HomeFragment;
+import com.example.projetotcc.cadastroServico.CadastroServico1;
+import database.DadosOpenHelper;
+import dominio.repositorio.ManterLogadoRepositorio;
+import com.example.projetotcc.controllers.SelecionarServico;
+import com.example.projetotcc.models.CallBacks;
+import com.example.projetotcc.models.SelecionarServicoModel;
+import com.example.projetotcc.ui.editarPerfil.EditarPerfilFragment;
+import com.example.projetotcc.ui.editarEndereco.EditarEnderecoFragment;
+import com.example.projetotcc.ui.endereco.EnderecoFragment;
 import com.example.projetotcc.ui.listaFragment.ListaCategoriasFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.xwray.groupie.GroupAdapter;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.ListFragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -38,16 +35,20 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.ByteArrayInputStream;
+
+import dominio.entidade.Servico;
+import dominio.entidade.Usuario;
 
 public class PaginaUsuario extends AppCompatActivity {
 
     public static GroupAdapter adapter;
     public static Context context;
     public static RequestQueue requestQueue;
+    protected SelecionarServicoModel selecionarServicoModel;
     public static Servico servico;
+    private SelecionarServico selecionarServico;
     private SQLiteDatabase conexao;
     private DadosOpenHelper dadosOpenHelper;
     private ManterLogadoRepositorio manterLogadoRepositorio;
@@ -55,7 +56,7 @@ public class PaginaUsuario extends AppCompatActivity {
     public static String tipo;
     public static Usuario usuario;
     public static int view;
-    private Controller controller;
+    private CallBacks callBacks;
     int i = 1;
     Intent it = null;
     private MainActivity login;
@@ -63,10 +64,11 @@ public class PaginaUsuario extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        criarConexaoInterna();
         super.onCreate(savedInstanceState);
+        criarConexaoInterna();
         servicop = new Servico();
         adapter = new GroupAdapter();
+
         requestQueue = Volley.newRequestQueue(this.getApplicationContext());
 
         this.login = new MainActivity();
@@ -74,16 +76,11 @@ public class PaginaUsuario extends AppCompatActivity {
         ByteArrayInputStream stream = new ByteArrayInputStream(Base64.decode(usuario.getImagem().getBytes(), Base64.DEFAULT));
         usuario.setImage(BitmapFactory.decodeStream(stream));
 
-        controller = new Controller();
+        callBacks = new CallBacks();
+        selecionarServico = new SelecionarServico();
         String cod = String.valueOf(usuario.getCod());
 
-        controller.findServicoById(new Controller.VolleyCallbackProduto()
-        {
-            @Override
-            public void onSuccess(String response, Servico p) {
-                servicop = p;
-            }
-        }, cod);
+        selecionarServico.SelecionarServicoById(cod);
 
         setContentView(R.layout.activity_pagina_usuario);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -104,7 +101,7 @@ public class PaginaUsuario extends AppCompatActivity {
         nome.setText(this.usuario.getNome());
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_categoria, R.id.nav_favoritos, R.id.nav_minhaLoja, R.id.nav_pedidos, R.id.nav_perfil, R.id.nav_lista, R.id.nav_sair).setDrawerLayout(drawer).build();
+                R.id.nav_home, R.id.nav_categoria, R.id.nav_favoritos, R.id.nav_minhaLoja, R.id.nav_pedidos, R.id.nav_perfil, R.id.nav_lista, R.id.nav_editar_perfil, R.id.nav_endereco, R.id.nav_sair).setDrawerLayout(drawer).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -129,9 +126,18 @@ public class PaginaUsuario extends AppCompatActivity {
         this.startActivity(it);
     }
     public void CadastroProduto(View view) {
-        it = new Intent(this, CadastroServico.class);
+        it = new Intent(this, CadastroServico1.class);
         this.startActivity(it);
     }
+    public void EditarPerfil(View view) {
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new EditarPerfilFragment()).commit(); }
+
+    public void Endereco(View view) {
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new EnderecoFragment()).commit(); }
+
+    public void EditarEndereco(View view) {
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new EditarEnderecoFragment()).commit(); }
+
 
 
 

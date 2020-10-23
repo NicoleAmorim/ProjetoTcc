@@ -36,4 +36,6 @@ public class CategoriasFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+
+
 }

@@ -24,6 +24,18 @@
         tools:layout="@layout/fragment_lista" />
 
     <fragment
+        android:id="@+id/nav_editar_perfil"
+        android:name="com.example.projetotcc.ui.editarPerfil.EditarPerfilFragment"
+        android:label="@string/menu_editar_perfil"
+        tools:layout="@layout/fragment_editar_perfil" />
+
+    <fragment
+        android:id="@+id/nav_endereco"
+        android:name="com.example.projetotcc.ui.endereco.EnderecoFragment"
+        android:label="@string/menu_endereco"
+        tools:layout="@layout/fragment_editar_perfil" />
+
+    <fragment
         android:id="@+id/nav_pedidos"
         android:name="com.example.projetotcc.ui.pedidos.PedidosFragment"
         android:label="@string/menu_pedidos"
@@ -31,7 +43,7 @@
 
     <fragment
         android:id="@+id/nav_favoritos"
-        android:name="com.example.projetotcc.ui.favoritos.FavoritosFragment"
+        android:name="com.example.projetotcc.ui.editarEndereco.EditarEnderecoFragment"
         android:label="@string/menu_favoritos"
         tools:layout="@layout/fragment_favoritos" />
 
@@ -39,7 +51,7 @@
         android:id="@+id/nav_perfil"
         android:name="com.example.projetotcc.ui.perfil.PerfilFragment"
         android:label="@string/menu_perfil"
-        tools:layout="@layout/fragment_perfilPRIMEIRO" />
+        tools:layout="@layout/fragment_perfil" />
 
     <fragment
         android:id="@+id/nav_categoria"

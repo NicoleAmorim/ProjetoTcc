@@ -1,4 +1,4 @@
-package com.example.projetotcc.ManterLogado;
+package database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,6 +12,7 @@ public class DadosOpenHelper extends SQLiteOpenHelper {
     {
         super(context, "tbl_usuario", null, 1);
     }
+
     @Override
     public void onCreate(SQLiteDatabase db){db.execSQL(ScriptDLL.getCreateTableCliente());}
 

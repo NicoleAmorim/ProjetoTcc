@@ -1,4 +1,4 @@
-package com.example.projetotcc;
+package dominio.entidade;
 
 import android.graphics.Bitmap;
 
