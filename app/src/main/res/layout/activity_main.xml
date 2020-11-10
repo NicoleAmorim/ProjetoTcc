@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0C0C0C"
+    android:background="@drawable/marceneiro"
     tools:context=".MainActivity">
 
     <EditText
@@ -20,6 +20,7 @@
         android:inputType="textPersonName"
         android:textAlignment="center"
         android:textColorHint="#858585"
+        android:textStyle="bold"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +37,7 @@
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="24sp"
-        android:textStyle="italic"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -69,34 +70,35 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="200dp"
-        android:background="#111B55"
+        android:background="@color/colorAccent"
         android:onClick="Entrar"
         android:text="@string/btn_entrar"
-        android:textColor="#303E8A"
+        android:textColor="@color/grey"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/senhaL"
-        app:layout_constraintVertical_bias="0.064" />
+        app:layout_constraintVertical_bias="0.714" />
 
     <CheckedTextView
         android:id="@+id/checkedTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginEnd="211dp"
-        android:layout_marginBottom="149dp"
+        android:layout_marginRight="211dp"
+        android:layout_marginBottom="252dp"
         android:text="@string/F_pass"
-        android:textColor="?attr/actionModeSplitBackground"
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="211dp" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/senhaL"

@@ -87,7 +87,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Estado"
+                    android:text="@string/estado"
                     android:textColor="@color/grey"
                     android:textStyle="bold"
                     android:textSize="20sp" />
@@ -126,7 +126,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cidade"
+                    android:text="@string/cidade"
                     android:textColor="@color/grey"
                     android:textStyle="bold"
                     android:textSize="20sp" />
@@ -180,7 +180,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Bairro"
+                        android:text="@string/bairro"
                         android:textColor="@color/colorTextSecondary"
                         android:textStyle="bold"
                         android:textSize="13sp" />
@@ -222,7 +222,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rua"
+                        android:text="@string/rua"
                         android:textColor="@color/colorTextSecondary"
                         android:textStyle="bold"
                         android:textSize="13sp" />
@@ -272,7 +272,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Número"
+                        android:text="@string/n_mero"
                         android:textColor="@color/colorTextSecondary"
                         android:textStyle="bold"
                         android:textSize="13sp" />
@@ -314,7 +314,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Acréscimo"
+                        android:text="@string/acr_scimo"
                         android:textColor="@color/colorTextSecondary"
                         android:textStyle="bold"
                         android:textSize="13sp" />

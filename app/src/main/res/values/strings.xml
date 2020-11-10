@@ -22,7 +22,7 @@
     <string name="txt_Login">FAÇA SEU LOGIN</string>
     <string name="F_pass">Esqueci minha senha</string>
     <string name="btn_entrar">Entrar</string>
-    <string name="btn_cadastrando">CANDASTRAR</string>
+    <string name="btn_cadastrando">CADASTRAR</string>
     <string name="btn_irCadastro">Faça seu cadastro</string>
     <string name="title_activity_pag_login">PagLogin</string>
     <string name="tipo_cliente">Cliente:</string>
@@ -68,4 +68,11 @@
     <string name="txt_edit_message">Digite sua mensagem aqui</string>
     <string name="menu_endereco">Endereço</string>
     <string name="menu_editar_perfil">Editar Perfil</string>
+    <string name="cadastro_localizacao">Para finalizar o cadastro de seus dados pessoais, precisamos saber a sua localização</string>
+    <string name="estado">Estado</string>
+    <string name="cidade">Cidade</string>
+    <string name="bairro">Bairro</string>
+    <string name="rua">Rua</string>
+    <string name="n_mero">Número</string>
+    <string name="acr_scimo">Acréscimo</string>
 </resources>
