@@ -74,5 +74,7 @@
     <string name="bairro">Bairro</string>
     <string name="rua">Rua</string>
     <string name="n_mero">Número</string>
-    <string name="acr_scimo">Acréscimo</string>
+    <string name="complemento">Complemento</string>
+    <string name="logradouro">Logradouro</string>
+    <string name="msgOk">Ok</string>
 </resources>

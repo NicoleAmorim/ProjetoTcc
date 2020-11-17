@@ -29,7 +29,7 @@ public class AlertDialog extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro_5);
+        setContentView(R.layout.activity_cadastro_6);
 
         mShowDialogBtn = findViewById(R.id.button7);
 

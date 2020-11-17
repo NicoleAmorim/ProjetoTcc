@@ -56,8 +56,5 @@ dependencies {
     //Cardview Library
     implementation 'androidx.cardview:cardview:1.0.0'
 
-    // jsoup HTML parser library @ https://jsoup.org/
-    implementation 'org.jsoup:jsoup:1.11.1'
-
 }
 apply plugin: 'com.google.gms.google-services'

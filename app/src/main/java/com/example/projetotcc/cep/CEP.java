@@ -1,104 +1,155 @@
 package com.example.projetotcc.cep;
 
-import java.io.Serializable;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-/*Representa um CEP*/
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 
-public class CEP implements Serializable {
+public class CEP {
+    private String CEP;
+    private String Logradouro;
+    private String Complemento;
+    private String Bairro;
+    private String Estado;
+    //private String Uf;
 
-    private static final long serialVersionUID = -3046561560949012411L;
-
-    private final String numero;
-    private final String logradouro;
-    private final String bairro;
-    private final String localidade;
-    private final String uf;
-
-    public CEP(String num, String logradouro, String bairro, String localidade,
-               String uf) {
-        this.numero = num;
-        this.logradouro = logradouro;
-        this.bairro = bairro;
-        this.localidade = localidade;
-        this.uf = uf;
+    /**
+     * Constrói uma nova classe
+     */
+    public CEP() {
+        this.CEP = null;
+        this.Logradouro = null;
+        this.Complemento = null;
+        this.Bairro = null;
+        this.Estado = null;
+        //this.Uf = null;
     }
 
-    public String getNumero() {
-        return numero;
+    /**
+     * Constrói uma nova classe e busca um CEP no ViaCEP
+     *
+     * @param cep
+     * @throws CEPException caso ocorra algum erro
+     */
+    public CEP(String cep) throws CEPException, JSONException {
+        this.buscar(cep);
     }
 
+    /**
+     * Busca um CEP no ViaCEP
+     *
+     * @param cep
+     * @throws CEPException caso ocorra algum erro
+     */
+    public final void buscar(String cep) throws CEPException, JSONException {
+        this.CEP = cep;
+
+        // define a url
+        String url = "http://viacep.com.br/ws/" + cep + "/json/";
+
+        // define os dados
+        JSONObject obj = new JSONObject(this.get(url));
+
+        if (!obj.has("erro")) {
+            this.CEP = obj.getString("cep");
+            this.Logradouro = obj.getString("logradouro");
+            this.Complemento = obj.getString("complemento");
+            this.Bairro = obj.getString("bairro");
+            this.Estado = obj.getString("estado");
+            //this.Uf = obj.getString("uf");
+        } else {
+            throw new CEPException("Não foi possível encontrar o CEP", cep);
+        }
+    }
+
+    /**
+     * Retonar o CEP
+     *
+     * @return
+     */
+    public String getCep() {
+        return this.CEP;
+    }
+
+    /**
+     * Retorna o nome da rua, avenida, travessa, ...
+     *
+     * @return
+     */
     public String getLogradouro() {
-        return logradouro;
+        return this.Logradouro;
     }
 
+    /**
+     * Retorna se tem algum complemento Ex: lado impar
+     *
+     * @return
+     */
+    public String getComplemento() {
+        return this.Complemento;
+    }
+
+    /**
+     * Retorna o Bairro
+     *
+     * @return
+     */
     public String getBairro() {
-        return bairro;
+        return this.Bairro;
     }
 
-    public String getLocalidade() {
-        return localidade;
+    /**
+     * Retorna a Cidade
+     *
+     * @return
+     */
+    public String getEstado() {
+        return this.Estado;
     }
 
-    public String getUf() {
-        return uf;
-    }
+    /**
+     * Retorna o UF
+     *
+     * @return
+     */
+    /*public String getUf() {
+        return this.Uf;
+    }*/
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((bairro == null) ? 0 : bairro.hashCode());
-        result = prime * result
-                + ((localidade == null) ? 0 : localidade.hashCode());
-        result = prime * result
-                + ((logradouro == null) ? 0 : logradouro.hashCode());
-        result = prime * result + ((numero == null) ? 0 : numero.hashCode());
-        result = prime * result + ((uf == null) ? 0 : uf.hashCode());
-        return result;
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        CEP other = (CEP) obj;
-        if (bairro == null) {
-            if (other.bairro != null)
-                return false;
-        } else if (!bairro.equals(other.bairro))
-            return false;
-        if (localidade == null) {
-            if (other.localidade != null)
-                return false;
-        } else if (!localidade.equals(other.localidade))
-            return false;
-        if (logradouro == null) {
-            if (other.logradouro != null)
-                return false;
-        } else if (!logradouro.equals(other.logradouro))
-            return false;
-        if (numero == null) {
-            if (other.numero != null)
-                return false;
-        } else if (!numero.equals(other.numero))
-            return false;
-        if (uf == null) {
-            if (other.uf != null)
-                return false;
-        } else if (!uf.equals(other.uf))
-            return false;
-        return true;
-    }
+    /**
+     * Procedimento para obtem dados via GET
+     *
+     * @param urlToRead endereço
+     * @return conteúdo remoto
+     * @throws CEPException caso ocorra algum erro
+     */
+    public final String get(String urlToRead) throws CEPException {
+        StringBuilder result = new StringBuilder();
 
-    @Override
-    public String toString() {
-        return "CEP [numero=" + numero + ", logradouro=" + logradouro
-                + ", bairro=" + bairro + ", localidade=" + localidade + ", uf="
-                + uf + "]";
-    }
+        try {
+            URL url = new URL(urlToRead);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
 
+            BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line;
+            while ((line = rd.readLine()) != null) {
+                result.append(line);
+            }
+
+        } catch (MalformedURLException | ProtocolException ex) {
+            throw new CEPException(ex.getMessage());
+        } catch (IOException ex) {
+            throw new CEPException(ex.getMessage());
+        }
+
+        return result.toString();
+    }
 }
