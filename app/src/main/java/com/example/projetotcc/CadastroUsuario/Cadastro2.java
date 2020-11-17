@@ -23,7 +23,7 @@ import java.util.Arrays;
 
 public class Cadastro2 extends AppCompatActivity {
     public static Usuario usuario;
-    private String ano, dia, mes, data, sexo;
+    private String ano, dia, mes, data, sexo;;
     private Intent it = null;
     private ValidarCadastroUsuario validarCadastroUsuario;
     public static Context context;

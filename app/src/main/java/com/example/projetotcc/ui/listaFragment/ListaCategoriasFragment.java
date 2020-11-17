@@ -11,22 +11,38 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.projetotcc.config.Constants;
 import com.example.projetotcc.controllers.SelecionarServico;
 import com.example.projetotcc.models.CallBacks;
 import com.example.projetotcc.InfoServico;
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
 import dominio.entidade.Servico;
+import dominio.entidade.Usuario;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 import com.xwray.groupie.GroupAdapter;
 import com.xwray.groupie.Item;
 import com.xwray.groupie.OnItemClickListener;
 import com.xwray.groupie.ViewHolder;
+
+import java.util.List;
 
 public class ListaCategoriasFragment extends Fragment {
 
@@ -45,7 +61,6 @@ public class ListaCategoriasFragment extends Fragment {
         callBacks = new CallBacks();
         selecionarServico = new SelecionarServico();
         adapter = new GroupAdapter();
-        selecionarServico.IdUltimoServico();
 
         View view;
         view = inflater.inflate(R.layout.fragment_lista, container, false);
@@ -69,24 +84,44 @@ public class ListaCategoriasFragment extends Fragment {
                 ServicoItem servicoItem = (ServicoItem) item;
                 servico = new Servico();
                 servico = servicoItem.servico;
+                intent.putExtra("servico", servico);
 
                 startActivity(intent);
             }
         });
+        FindServico();
     }
+
+    private void FindServico() {
+        FirebaseFirestore.getInstance().collection("servicoGlobal")
+                .whereEqualTo("tipo", PaginaUsuario.tipo)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.e("Teste", e.getMessage(), e);
+                            return;
+                        }
+                        List<DocumentSnapshot> docs = queryDocumentSnapshots.getDocuments();
+                        adapter.clear();
+                        for (DocumentSnapshot doc: docs) {
+                            Servico servico = doc.toObject(Servico.class);
+                            String uid = FirebaseAuth.getInstance().getUid();
+                            if (servico.getIDUser().equals(uid))
+                                continue;
+                            adapter.add(new ServicoItem(servico));
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+    }
+
 
     public static class ServicoItem extends Item<ViewHolder> {
         private final Servico servico;
-        private final int ultimo;
 
-        public ServicoItem(Servico servico, int ultimo) {
+        public ServicoItem(Servico servico) {
             this.servico = servico;
-            this.ultimo = ultimo;
-
-            if(servico.getID() != ultimo)
-            {
-                selecionarServico.SelecionarServicoByTipo(ultimo,servico.getID()+1, servico.getTipo());
-            }
         }
 
         @Override
@@ -96,8 +131,7 @@ public class ListaCategoriasFragment extends Fragment {
             ImageView imageView = (ImageView) viewHolder.itemView.findViewById(R.id.imageUseNav);
 
             var3.setText(servico.getNome());
-            var4.setText(servico.getPreco() + " " + servico.getID());
-            imageView.setImageBitmap(servico.getImagem());
+            Picasso.get().load(servico.getImagemUrl()).into(imageView);
         }
 
         @Override

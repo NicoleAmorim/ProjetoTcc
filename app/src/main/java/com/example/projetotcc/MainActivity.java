@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     public static RequestQueue requestQueue;
     private ValidarLogin validarLogin;
     public static Usuario usuario;
+    public static boolean procurar;
     protected SQLiteDatabase conexao;
     protected DadosOpenHelper dadosOpenHelper;
     protected ManterLogadoRepositorio manterLogadoRepositorio;
@@ -39,11 +40,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
+        procurar = true;
         validarLogin = new ValidarLogin();
         usuario = new Usuario();
         loadingDialog = new LoadingDialog(this);
 
-        validarLogin.LoginOff();
 
         emailm = (EditText)this.findViewById(R.id.emailL);
         senham = (EditText)this.findViewById(R.id.senhaL);
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         final String Senha = this.senham.getText().toString();
 
         loadingDialog.StartActivityLogin();
-        validarLogin.Login(Email, Senha);
+        validarLogin.LoginFirebase(Email, Senha);
     }
     public void Cadastrar(View view)
     {

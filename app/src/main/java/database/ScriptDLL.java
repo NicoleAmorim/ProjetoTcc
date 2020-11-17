@@ -20,6 +20,19 @@ public class ScriptDLL {
         return sql.toString();
     }
 
+    public static String getCreateTableUsuariosPedidos(){
+
+        StringBuilder sql = new StringBuilder();
+
+        sql.append("CREATE TABLE IF NOT EXISTS tbl_usuario_pedido (");
+        sql.append("id INTEGER PRIMARY KEY AUTOINCREMENT,");
+        sql.append("cod_usuario INT UNIQUE,");
+        sql.append("nome_usuario VARCHAR(100));");
+
+        return sql.toString();
+    }
+
+
     public static String getCreateTableMensagem(){
 
         StringBuilder sql = new StringBuilder();

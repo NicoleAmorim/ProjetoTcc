@@ -16,6 +16,7 @@ import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.projetotcc.LoadingDialog;
 import com.example.projetotcc.controllers.ValidarCadastroUsuario;
 import com.example.projetotcc.models.ValidarCadastroUsuarioModel;
 import com.example.projetotcc.models.CallBacks;
@@ -35,6 +36,7 @@ public class Cadastro5 extends AppCompatActivity {
     private int PICK_IMAGE_REQUEST = 1;
     protected CallBacks callBacks;
     public static Context context;
+    public static LoadingDialog loadingDialog;
     private ValidarCadastroUsuario validarCadastroUsuario;
     protected ValidarCadastroUsuarioModel cadastroUsuarioModel;
     private Uri filePath;
@@ -50,13 +52,15 @@ public class Cadastro5 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_5);
         validarCadastroUsuario = new ValidarCadastroUsuario();
+        loadingDialog = new LoadingDialog(this);
         context = this;
         requestQueue = Volley.newRequestQueue(this.getApplicationContext());
         imageView = findViewById(R.id.imageCadUser);
     }
 
     public void Cadastrar(View var1) {
-        validarCadastroUsuario.ValidarCadastro5(image);
+        loadingDialog.StartActivityLogin();
+        validarCadastroUsuario.ValidarCadastro5FireBase(filePath);
     }
 
     public void SelecionarImagem(View view) {
@@ -69,7 +73,6 @@ public class Cadastro5 extends AppCompatActivity {
             try {
                 filePath = intent.getData();
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap((ContentResolver) this.getContentResolver(), (Uri) filePath);
-                usuario.setImage(bitmap);
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, (OutputStream) byteArrayOutputStream);
                 image = Base64.encodeToString((byte[]) byteArrayOutputStream.toByteArray(), (int) 0);

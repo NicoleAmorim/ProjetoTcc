@@ -45,7 +45,6 @@ public class SelecionarUsuarioModel {
                             usuario.setTel(Integer.parseInt(jsonObject.getString("telefone_usuario")));
                             usuario.setCpf(jsonObject.getString("cpf_usuario"));
                             usuario.setIdade(Integer.parseInt(jsonObject.getString("idade_usuario")));
-                            usuario.setImagem(jsonObject.getString("img").substring(jsonObject.getString("img").indexOf(",")+1));
                             callback.onSuccess(response, usuario);
                         } catch (JSONException e) {
                             e.printStackTrace();

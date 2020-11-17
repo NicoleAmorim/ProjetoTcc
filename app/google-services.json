@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "933071066848",
+    "firebase_url": "https://androidtcc-98e58.firebaseio.com",
+    "project_id": "androidtcc-98e58",
+    "storage_bucket": "androidtcc-98e58.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:933071066848:android:a43085cec59bf4f2896285",
+        "android_client_info": {
+          "package_name": "com.example.projetotcc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "933071066848-nrcs0646o0gp0g46m8fus57u7grm5396.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw0nWcxqFNT7SXWYF59Yu-ALvpY5iMfAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "933071066848-nrcs0646o0gp0g46m8fus57u7grm5396.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

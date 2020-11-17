@@ -1,16 +1,17 @@
 package dominio.entidade;
 
 import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Servico {
-   private int ID;
-   private int IDUser;
+public class Servico implements Parcelable {
+
+   private String IDUser;
+   private String ImagemUrl;
    private String Tipo;
-   private boolean continuar;
    private String descricao;
    private String nome;
    private String preco;
-   private Bitmap imagem;
 
    public Servico() {
    }
@@ -18,23 +19,34 @@ public class Servico {
    public Servico(String Nome, String Descricao, String Preco, int id) {
       this.setNome(Nome);
       this.setDescricao(Descricao);
-      this.setID(id);
       this.setPreco(Preco);
    }
-
-   public int getID() {
-      return ID;
+   protected Servico(Parcel in) {
+      IDUser = in.readString();
+      ImagemUrl = in.readString();
+      Tipo = in.readString();
+      descricao = in.readString();
+      nome = in.readString();
+      preco = in.readString();
    }
 
-   public void setID(int ID) {
-      this.ID = ID;
-   }
+   public static final Creator<Servico> CREATOR = new Creator<Servico>() {
+      @Override
+      public Servico createFromParcel(Parcel in) {
+         return new Servico(in);
+      }
 
-   public int getIDUser() {
+      @Override
+      public Servico[] newArray(int size) {
+         return new Servico[size];
+      }
+   };
+
+   public String getIDUser() {
       return IDUser;
    }
 
-   public void setIDUser(int IDUser) {
+   public void setIDUser(String IDUser) {
       this.IDUser = IDUser;
    }
 
@@ -44,14 +56,6 @@ public class Servico {
 
    public void setTipo(String tipo) {
       Tipo = tipo;
-   }
-
-   public boolean isContinuar() {
-      return continuar;
-   }
-
-   public void setContinuar(boolean continuar) {
-      this.continuar = continuar;
    }
 
    public String getDescricao() {
@@ -78,11 +82,26 @@ public class Servico {
       this.preco = preco;
    }
 
-   public Bitmap getImagem() {
-      return imagem;
+   public String getImagemUrl() {
+      return ImagemUrl;
    }
 
-   public void setImagem(Bitmap imagem) {
-      this.imagem = imagem;
+   public void setImagemUrl(String imagemUrl) {
+      ImagemUrl = imagemUrl;
+   }
+
+   @Override
+   public int describeContents() {
+      return 0;
+   }
+
+   @Override
+   public void writeToParcel(Parcel dest, int flags) {
+      dest.writeString(IDUser);
+      dest.writeString(ImagemUrl);
+      dest.writeString(Tipo);
+      dest.writeString(descricao);
+      dest.writeString(nome);
+      dest.writeString(preco);
    }
 }

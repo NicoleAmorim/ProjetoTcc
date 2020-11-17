@@ -76,11 +76,6 @@ public class SelecionarServicoModel {
                             servico.setTipo(jsonObject.getString("tipo_servico"));
                             servico.setPreco(jsonObject.getString("preco_servico"));
                             servico.setDescricao(jsonObject.getString("descricao_servico"));
-                            servico.setID(jsonObject.getInt("cod_servico"));
-                            servico.setIDUser(jsonObject.getInt("cod_usuario"));
-                            String imageDataBytes = jsonObject.getString("img").substring(jsonObject.getString("img").indexOf(",")+1);
-                            ByteArrayInputStream stream = new ByteArrayInputStream(Base64.decode(imageDataBytes.getBytes(), Base64.DEFAULT));
-                            servico.setImagem(BitmapFactory.decodeStream(stream));
                             callback.onSuccess(response, servico);
                             Log.v("LogLogin", servico.getNome());
                         } catch (JSONException e) {
@@ -120,7 +115,6 @@ public class SelecionarServicoModel {
                             servico.setDescricao(jsonObject.getString("descricao_servico"));
                             servico.setPreco(jsonObject.getString("preco_servico"));
                             servico.setTipo(jsonObject.getString("tipo_servico"));
-                            servico.setID(jsonObject.getInt("cod_servico"));
                             callback.onSuccess(response, servico);
                             Log.v("LogLogin", servico.getNome());
                         } catch (JSONException e) {

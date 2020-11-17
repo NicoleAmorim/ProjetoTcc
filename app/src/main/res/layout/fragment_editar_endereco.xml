@@ -35,7 +35,7 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/nomePerfilServico"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgUser"
@@ -48,10 +48,10 @@
 
 
         <TextView
-            android:id="@+id/tv_address"
+            android:id="@+id/ServicoPerfilServico"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_name"
+            android:layout_below="@+id/nomePerfilServico"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
             android:text="Encanador"

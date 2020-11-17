@@ -17,7 +17,6 @@
         android:layout_marginBottom="101dp"
         android:scaleType="centerCrop"
         android:onClick="SelecionarImagem"
-        android:background="@drawable/circle"
         app:layout_constraintBottom_toTopOf="@+id/nomeServico"
         app:layout_constraintEnd_toStartOf="@+id/tipoProduto"
         app:layout_constraintStart_toStartOf="parent"

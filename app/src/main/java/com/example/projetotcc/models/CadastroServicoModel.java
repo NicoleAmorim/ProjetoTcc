@@ -21,7 +21,7 @@ public class CadastroServicoModel extends CadastroServico1 {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.CadastrarServicoUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i("Script", "SUCCESS Servico: "+response + cod);
+                Log.i("Script", "SUCCESS Servico: " + response + cod);
                 callback.onSuccess(response);
             }
         }, new Response.ErrorListener() {

@@ -32,24 +32,27 @@ public class MinhaLojaFragment extends Fragment {
         callBacks = new CallBacks();
         servico = PaginaUsuario.servicop;
         View view;
+try {
+    if (servico.getNome().isEmpty()) {
+        view = inflater.inflate(R.layout.fragment_meu_servico_vazio, container, false);
+    } else {
+        view = inflater.inflate(R.layout.fragment_meu_servico, container, false);
+    }
+    try {
 
-        if( servico.getNome() == null) {
-            view = inflater.inflate(R.layout.fragment_meu_servico_vazio, container, false);
-        }else
-        {
-            view = inflater.inflate(R.layout.fragment_meu_servico, container, false);
-        }
-        try {
-
-            nome = view.findViewById(R.id.nomeServicoItem);
-            tipo = view.findViewById(R.id.tipoServicoItem);
-            descricao = view.findViewById(R.id.descricaoServicoItem);
-            nome.setText(servico.getNome());
-            tipo.setText(servico.getTipo());
-            descricao.setText(servico.getDescricao());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        nome = view.findViewById(R.id.nomeServicoItem);
+        tipo = view.findViewById(R.id.tipoServicoItem);
+        descricao = view.findViewById(R.id.descricaoServicoItem);
+        nome.setText(servico.getNome());
+        tipo.setText(servico.getTipo());
+        descricao.setText(servico.getDescricao());
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+} catch (Exception e) {
+    e.printStackTrace();
+    view = inflater.inflate(R.layout.fragment_meu_servico_vazio, container, false);
+}
         return  view;
     }
 

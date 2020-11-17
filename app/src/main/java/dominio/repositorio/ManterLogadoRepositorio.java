@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.projetotcc.ChatUsuario;
 import dominio.entidade.Message;
 import dominio.entidade.Usuario;
+
+import com.example.projetotcc.ui.pedidos.PedidosFragment;
 import com.xwray.groupie.GroupAdapter;
 
 public class ManterLogadoRepositorio {
@@ -26,7 +28,6 @@ public class ManterLogadoRepositorio {
         contentValues.put("id", 1);
         contentValues.put("cod_usuario", usuario.getCod());
         contentValues.put("nome_usuario", usuario.getNome());
-        contentValues.put("imagem_usuario", usuario.getImagem());
         contentValues.put("email_usuario", usuario.getEmail());
         contentValues.put("userName_usuario", usuario.getUsername());
         contentValues.put("senha_usuario", usuario.getSenha());
@@ -49,12 +50,23 @@ public class ManterLogadoRepositorio {
         conexao.insertOrThrow("tbl_mensagem", null, contentValues);
     }
 
-    public void excluir(Usuario usuario){
+    public void inserirUserPedido(Usuario usuario){
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("cod_usuario", usuario.getCod());
+        contentValues.put("nome_usuario", usuario.getUsername());
+
+        conexao.insertOrThrow("tbl_usuario_pedido", null, contentValues);
+    }
+
+
+    public void excluir(){
 
         String[] parametros = new String[1];
-        parametros[0] = String.valueOf(usuario.getCod());
+        parametros[0] = String.valueOf(1);
 
-        conexao.delete("tbl_usuario", "cod_usuario = ?", parametros);
+        conexao.delete("tbl_usuario", "id = ?", parametros);
 
     }
 
@@ -81,7 +93,6 @@ public class ManterLogadoRepositorio {
             usuario.setNome(resultado.getString(resultado.getColumnIndexOrThrow("nome_usuario")));
             usuario.setEmail(resultado.getString(resultado.getColumnIndexOrThrow("email_usuario")));
             usuario.setUsername(resultado.getString(resultado.getColumnIndexOrThrow("userName_usuario")));
-            usuario.setImagem(resultado.getString(resultado.getColumnIndexOrThrow("imagem_usuario")));
             usuario.setSenha(resultado.getString(resultado.getColumnIndexOrThrow("senha_usuario")));
             usuario.setTel(Integer.parseInt(resultado.getString(resultado.getColumnIndexOrThrow("telefone_usuario"))));
             usuario.setCpf(resultado.getString(resultado.getColumnIndexOrThrow("cpf_usuario")));
@@ -91,26 +102,23 @@ public class ManterLogadoRepositorio {
         }
         return null;
     }
-    public Message buscarMensagem(String meuID){
+    public Message buscarMensagem(String meuID,  String servicoID){
 
         Message message = new Message();
 
         StringBuilder sql = new StringBuilder();
 
-        String[] parametros = new String[2];
-        parametros[0] = meuID;
-        parametros[1] = meuID;
+        String[] parametros = new String[1];
 
         sql.append("SELECT*");
         sql.append("FROM tbl_mensagem ");
-        sql.append("WHERE (remetenteID = ? OR destinatarioID = ?) ORDER BY id_mensage DESC");
+        sql.append("ORDER BY id DESC");
 
         Cursor resultado = conexao.rawQuery(sql.toString(), parametros);
 
         if(resultado.getCount() > 0) {
 
             resultado.moveToFirst();
-
 
             message.setID(resultado.getString(resultado.getColumnIndexOrThrow("id_mensage")));
             message.setDestinatarioID(resultado.getString(resultado.getColumnIndexOrThrow("destinatarioID")));
@@ -155,6 +163,32 @@ public class ManterLogadoRepositorio {
         resultado.close();
         return adapter;
 
+    }
+    public GroupAdapter buscarDestinoUser(){
+
+        GroupAdapter adapter;
+        adapter = new GroupAdapter();
+
+        StringBuilder sql = new StringBuilder();
+
+        String[] parametros = new String[1];
+        parametros[0] = "1";
+
+        sql.append("SELECT*");
+        sql.append("FROM tbl_usuario_pedido ");
+        sql.append("WHERE id >= ?");
+
+        Cursor resultado = conexao.rawQuery(sql.toString(), parametros);
+
+        if(resultado.moveToFirst()) {
+            do{
+                Usuario usuario = new Usuario();
+                usuario.setCod(resultado.getInt(resultado.getColumnIndexOrThrow("cod_usuario")));
+                usuario.setUsername(resultado.getString(resultado.getColumnIndexOrThrow("nome_usuario")));
+            }while (resultado.moveToNext());
+        }
+        resultado.close();
+        return adapter;
     }
 
 }

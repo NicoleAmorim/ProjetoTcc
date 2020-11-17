@@ -17,7 +17,7 @@
         android:layout_marginBottom="23dp"
         android:shadowColor="#393939"
         android:text="Nome:"
-        android:textColor="@color/colorAccent"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/textView23"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -54,7 +54,7 @@
         android:layout_marginRight="19dp"
         android:layout_marginBottom="31dp"
         android:text="Tipo:"
-        android:textColor="@color/colorAccent"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/descricaoServicoItem"
         app:layout_constraintEnd_toStartOf="@+id/tipoServicoItem"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +71,7 @@
         android:layout_marginRight="19dp"
         android:layout_marginBottom="550dp"
         android:text="Descrição:"
-        android:textColor="@color/colorAccent"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/descricaoServicoItem"
         app:layout_constraintHorizontal_bias="1.0"
@@ -93,10 +93,9 @@
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/nomeServicoItem"

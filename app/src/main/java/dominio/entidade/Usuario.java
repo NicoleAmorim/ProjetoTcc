@@ -5,17 +5,16 @@ import android.net.Uri;
 
 public class Usuario {
    private int cod;
+   private String id;
    private String cpf;
    private String email;
-   private boolean erro;
+   private String imageUrl;
    private int idade;
-   private Bitmap image;
    private String nome;
    private String senha;
    private String sexo;
    private int tel;
    private String username;
-   private String imagem;
 
    public Usuario() {
    }
@@ -29,7 +28,6 @@ public class Usuario {
       this.tel = var6;
       this.idade = var7;
       this.sexo = var8;
-      this.image = var9;
    }
 
    public String getCpf() {
@@ -42,10 +40,6 @@ public class Usuario {
 
    public int getIdade() {
       return this.idade;
-   }
-
-   public Bitmap getImage() {
-      return this.image;
    }
 
    public String getNome() {
@@ -80,10 +74,6 @@ public class Usuario {
       this.idade = var1;
    }
 
-   public void setImage(Bitmap var1) {
-      this.image = var1;
-   }
-
    public void setNome(String var1) {
       this.nome = var1;
    }
@@ -104,14 +94,6 @@ public class Usuario {
       this.username = var1;
    }
 
-   public boolean isErro() {
-      return erro;
-   }
-
-   public void setErro(boolean erro) {
-      this.erro = erro;
-   }
-
    public int getCod() {
       return cod;
    }
@@ -120,11 +102,20 @@ public class Usuario {
       this.cod = cod;
    }
 
-   public String getImagem() {
-      return imagem;
+
+   public String getId() {
+      return id;
    }
 
-   public void setImagem(String imagem) {
-      this.imagem = imagem;
+   public void setId(String id) {
+      this.id = id;
+   }
+
+   public String getImageUrl() {
+      return imageUrl;
+   }
+
+   public void setImageUrl(String imageUrl) {
+      this.imageUrl = imageUrl;
    }
 }

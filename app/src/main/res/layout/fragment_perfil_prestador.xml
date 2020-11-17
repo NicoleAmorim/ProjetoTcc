@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0E0E0E"
-    tools:context=".PaginaUsuario" >
+    tools:context=".InfoServico" >
 
     <RelativeLayout
         android:id="@+id/rellay1"
@@ -23,20 +23,23 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/circle_border">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgPerfilServico"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_margin="9dp"
-                android:adjustViewBounds="true"
+                android:layout_marginStart="9dp"
+                android:layout_marginLeft="9dp"
+                android:layout_marginTop="9dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginRight="9dp"
+                android:layout_marginBottom="9dp"
                 android:background="@drawable/circle"
-                android:padding="3dp"
-                android:scaleType="centerInside"
                 android:src="@drawable/ic_perfil_usuario" />
 
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/nomePerfilServico"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgUser"
@@ -49,10 +52,10 @@
 
 
         <TextView
-            android:id="@+id/tv_address"
+            android:id="@+id/ServicoPerfilServico"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_name"
+            android:layout_below="@+id/nomePerfilServico"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
             android:text="Encanador"
@@ -86,6 +89,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/EstadoPerfilServico"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -94,6 +98,7 @@
                     android:textSize="25sp" />
 
                 <TextView
+                    android:id="@+id/CidadePerfilServico"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -101,7 +106,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/grey"
                     android:textSize="13sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </RelativeLayout>
@@ -177,6 +182,7 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/EmailPerfilServico"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -207,6 +213,7 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/tellPerfilServico"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -238,6 +245,7 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/DescricaoPerfilServico"
                     android:layout_width="wrap_content"
                     android:layout_height="63dp"
                     android:fontFamily="sans-serif-light"
@@ -268,7 +276,7 @@
                     android:background="@drawable/bg_btn"
                     android:drawableLeft="@drawable/ic_chat"
                     android:gravity="center"
-                    android:onClick="EditarEndereco"
+                    android:onClick="Solicitar"
                     android:paddingLeft="10dp"
                     android:text="Enviar mensagem"
                     android:textColor="@color/colorAccent"
@@ -283,6 +291,7 @@
                     android:background="@drawable/bg_btn"
                     android:drawableLeft="@drawable/ic_album"
                     android:gravity="center"
+                    android:onClick="Portifolio"
                     android:paddingLeft="10dp"
                     android:text="Vizualizar Portifólio de Serviços"
                     android:textColor="@color/colorAccent"

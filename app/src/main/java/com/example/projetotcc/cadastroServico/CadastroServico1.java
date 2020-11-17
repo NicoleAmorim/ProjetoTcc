@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.projetotcc.LoadingDialog;
 import com.example.projetotcc.controllers.ValidarCadastroServico;
 import com.example.projetotcc.models.CadastroServicoModel;
 import com.example.projetotcc.PaginaUsuario;
@@ -49,12 +50,13 @@ public class CadastroServico1 extends AppCompatActivity {
     private EditText preco;
     private String tipo;
     private Usuario usuario;
+    protected LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_servico);
-
+        loadingDialog = new LoadingDialog(this);
         this.nome = (EditText)this.findViewById(R.id.nomeServico);
         this.preco = (EditText)this.findViewById(R.id.precoServico);
         this.descricao = (EditText)this.findViewById(R.id.descricaoServico);
@@ -93,7 +95,8 @@ public class CadastroServico1 extends AppCompatActivity {
         final String nome = this.nome.getText().toString();
         final String preco = this.preco.getText().toString();
         final String descricao = this.descricao.getText().toString();
-        validarCadastroServico.ValidarCadastroServico(nome, tipo, preco, descricao,image, usuario);
+        loadingDialog.StartActivityLogin();
+        validarCadastroServico.ValidarCadastroServico(nome, tipo, preco, descricao,filePath, usuario);
     }
 
     public void SelecionarImagem(View view) {

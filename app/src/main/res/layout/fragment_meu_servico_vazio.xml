@@ -7,25 +7,10 @@
     android:background="#0E0E0E"
     tools:context=".PaginaUsuario" >
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerProdut"
-        android:layout_width="409dp"
-        android:layout_height="390dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
-
     <Button
         android:id="@+id/button11"
-        android:layout_width="435dp"
-        android:layout_height="352dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginRight="100dp"
-        android:layout_marginBottom="600dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#000000"
         android:onClick="CadastroProduto"
         android:shadowColor="#3F51B5"

@@ -1,4 +1,4 @@
-package com.example.projetotcc.ui.editarEndereco;
+package com.example.projetotcc.ui.favoritos;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -14,25 +14,25 @@ import android.view.ViewGroup;
 
 import com.example.projetotcc.R;
 
-public class EditarEnderecoFragment extends Fragment {
+public class FavoritosFragment extends Fragment {
 
-    private EditarEnderecoViewModel mViewModel;
+    private FavoritosViewModel mViewModel;
 
-    public static EditarEnderecoFragment newInstance() {
-        return new EditarEnderecoFragment();
+    public static FavoritosFragment newInstance() {
+        return new FavoritosFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_editar_endereco, container, false);
+        return inflater.inflate(R.layout.fragment_favoritos, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(EditarEnderecoViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(FavoritosViewModel.class);
         // TODO: Use the ViewModel
     }
 

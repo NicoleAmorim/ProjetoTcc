@@ -22,7 +22,7 @@
     <string name="txt_Login">FAÇA SEU LOGIN</string>
     <string name="F_pass">Esqueci minha senha</string>
     <string name="btn_entrar">Entrar</string>
-    <string name="btn_cadastrando">CADASTRAR</string>
+    <string name="btn_cadastrando">CANDASTRAR</string>
     <string name="btn_irCadastro">Faça seu cadastro</string>
     <string name="title_activity_pag_login">PagLogin</string>
     <string name="tipo_cliente">Cliente:</string>
@@ -55,7 +55,7 @@
         <item>Masculino</item>
         <item>Feminino</item>
     </string-array>
-    <string name="title_activity_pagina_usuario">PaginaUsuario</string>
+    <string name="title_activity_pagina_usuario">Home Service</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_minhaLoja">Meu Serviço</string>

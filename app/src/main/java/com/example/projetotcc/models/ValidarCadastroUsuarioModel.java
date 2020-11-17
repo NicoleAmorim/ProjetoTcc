@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class ValidarCadastroUsuarioModel extends ValidarCadastroUsuario {
 
-    public void CadastrarUser(final CallBacks.VolleyCallbackUsuario callback, final Usuario usuario) {
+    public void CadastrarUser(final CallBacks.VolleyCallbackUsuario callback, final Usuario usuari, final String img) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.CadastrarUsuarioUrl, new Response.Listener<String>() {
             @Override
@@ -35,7 +35,7 @@ public class ValidarCadastroUsuarioModel extends ValidarCadastroUsuario {
                 hashMap.put("email", usuario.getEmail());
                 hashMap.put("username", usuario.getUsername());
                 hashMap.put("cpf", usuario.getCpf());
-                hashMap.put("img", usuario.getImagem());
+                hashMap.put("img", img);
                 hashMap.put("senha", usuario.getSenha());
                 hashMap.put("tel", String.valueOf(usuario.getTel()));
                 hashMap.put("idade", String.valueOf(usuario.getIdade()));
