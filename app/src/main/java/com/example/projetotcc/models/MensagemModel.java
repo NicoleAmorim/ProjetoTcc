@@ -8,10 +8,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.projetotcc.ChatUsuario;
 import com.example.projetotcc.MainActivity;
 import dominio.entidade.Message;
 import com.example.projetotcc.config.Constants;
+import com.example.projetotcc.ui.chatUsuario.ChatUsuarioFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,7 +65,7 @@ public class MensagemModel {
         requestQueue.add(request);
     }
     public void EnviarMensagem(final Message message) {
-        requestQueue = ChatUsuario.requestQueue;
+        requestQueue = ChatUsuarioFragment.requestQueue;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.EnviarMensagemUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

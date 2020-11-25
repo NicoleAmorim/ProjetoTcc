@@ -74,7 +74,6 @@ public class SelecionarServicoModel {
                             JSONObject jsonObject = new JSONObject(response);
                             servico.setNome(jsonObject.getString("nome_servico"));
                             servico.setTipo(jsonObject.getString("tipo_servico"));
-                            servico.setPreco(jsonObject.getString("preco_servico"));
                             servico.setDescricao(jsonObject.getString("descricao_servico"));
                             callback.onSuccess(response, servico);
                             Log.v("LogLogin", servico.getNome());
@@ -113,7 +112,6 @@ public class SelecionarServicoModel {
                             JSONObject jsonObject = new JSONObject(response);
                             servico.setNome(jsonObject.getString("nome_servico"));
                             servico.setDescricao(jsonObject.getString("descricao_servico"));
-                            servico.setPreco(jsonObject.getString("preco_servico"));
                             servico.setTipo(jsonObject.getString("tipo_servico"));
                             callback.onSuccess(response, servico);
                             Log.v("LogLogin", servico.getNome());

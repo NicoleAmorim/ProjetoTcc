@@ -19,15 +19,22 @@ public class ScriptDLL {
 
         return sql.toString();
     }
-
-    public static String getCreateTableUsuariosPedidos(){
+    public static String getCreateTable(){
 
         StringBuilder sql = new StringBuilder();
 
-        sql.append("CREATE TABLE IF NOT EXISTS tbl_usuario_pedido (");
-        sql.append("id INTEGER PRIMARY KEY AUTOINCREMENT,");
-        sql.append("cod_usuario INT UNIQUE,");
-        sql.append("nome_usuario VARCHAR(100));");
+        sql.append("CREATE TABLE IF NOT EXISTS tbl_message (");
+        sql.append("id_mensage integer primary key autoincrement not null,");
+        sql.append("message VARCHAR(100));");
+
+        return sql.toString();
+    }
+
+    public static String getDrop(){
+
+        StringBuilder sql = new StringBuilder();
+
+        sql.append("DROP TABLE tbl_message;");
 
         return sql.toString();
     }

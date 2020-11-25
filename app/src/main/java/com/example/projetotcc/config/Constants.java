@@ -29,5 +29,4 @@ public class Constants {
            ".LOCATION_DATA_EXTRA";
 
    public static final String API_PLACES_KEY = "<AIzaSyCxBo5U2EMz8pCrefE3ZwAz5vQFf8I2vII>";
-
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,15 +16,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.projetotcc.models.CallBacks;
 import com.example.projetotcc.PaginaUsuario;
 import dominio.entidade.Servico;
+import dominio.entidade.Usuario;
+
 import com.example.projetotcc.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 public class MinhaLojaFragment extends Fragment {
 
     private MinhaLojaViewModel mViewModel;
     public static RecyclerView rv;
     Servico servico;
+    Usuario user;
     CallBacks callBacks;
-    TextView nome, tipo, descricao;
+    TextView email, tipo, descricao, userName, estado, cidade, tell;
+    ImageView imageView;
 
     @Nullable
     @Override
@@ -31,6 +40,7 @@ public class MinhaLojaFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         callBacks = new CallBacks();
         servico = PaginaUsuario.servicop;
+        user = new Usuario();
         View view;
 try {
     if (servico.getNome().isEmpty()) {
@@ -40,12 +50,32 @@ try {
     }
     try {
 
-        nome = view.findViewById(R.id.nomeServicoItem);
-        tipo = view.findViewById(R.id.tipoServicoItem);
-        descricao = view.findViewById(R.id.descricaoServicoItem);
-        nome.setText(servico.getNome());
-        tipo.setText(servico.getTipo());
-        descricao.setText(servico.getDescricao());
+        imageView = view.findViewById(R.id.imgPerfilServicoU);
+        userName = view.findViewById(R.id.nomePerfilServicoU);
+        tipo = view.findViewById(R.id.ServicoPerfilServicoU);
+        estado = view.findViewById(R.id.EstadoPerfilServicoU);
+        cidade = view.findViewById(R.id.CidadePerfilServicoU);
+        tell = view.findViewById(R.id.tellPerfilServicoU);
+        email = view.findViewById(R.id.EmailPerfilServicoU);
+        descricao = view.findViewById(R.id.DescricaoPerfilServicoU);
+
+        FirebaseFirestore.getInstance().collection("/users")
+                .document(servico.getIDUser())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        user = documentSnapshot.toObject(Usuario.class);
+                        userName.setText(user.getNome());
+                        tipo.setText(servico.getTipo());
+                        estado.setText(user.getNome());
+                        cidade.setText(servico.getTipo());
+                        tell.setText(String.valueOf(user.getTel()));
+                        email.setText(user.getEmail());
+                        descricao.setText(servico.getDescricao());
+                        Picasso.get().load(user.getImageUrl()).into(imageView);
+                    }
+                });
     } catch (Exception e) {
         e.printStackTrace();
     }

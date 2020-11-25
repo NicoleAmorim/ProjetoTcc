@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -29,10 +28,8 @@ import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
 import dominio.entidade.Usuario;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -58,8 +55,7 @@ public class CadastroServico1 extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_servico);
         loadingDialog = new LoadingDialog(this);
         this.nome = (EditText)this.findViewById(R.id.nomeServico);
-        this.preco = (EditText)this.findViewById(R.id.precoServico);
-        this.descricao = (EditText)this.findViewById(R.id.descricaoServico);
+        this.descricao = (EditText)this.findViewById(R.id.tituloServico);
         this.imageView = (ImageView)this.findViewById(R.id.imgProduto);
 
         context = this;
@@ -96,7 +92,7 @@ public class CadastroServico1 extends AppCompatActivity {
         final String preco = this.preco.getText().toString();
         final String descricao = this.descricao.getText().toString();
         loadingDialog.StartActivityLogin();
-        validarCadastroServico.ValidarCadastroServico(nome, tipo, preco, descricao,filePath, usuario);
+        validarCadastroServico.ValidarCadastroServico(nome, tipo, preco, descricao,filePath);
     }
 
     public void SelecionarImagem(View view) {
@@ -108,9 +104,6 @@ public class CadastroServico1 extends AppCompatActivity {
         try {
             filePath = intent.getData();
             Bitmap bitmap = MediaStore.Images.Media.getBitmap((ContentResolver)this.getContentResolver(), (Uri)filePath);
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, (OutputStream)byteArrayOutputStream);
-            this.image = Base64.encodeToString((byte[])byteArrayOutputStream.toByteArray(), (int)0);
             this.imageView.setImageBitmap(bitmap);
             return;
         } catch (FileNotFoundException e) {

@@ -4,7 +4,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.android.volley.RequestQueue;
-import com.example.projetotcc.ChatUsuario;
 
 import database.DadosOpenHelperDestinatario;
 import database.DadosOpenHelperMessage;
@@ -17,9 +16,10 @@ import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.models.CallBacks;
 import com.example.projetotcc.models.MensagemModel;
 import com.example.projetotcc.models.SelecionarUsuarioModel;
-import com.example.projetotcc.ui.pedidos.PedidosFragment;
+import com.example.projetotcc.ui.chatUsuario.ChatUsuarioFragment;
 
-public class Mensagem  extends ChatUsuario {
+public class Mensagem  extends ChatUsuarioFragment
+{
     private DadosOpenHelperMessage dadosOpenHelper;
     private SQLiteDatabase conexao;
     private ManterLogadoRepositorio manterLogadoRepositorio;
@@ -37,14 +37,12 @@ public class Mensagem  extends ChatUsuario {
             public void onSuccess(String result, Message message) {
                 if(message.getText()!= "erro" && layout == "chat")
                 {
-                    manterLogadoRepositorio.inserirMensagem(message);
-                    adapter.add(new ChatUsuario.MessageItem(message));
+                    adapter.add(new ChatUsuarioFragment.MessageItem(message));
                     SelecionarMensagem(usuario, requestQueue1);
                     Log.i("oi", "né: "+ "chat");
                 }
                 if(message.getText()!= "erro" && layout == "pagina")
                 {
-                    manterLogadoRepositorio.inserirMensagem(message);
                     selecionarUsuario.SelecionarUserById(new CallBacks.VolleyCallbackUsuario() {
                         @Override
                         public void onSuccess(String response, Usuario usuario) {
@@ -92,7 +90,6 @@ public class Mensagem  extends ChatUsuario {
         {
             mensagemModel.EnviarMensagem(message);
             Log.i("Script", "SUCCESS: "+ message.getText());
-            manterLogadoRepositorio.inserirMensagem(message);
 
             adapter.add(new MessageItem(message));
         }

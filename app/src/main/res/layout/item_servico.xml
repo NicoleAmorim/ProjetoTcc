@@ -28,7 +28,7 @@
 		app:riv_corner_radius="6dp" />
 
 	<TextView
-		android:id="@+id/descricaoServico"
+		android:id="@+id/tituloServico"
 		android:layout_width="256dp"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="16dp"
@@ -41,13 +41,13 @@
 		android:textColor="@color/colorTextPrimary"
 		android:textSize="16sp"
 		android:textStyle="bold"
-		app:layout_constraintBottom_toTopOf="@+id/ratingBar2"
+		app:layout_constraintBottom_toTopOf="@+id/estrelas"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toEndOf="@+id/imageUseNav"
 		app:layout_constraintTop_toTopOf="parent" />
 
 	<RatingBar
-		android:id="@+id/ratingBar2"
+		android:id="@+id/estrelas"
 		style="@style/Widget.AppCompat.RatingBar.Small"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -60,13 +60,13 @@
 		android:isIndicator="true"
 		android:numStars="5"
 		android:theme="@style/RatingBar"
-		app:layout_constraintBottom_toTopOf="@+id/precoServico"
+		app:layout_constraintBottom_toTopOf="@+id/nomeServico"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toEndOf="@+id/imageUseNav"
-		app:layout_constraintTop_toBottomOf="@+id/descricaoServico" />
+		app:layout_constraintTop_toBottomOf="@+id/tituloServico" />
 
 	<TextView
-		android:id="@+id/precoServico"
+		android:id="@+id/nomeServico"
 		android:layout_width="257dp"
 		android:layout_height="23dp"
 		android:layout_marginStart="16dp"
@@ -79,13 +79,13 @@
 		android:maxLines="1"
 		android:textColor="@color/colorTextSecondary"
 		android:textSize="15sp"
-		app:layout_constraintBottom_toTopOf="@+id/textStory2"
+		app:layout_constraintBottom_toTopOf="@+id/tipoServico"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toEndOf="@+id/imageUseNav"
-		app:layout_constraintTop_toBottomOf="@+id/ratingBar2" />
+		app:layout_constraintTop_toBottomOf="@+id/estrelas" />
 
 	<TextView
-		android:id="@+id/textStory2"
+		android:id="@+id/tipoServico"
 		android:layout_width="256dp"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="16dp"
@@ -101,6 +101,32 @@
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toEndOf="@+id/imageUseNav"
-		app:layout_constraintTop_toBottomOf="@+id/precoServico" />
+		app:layout_constraintTop_toBottomOf="@+id/nomeServico" />
+
+	<Switch
+		android:id="@+id/btnFavItem"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="227dp"
+		android:layout_marginLeft="227dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="4dp"
+		android:layout_marginRight="4dp"
+		android:layout_marginBottom="7dp"
+		app:layout_constraintBottom_toTopOf="@+id/tituloServico"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@+id/imageUseNav"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<TextView
+		android:id="@+id/textView3"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:layout_marginBottom="7dp"
+		android:text="⭐"
+		app:layout_constraintBottom_toTopOf="@+id/tituloServico"
+		app:layout_constraintEnd_toStartOf="@+id/btnFavItem"
+		app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,6 @@
 package dominio.entidade;
 
 import android.graphics.Bitmap;
-import android.net.Uri;
 
 public class Usuario {
    private int cod;
@@ -13,8 +12,10 @@ public class Usuario {
    private String nome;
    private String senha;
    private String sexo;
-   private int tel;
+   private String tel;
    private String username;
+   private String Token;
+   private boolean online;
 
    public Usuario() {
    }
@@ -25,7 +26,7 @@ public class Usuario {
       this.username = var3;
       this.cpf = var4;
       this.senha = var5;
-      this.tel = var6;
+
       this.idade = var7;
       this.sexo = var8;
    }
@@ -54,7 +55,7 @@ public class Usuario {
       return this.sexo;
    }
 
-   public int getTel() {
+   public String getTel() {
       return this.tel;
    }
 
@@ -86,7 +87,7 @@ public class Usuario {
       this.sexo = var1;
    }
 
-   public void setTel(int var1) {
+   public void setTel(String var1) {
       this.tel = var1;
    }
 
@@ -117,5 +118,21 @@ public class Usuario {
 
    public void setImageUrl(String imageUrl) {
       this.imageUrl = imageUrl;
+   }
+
+   public String getToken() {
+      return Token;
+   }
+
+   public void setToken(String token) {
+      Token = token;
+   }
+
+   public boolean isOnline() {
+      return online;
+   }
+
+   public void setOnline(boolean online) {
+      this.online = online;
    }
 }

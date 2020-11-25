@@ -47,4 +47,5 @@ public class Pedido {
         public void setPhotoUrl(String photoUrl) {
             this.photoUrl = photoUrl;
         }
+
 }

@@ -1,37 +1,48 @@
-package com.example.projetotcc;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.projetotcc.ui.infoServico;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-import com.example.projetotcc.config.Constants;
+import com.example.projetotcc.PaginaUsuario;
+import com.example.projetotcc.R;
+import com.example.projetotcc.controllers.Mensagem;
 import com.example.projetotcc.controllers.SelecionarUsuario;
 import com.example.projetotcc.models.CallBacks;
+import com.example.projetotcc.ui.favoritos.FavoritosFragment;
 import com.example.projetotcc.ui.listaFragment.ListaCategoriasFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
+import com.xwray.groupie.GroupAdapter;
+import com.xwray.groupie.Item;
+import com.xwray.groupie.ViewHolder;
 
+import database.DadosOpenHelperMessage;
+import dominio.entidade.Message;
 import dominio.entidade.Servico;
 import dominio.entidade.Usuario;
+import dominio.repositorio.ManterLogadoRepositorio;
 
-public class InfoServico extends AppCompatActivity {
+public class InfoServicoFragment extends Fragment {
 
+    private InfoServicoViewModel mViewModel;
     public static Servico servico;
     public static TextView  userName, email,estado, descricao, tell, tipo, cidade;
     public static ImageView imageView;
@@ -40,31 +51,39 @@ public class InfoServico extends AppCompatActivity {
     private SelecionarUsuario selecionarUsuario;
     public static RequestQueue requestQueue;
     public static Usuario user;
-    public static Context context;
     public static boolean validar;
     protected Intent it;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_perfil_prestador);
-        requestQueue = Volley.newRequestQueue(this.getApplicationContext());
-        user = new Usuario();
-        servico = getIntent().getExtras().getParcelable("servico");
 
+    public static InfoServicoFragment newInstance() {
+        return new InfoServicoFragment();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_perfil_prestador, container, false);
+        user = new Usuario();
+        servico = ListaCategoriasFragment.servico;
+    try {
         Log.i("teste", servico.getIDUser());
+    } catch (Exception e) {
+     servico = FavoritosFragment.servico;
+     e.printStackTrace();
+    }
+
         SelecionarUserFireBase(servico.getIDUser());
-        context = this;
         validar = true;
 
-        imageView = findViewById(R.id.imgPerfilServico);
-        userName = findViewById(R.id.nomePerfilServico);
-        tipo = findViewById(R.id.ServicoPerfilServico);
-        estado = findViewById(R.id.EstadoPerfilServico);
-        cidade = findViewById(R.id.CidadePerfilServico);
-        tell = findViewById(R.id.tellPerfilServico);
-        email = findViewById(R.id.EmailPerfilServico);
-        descricao = findViewById(R.id.DescricaoPerfilServico);
+        imageView = view.findViewById(R.id.imgPerfilServico);
+        userName = view.findViewById(R.id.nomePerfilServico);
+        tipo = view.findViewById(R.id.ServicoPerfilServico);
+        estado = view.findViewById(R.id.EstadoPerfilServico);
+        cidade = view.findViewById(R.id.CidadePerfilServico);
+        tell = view.findViewById(R.id.tellPerfilServico);
+        email = view.findViewById(R.id.EmailPerfilServico);
+        descricao = view.findViewById(R.id.DescricaoPerfilServico);
 
         FirebaseFirestore.getInstance().collection("/users")
                 .document(servico.getIDUser())
@@ -83,16 +102,17 @@ public class InfoServico extends AppCompatActivity {
                         Picasso.get().load(user.getImageUrl()).into(imageView);
                     }
                 });
-    }
-    public  void Solicitar(View view)
-    {
-        it = new Intent(InfoServico.context, ChatUsuario.class);
-        context.startActivity(it);
-    }
-    public  void Portifolio(View view)
-    {
+
+        return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mViewModel = ViewModelProviders.of(this).get(InfoServicoViewModel.class);
+
+        // TODO: Use the ViewModel
+    }
     private void SelecionarUserFireBase(String id)
     {
         FirebaseFirestore.getInstance().collection("/users")

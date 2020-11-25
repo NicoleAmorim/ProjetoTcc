@@ -11,7 +11,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
-
 import android.util.Log;
 import android.widget.Toast;
 
@@ -69,7 +68,7 @@ public class Localizacao extends AppCompatActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_localizacao);
+        setContentView(R.layout.activity_maps);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);

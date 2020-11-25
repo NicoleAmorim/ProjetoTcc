@@ -3,6 +3,7 @@ package com.example.projetotcc.androidMask;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+
 import java.util.HashSet;
 import java.util.Set;
 

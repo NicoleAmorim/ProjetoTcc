@@ -38,7 +38,6 @@ public class ValidarLoginModel extends ValidarLogin {
                             usuario.setCod(Integer.parseInt(jsonObject.getString("cod_usuario")));
                             usuario.setUsername(jsonObject.getString("userName_usuario"));
                             usuario.setSenha(jsonObject.getString("senha_usuario"));
-                            usuario.setTel(Integer.parseInt(jsonObject.getString("telefone_usuario")));
                             usuario.setCpf(jsonObject.getString("cpf_usuario"));
                             usuario.setIdade(Integer.parseInt(jsonObject.getString("idade_usuario")));
                             Log.i("Cod", "Int: "+ usuario.getCod());

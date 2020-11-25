@@ -17,6 +17,7 @@ import database.DadosOpenHelper;
 import dominio.repositorio.ManterLogadoRepositorio;
 import com.example.projetotcc.controllers.ValidarLogin;
 import com.example.projetotcc.models.ValidarLoginModel;
+import com.google.firebase.auth.AuthCredential;
 
 import dominio.entidade.Usuario;
 
@@ -32,8 +33,10 @@ public class MainActivity extends AppCompatActivity {
     public EditText emailm;
     public EditText senham;
     public static Context context;
+    public static AuthCredential authCredential;
     public static LoadingDialog loadingDialog;
     protected Intent it = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

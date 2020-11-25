@@ -9,11 +9,10 @@ import androidx.annotation.Nullable;
 public class DadosOpenHelperDestinatario extends SQLiteOpenHelper {
 
     public DadosOpenHelperDestinatario(@Nullable Context context)
-    { super(context, "tbl_usuario_pedido", null, 1); }
+    { super(context, "tbl_message", null, 1); }
 
     @Override
-    public void onCreate(SQLiteDatabase db){db.execSQL(ScriptDLL.getCreateTableUsuariosPedidos());}
-
+    public void onCreate(SQLiteDatabase db){db.execSQL(ScriptDLL.getDrop());}
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 }

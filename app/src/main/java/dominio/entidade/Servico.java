@@ -8,26 +8,29 @@ public class Servico implements Parcelable {
 
    private String IDUser;
    private String ImagemUrl;
+   private String ImagemUrl2;
+   private String ImagemUrl3;
+   private String ImagemUrl4;
    private String Tipo;
    private String descricao;
    private String nome;
-   private String preco;
 
    public Servico() {
    }
 
-   public Servico(String Nome, String Descricao, String Preco, int id) {
+   public Servico(String Nome, String Descricao, int id) {
       this.setNome(Nome);
       this.setDescricao(Descricao);
-      this.setPreco(Preco);
    }
    protected Servico(Parcel in) {
       IDUser = in.readString();
       ImagemUrl = in.readString();
+      ImagemUrl2 = in.readString();
+      ImagemUrl3 = in.readString();
+      ImagemUrl4 = in.readString();
       Tipo = in.readString();
       descricao = in.readString();
       nome = in.readString();
-      preco = in.readString();
    }
 
    public static final Creator<Servico> CREATOR = new Creator<Servico>() {
@@ -74,14 +77,6 @@ public class Servico implements Parcelable {
       this.nome = nome;
    }
 
-   public String getPreco() {
-      return preco;
-   }
-
-   public void setPreco(String preco) {
-      this.preco = preco;
-   }
-
    public String getImagemUrl() {
       return ImagemUrl;
    }
@@ -99,9 +94,35 @@ public class Servico implements Parcelable {
    public void writeToParcel(Parcel dest, int flags) {
       dest.writeString(IDUser);
       dest.writeString(ImagemUrl);
+      dest.writeString(ImagemUrl2);
+      dest.writeString(ImagemUrl3);
+      dest.writeString(ImagemUrl4);
       dest.writeString(Tipo);
       dest.writeString(descricao);
       dest.writeString(nome);
-      dest.writeString(preco);
+   }
+
+   public String getImagemUrl2() {
+      return ImagemUrl2;
+   }
+
+   public void setImagemUrl2(String imagemUrl2) {
+      ImagemUrl2 = imagemUrl2;
+   }
+
+   public String getImagemUrl3() {
+      return ImagemUrl3;
+   }
+
+   public void setImagemUrl3(String imagemUrl3) {
+      ImagemUrl3 = imagemUrl3;
+   }
+
+   public String getImagemUrl4() {
+      return ImagemUrl4;
+   }
+
+   public void setImagemUrl4(String imagemUrl4) {
+      ImagemUrl4 = imagemUrl4;
    }
 }

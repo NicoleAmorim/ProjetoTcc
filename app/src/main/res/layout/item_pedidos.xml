@@ -7,6 +7,18 @@
     android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/onlinePedido"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_margin="9dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:src="#FF002E"
+        app:layout_constraintBottom_toBottomOf="@+id/Ultimotextopedido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Nomeusuariopedido" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageUsuarioPedido"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -17,6 +29,8 @@
         android:src="@drawable/ic_perfil_usuario"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
     <TextView
         android:id="@+id/Nomeusuariopedido"
@@ -50,4 +64,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageUsuarioPedido"
         app:layout_constraintTop_toBottomOf="@+id/Nomeusuariopedido" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="__________________________________________________________"
+        android:textColor="#673AB7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageUsuarioPedido" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

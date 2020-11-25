@@ -16,7 +16,7 @@ public class Cadastro3 extends AppCompatActivity {
     private ValidarCadastroUsuario validarCadastroUsuario;
     private EditText email, username, tel;
     private  String Email, User;
-    private  int Tell;
+    private String Tell;
     Intent it = null;
 
     @Override
@@ -36,7 +36,7 @@ public class Cadastro3 extends AppCompatActivity {
     public void Cadastrar(View view) {
         Email = email.getText().toString() + "";
         User = username.getText().toString() + "";
-        Tell = Integer.parseInt(tel.getText().toString());
+        Tell = tel.getText().toString();
 
         if(validarCadastroUsuario.ValidarCadastro3(Email, User, Tell))
         {

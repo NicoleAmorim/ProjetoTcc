@@ -43,7 +43,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="RtlCompat" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageCadUser"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -54,8 +54,13 @@
         android:layout_marginRight="100dp"
         android:layout_marginBottom="250dp"
         android:adjustViewBounds="true"
+        android:background="#4A151414"
+        android:foreground="@drawable/ic_person"
         android:onClick="SelecionarImagem"
         android:scaleType="centerCrop"
+        app:civ_border_color="#4F15B1"
+        app:civ_border_overlay="false"
+        app:civ_circle_background_color="#AC5A5A"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

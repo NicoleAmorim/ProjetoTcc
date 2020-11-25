@@ -116,10 +116,10 @@ public class ValidarCadastroUsuario extends Cadastro5 {
         }
     }
 
-    public boolean ValidarCadastro3(String email, String user, int tell) {
+    public boolean ValidarCadastro3(String email, String user, String tell) {
         if (!email.isEmpty()) {
             if (!user.isEmpty()) {
-                if (tell != 0) {
+                if (tell != null || tell.isEmpty()) {
                     email+= "@gmail.com";
                     usuario.setEmail(email);
                     usuario.setUsername(user);

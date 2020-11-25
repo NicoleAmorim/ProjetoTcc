@@ -4,11 +4,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.projetotcc.ChatUsuario;
 import dominio.entidade.Message;
 import dominio.entidade.Usuario;
 
-import com.example.projetotcc.ui.pedidos.PedidosFragment;
 import com.xwray.groupie.GroupAdapter;
 
 public class ManterLogadoRepositorio {
@@ -38,16 +36,13 @@ public class ManterLogadoRepositorio {
         conexao.insertOrThrow("tbl_usuario", null, contentValues);
     }
 
-    public void inserirMensagem(Message message){
+    public void inserirMensagem(String message){
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put("texto", message.getText());
-        contentValues.put("hora", message.getTime());
-        contentValues.put("remetenteID", message.getRemetenteID());
-        contentValues.put("destinatarioID", message.getDestinatarioID());
+        contentValues.put("message", message);
 
-        conexao.insertOrThrow("tbl_mensagem", null, contentValues);
+        conexao.insertOrThrow("tbl_message", null, contentValues);
     }
 
     public void inserirUserPedido(Usuario usuario){
@@ -63,10 +58,26 @@ public class ManterLogadoRepositorio {
 
     public void excluir(){
 
+        StringBuilder sql = new StringBuilder();
         String[] parametros = new String[1];
         parametros[0] = String.valueOf(1);
 
-        conexao.delete("tbl_usuario", "id = ?", parametros);
+        sql.append("SELECT*");
+        sql.append("FROM tbl_usuario ");
+        sql.append("WHERE id = ?");
+
+        Cursor resultado = conexao.rawQuery(sql.toString(), parametros);
+
+    }
+    public void excluirMessage(){
+
+        StringBuilder sql = new StringBuilder();
+
+        sql.append("DELETE*");
+        sql.append("FROM tbl_message ");
+        sql.append("WHERE id >= 0");
+
+        conexao.execSQL(sql.toString());
 
     }
 
@@ -94,7 +105,6 @@ public class ManterLogadoRepositorio {
             usuario.setEmail(resultado.getString(resultado.getColumnIndexOrThrow("email_usuario")));
             usuario.setUsername(resultado.getString(resultado.getColumnIndexOrThrow("userName_usuario")));
             usuario.setSenha(resultado.getString(resultado.getColumnIndexOrThrow("senha_usuario")));
-            usuario.setTel(Integer.parseInt(resultado.getString(resultado.getColumnIndexOrThrow("telefone_usuario"))));
             usuario.setCpf(resultado.getString(resultado.getColumnIndexOrThrow("cpf_usuario")));
             usuario.setIdade(Integer.parseInt(resultado.getString(resultado.getColumnIndexOrThrow("idade_usuario"))));
 
@@ -102,33 +112,28 @@ public class ManterLogadoRepositorio {
         }
         return null;
     }
-    public Message buscarMensagem(String meuID,  String servicoID){
-
-        Message message = new Message();
+    public boolean buscarMensagem(String meuID){
 
         StringBuilder sql = new StringBuilder();
 
         String[] parametros = new String[1];
+        parametros[0] = meuID;
 
         sql.append("SELECT*");
-        sql.append("FROM tbl_mensagem ");
-        sql.append("ORDER BY id DESC");
+        sql.append("FROM tbl_message ");
+        sql.append("WHERE message = ?");
 
         Cursor resultado = conexao.rawQuery(sql.toString(), parametros);
 
         if(resultado.getCount() > 0) {
+                return true;
 
-            resultado.moveToFirst();
-
-            message.setID(resultado.getString(resultado.getColumnIndexOrThrow("id_mensage")));
-            message.setDestinatarioID(resultado.getString(resultado.getColumnIndexOrThrow("destinatarioID")));
-            message.setRemetenteID(resultado.getString(resultado.getColumnIndexOrThrow("remetenteID")));
-            message.setText(resultado.getString(resultado.getColumnIndexOrThrow("texto")));
-            message.setTime(Long.parseLong(resultado.getString(resultado.getColumnIndexOrThrow("hora"))));
-
-            return message;
         }
-        return null;
+        else
+        {
+            inserirMensagem(meuID);
+            return false;
+        }
     }
     public GroupAdapter buscarUltimaMensagem(String meuID, String servicoID){
 
@@ -157,7 +162,6 @@ public class ManterLogadoRepositorio {
                 message.setRemetenteID(resultado.getString(resultado.getColumnIndexOrThrow("remetenteID")));
                 message.setText(resultado.getString(resultado.getColumnIndexOrThrow("texto")));
                 message.setTime(Long.parseLong(resultado.getString(resultado.getColumnIndexOrThrow("hora"))));
-                adapter.add(new ChatUsuario.MessageItem(message));
             }while (resultado.moveToNext());
         }
         resultado.close();

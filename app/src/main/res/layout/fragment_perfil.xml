@@ -90,6 +90,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/qntddA"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -116,7 +117,7 @@
             android:layout_height="61dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@color/headerBackground"
+            android:background="@color/colorBackground"
             android:gravity="center"
             android:paddingTop="5dp"
             android:paddingBottom="5dp">
@@ -128,10 +129,11 @@
                 android:orientation="vertical">
 
                 <RatingBar
-                    android:id="@+id/ratingBar2"
+                    android:id="@+id/estrelas"
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="#00000000"
                     android:isIndicator="true"
                     android:numStars="5"
                     android:theme="@style/RatingBar"
@@ -145,7 +147,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/grey"
                     android:textSize="13sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -154,7 +156,7 @@
     </LinearLayout>
 
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/linlay1">
@@ -283,6 +285,6 @@
 
         </LinearLayout>
 
-    </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

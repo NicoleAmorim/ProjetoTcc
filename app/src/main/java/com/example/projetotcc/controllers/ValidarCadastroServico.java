@@ -28,7 +28,7 @@ import java.util.UUID;
 
 public class ValidarCadastroServico extends CadastroServico1 {
 
-    public void ValidarCadastroServico(String nome, String tipo, String preco, String descricao, Uri imagem, Usuario usuario) {
+    public void ValidarCadastroServico(String nome, String tipo, String preco, String descricao, Uri imagem) {
         cadastroServicoModel = new CadastroServicoModel();
         if (tipo != "Tipo") {
             if (!nome.isEmpty()) {
@@ -38,7 +38,6 @@ public class ValidarCadastroServico extends CadastroServico1 {
                             Servico servico  = new Servico();
                             servico.setDescricao(descricao);
                             servico.setNome(nome);
-                            servico.setPreco(preco);
                             servico.setTipo(tipo);
                             ServicoFireBase(servico, imagem);
 
@@ -59,7 +58,7 @@ public class ValidarCadastroServico extends CadastroServico1 {
         }
     }
     private void ServicoFireBase(final Servico servico, Uri imagem) {
-        String filename = UUID.randomUUID().toString();
+        final String filename = UUID.randomUUID().toString();
         final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/servico/" + filename);
         ref.putFile(imagem)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -69,6 +68,7 @@ public class ValidarCadastroServico extends CadastroServico1 {
                             @Override
                             public void onSuccess(Uri uri) {
                                 servico.setImagemUrl(String.valueOf(uri));
+                                servico.setNome(filename);
                                 servico.setIDUser(FirebaseAuth.getInstance().getUid());
                                 FirebaseFirestore.getInstance().collection("servico")
                                         .document(servico.getIDUser())
@@ -76,12 +76,7 @@ public class ValidarCadastroServico extends CadastroServico1 {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                FirebaseFirestore.getInstance().collection("servicoGlobal")
-                                                        .document(servico.getIDUser())
-                                                        .set(servico)
-                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                            @Override
-                                                            public void onSuccess(Void aVoid) {
+
                                                                 Intent it = new Intent(context, PaginaUsuario.class);
 
                                                                 it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -96,15 +91,6 @@ public class ValidarCadastroServico extends CadastroServico1 {
                                                                 loadingDialog.DismissDialog();
                                                             }
                                                         });
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                loadingDialog.DismissDialog();
-                                                Log.i("Teste", e.getMessage());
-                                            }
-                                        });
                             }
                         });
                     }

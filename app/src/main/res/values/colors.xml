@@ -12,5 +12,7 @@
     <color name="grey">#2d2d2d</color>
     <color name="circleBorder">#50FFFFFF</color>
     <color name="headerBackground">#8a2be2</color>
+    <color name="green">#FF2B7726</color>
+    <color name="red">#FF002E</color>
 
 </resources>
