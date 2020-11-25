@@ -16,6 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.projetotcc.R;
 import com.example.projetotcc.androidMask.MaskEditTextChangedListener;
 import com.example.projetotcc.cep.CEP;
+import com.example.projetotcc.cep.CEPException;
+
+import org.json.JSONException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -118,9 +121,14 @@ public class Cadastro6 extends AppCompatActivity implements Button.OnClickListen
 
             try {
                 vCep = new CEP(ceps[0]);
+            } catch (CEPException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
             } finally {
                 return vCep;
             }
+
         }
 
         @Override

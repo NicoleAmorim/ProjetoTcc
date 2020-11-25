@@ -61,7 +61,7 @@ public class CEP {
             this.Logradouro = obj.getString("logradouro");
             this.Complemento = obj.getString("complemento");
             this.Bairro = obj.getString("bairro");
-            this.Estado = obj.getString("estado");
+            this.Estado = obj.getString("uf");
             //this.Uf = obj.getString("uf");
         } else {
             throw new CEPException("Não foi possível encontrar o CEP", cep);

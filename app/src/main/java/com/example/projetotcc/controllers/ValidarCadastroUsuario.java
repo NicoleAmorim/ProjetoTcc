@@ -15,6 +15,8 @@ import database.DadosOpenHelper;
 import dominio.repositorio.ManterLogadoRepositorio;
 import com.example.projetotcc.PaginaUsuario;
 import dominio.entidade.Usuario;
+
+import com.example.projetotcc.cadastroUsuario.Cadastro6;
 import com.example.projetotcc.models.ValidarCadastroUsuarioModel;
 import com.example.projetotcc.models.CallBacks;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -246,7 +248,7 @@ public class ValidarCadastroUsuario extends Cadastro5 {
                     @Override
                     public void onSuccess(Void aVoid) {
                         loadingDialog.DismissDialog();
-                        it = new Intent(context, PaginaUsuario.class);
+                        it = new Intent(context, Cadastro6.class);
 
                         it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
