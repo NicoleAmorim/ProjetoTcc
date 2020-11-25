@@ -54,6 +54,12 @@
         tools:layout="@layout/fragment_perfil" />
 
     <fragment
+        android:id="@+id/nav_localizacao"
+        android:name="com.example.projetotcc.ui.localizacao.LocalizacaoFragment"
+        android:label="@string/localizacao_atual"
+        tools:layout="@layout/fragment_maps" />
+
+    <fragment
         android:id="@+id/nav_categoria"
         android:name="com.example.projetotcc.ui.categorias.CategoriasFragment"
         android:label="@string/menu_categoria"

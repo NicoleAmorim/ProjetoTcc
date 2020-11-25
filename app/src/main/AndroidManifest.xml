@@ -3,6 +3,7 @@
     package="com.example.projetotcc">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -26,11 +27,13 @@
             android:label="@string/title_activity_maps"></activity>
 
         <activity android:name=".cadastroServico.CadastroServico1" />
+        <activity android:name=".cadastroUsuario.Cadastro6" />
         <activity android:name=".cadastroUsuario.Cadastro5" />
         <activity android:name=".cadastroUsuario.Cadastro4" />
         <activity android:name=".cadastroUsuario.Cadastro3" />
         <activity android:name=".cadastroUsuario.Cadastro2" />
         <activity android:name=".cadastroUsuario.Cadastro1" />
+
         <activity
             android:name=".PaginaUsuario"
             android:label="@string/title_activity_pagina_usuario"

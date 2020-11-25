@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.example.projetotcc.cadastroServico.CadastroServico1;
@@ -22,6 +24,7 @@ import dominio.entidade.Message;
 import dominio.entidade.Pedido;
 import dominio.repositorio.ManterLogadoRepositorio;
 
+import com.example.projetotcc.cadastroUsuario.Cadastro6;
 import com.example.projetotcc.controllers.Mensagem;
 import com.example.projetotcc.models.CallBacks;
 import com.example.projetotcc.ui.chatUsuario.ChatUsuarioFragment;
@@ -31,6 +34,7 @@ import com.example.projetotcc.ui.home.HomeFragment;
 import com.example.projetotcc.ui.infoServico.InfoServicoFragment;
 import com.example.projetotcc.ui.listaFragment.ListaCategoriasFragment;
 import com.example.projetotcc.ui.editarPortifolio.EditarPortifolioFragment;
+import com.example.projetotcc.ui.localizacao.LocalizacaoFragment;
 import com.example.projetotcc.ui.pedidos.PedidosFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -129,7 +133,7 @@ public class PaginaUsuario extends AppCompatActivity {
          imagem = (ImageView) headerView.findViewById(R.id.imageUserNav);
         Logado();
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_categoria, R.id.nav_favoritos, R.id.nav_minhaLoja, R.id.nav_pedidos, R.id.nav_perfil, R.id.nav_lista, R.id.nav_editar_perfil, R.id.nav_endereco, R.id.nav_sair ).setDrawerLayout(drawer).build();
+                R.id.nav_home, R.id.nav_categoria, R.id.nav_favoritos, R.id.nav_minhaLoja, R.id.nav_pedidos, R.id.nav_perfil, R.id.nav_localizacao, R.id.nav_lista, R.id.nav_editar_perfil, R.id.nav_endereco, R.id.nav_sair ).setDrawerLayout(drawer).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -270,6 +274,11 @@ public class PaginaUsuario extends AppCompatActivity {
         Logado();
     }
 
+    public void localizacao(View view) {
+        it = new Intent(this, Cadastro6.class);
+        this.startActivity(it);
+    }
+
     private void Logado() {
         if (FirebaseAuth.getInstance().getUid() == null) {
             Intent intent = new Intent(PaginaUsuario.this, MainActivity.class);
@@ -312,6 +321,8 @@ public class PaginaUsuario extends AppCompatActivity {
                 });
 
     }
+
+
     public void CadastroProduto(View view) {
         it = new Intent(this, CadastroServico1.class);
         this.startActivity(it);
@@ -321,6 +332,10 @@ public class PaginaUsuario extends AppCompatActivity {
 
     public void Endereco(View view) {
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new EnderecoFragment()).commit(); }
+
+    public void Localizacao(View view) {
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new LocalizacaoFragment()).commit(); }
+
 
     public void editarPortifolio(View view) {
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new EditarPortifolioFragment()).commit(); }
