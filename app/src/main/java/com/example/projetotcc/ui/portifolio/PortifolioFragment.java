@@ -52,7 +52,7 @@ public class PortifolioFragment extends Fragment {
 
         AdapterView adapterView = new AdapterView(PaginaUsuario.context, mResources);
         mViewPager.setCurrentItem(0);
-        adapterView.setTimer(mViewPager,7, 6, 2);
+        adapterView.setTimer(mViewPager,7, 4, 2);
         mViewPager.setAdapter(adapterView);
         return view;
     }

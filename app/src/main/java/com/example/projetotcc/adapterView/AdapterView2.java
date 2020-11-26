@@ -47,8 +47,11 @@ public class AdapterView2 extends PagerAdapter {
         View itemView = mLayoutInflater.inflate(R.layout.item_pager, container, false);
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
-        Picasso.get().load(url[position]).into(imageView);
-
+        try {
+            imageView.setImageResource(mResources[position]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         container.addView(itemView);
 
         return itemView;

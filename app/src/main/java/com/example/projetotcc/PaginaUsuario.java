@@ -30,6 +30,8 @@ import com.example.projetotcc.ui.listaFragment.ListaCategoriasFragment;
 import com.example.projetotcc.ui.editarPortifolio.EditarPortifolioFragment;
 import com.example.projetotcc.ui.mudarSenha.MudarSenhaFragment;
 import com.example.projetotcc.ui.pedidos.PedidosFragment;
+import com.example.projetotcc.ui.perfil.PerfilFragment;
+import com.example.projetotcc.ui.portifolio.PortifolioFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -314,11 +316,14 @@ public class PaginaUsuario extends AppCompatActivity {
     }
     public void EditarPerfil(View view) {
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new EditarPerfilFragment()).commit(); }
+    public void Perfil(View view) {
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new PerfilFragment()).commit(); }
     public void MudarSenhaPerfil(View view) {
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new MudarSenhaFragment()).commit(); }
     public void Endereco(View view) {
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new EnderecoFragment()).commit(); }
-
+    public void EditarEndereco(View view) {
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new com.example.projetotcc.ui.editarEndereco.EnderecoFragment()).commit(); }
     public void editarPortifolio(View view) {
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new EditarPortifolioFragment()).commit(); }
 
@@ -575,7 +580,7 @@ public class PaginaUsuario extends AppCompatActivity {
 
     public  void Portifolio(View view)
     {
-        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new EditarPortifolioFragment()).commit();    }
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new PortifolioFragment()).commit();    }
     @Override
     public void onBackPressed()
     {
