@@ -23,10 +23,7 @@ import android.widget.TextView;
 
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
-import com.example.projetotcc.controllers.SelecionarServico;
-import com.example.projetotcc.models.CallBacks;
 import com.example.projetotcc.ui.infoServico.InfoServicoFragment;
-import com.example.projetotcc.ui.listaFragment.ListaCategoriasFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;

@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projetotcc.models.CallBacks;
 import com.example.projetotcc.PaginaUsuario;
 import dominio.entidade.Servico;
 import dominio.entidade.Usuario;
@@ -30,7 +29,6 @@ public class MinhaLojaFragment extends Fragment {
     public static RecyclerView rv;
     Servico servico;
     Usuario user;
-    CallBacks callBacks;
     TextView email, tipo, descricao, userName, estado, cidade, tell;
     ImageView imageView;
 
@@ -38,7 +36,6 @@ public class MinhaLojaFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        callBacks = new CallBacks();
         servico = PaginaUsuario.servicop;
         user = new Usuario();
         View view;

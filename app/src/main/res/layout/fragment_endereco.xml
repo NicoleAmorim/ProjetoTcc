@@ -22,20 +22,24 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/circle_border">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageEndereco"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_margin="9dp"
-                android:adjustViewBounds="true"
+                android:layout_marginStart="9dp"
+                android:layout_marginLeft="9dp"
+                android:layout_marginTop="9dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginRight="9dp"
+                android:layout_marginBottom="9dp"
                 android:background="@drawable/circle"
                 android:padding="3dp"
-                android:scaleType="centerInside"
                 android:src="@drawable/ic_perfil_usuario" />
 
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/nomePerfilServico"
+            android:id="@+id/nomePerfilEndereco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgUser"
@@ -48,7 +52,7 @@
 
 
         <TextView
-            android:id="@+id/ServicoPerfilServico"
+            android:id="@+id/ServicoPerfilEndereco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/nomePerfilServico"
@@ -94,6 +98,7 @@
 
 
                 <TextView
+                    android:id="@+id/EstadoPerfil"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -101,7 +106,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -133,6 +138,7 @@
 
 
                 <TextView
+                    android:id="@+id/CidadePerfil"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -140,7 +146,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -186,6 +192,7 @@
                         android:textSize="13sp" />
 
                     <TextView
+                        android:id="@+id/BairroPerfil"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
@@ -224,10 +231,11 @@
                         android:layout_height="wrap_content"
                         android:text="@string/rua"
                         android:textColor="@color/colorTextSecondary"
-                        android:textStyle="bold"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/RuaPerfil"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
@@ -278,6 +286,7 @@
                         android:textSize="13sp" />
 
                     <TextView
+                        android:id="@+id/NumeroPerfil"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
@@ -320,6 +329,7 @@
                         android:textSize="13sp" />
 
                     <TextView
+                        android:id="@+id/ComplementoPerfil"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"

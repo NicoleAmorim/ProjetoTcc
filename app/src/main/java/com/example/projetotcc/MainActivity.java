@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -13,10 +12,7 @@ import android.widget.EditText;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.projetotcc.cadastroUsuario.Cadastro1;
-import database.DadosOpenHelper;
-import dominio.repositorio.ManterLogadoRepositorio;
 import com.example.projetotcc.controllers.ValidarLogin;
-import com.example.projetotcc.models.ValidarLoginModel;
 import com.google.firebase.auth.AuthCredential;
 
 import dominio.entidade.Usuario;
@@ -26,10 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private ValidarLogin validarLogin;
     public static Usuario usuario;
     public static boolean procurar;
-    protected SQLiteDatabase conexao;
-    protected DadosOpenHelper dadosOpenHelper;
-    protected ManterLogadoRepositorio manterLogadoRepositorio;
-    protected ValidarLoginModel loginModel;
     public EditText emailm;
     public EditText senham;
     public static Context context;

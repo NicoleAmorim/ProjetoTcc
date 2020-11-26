@@ -4,29 +4,23 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.example.projetotcc.cadastroServico.CadastroServico1;
-import database.DadosOpenHelper;
+
+import dominio.entidade.CEP;
 import dominio.entidade.Favoritos;
 import dominio.entidade.Message;
 import dominio.entidade.Pedido;
-import dominio.repositorio.ManterLogadoRepositorio;
 
-import com.example.projetotcc.cadastroUsuario.Cadastro6;
-import com.example.projetotcc.controllers.Mensagem;
-import com.example.projetotcc.models.CallBacks;
 import com.example.projetotcc.ui.chatUsuario.ChatUsuarioFragment;
 import com.example.projetotcc.ui.editarPerfil.EditarPerfilFragment;
 import com.example.projetotcc.ui.endereco.EnderecoFragment;
@@ -34,7 +28,7 @@ import com.example.projetotcc.ui.home.HomeFragment;
 import com.example.projetotcc.ui.infoServico.InfoServicoFragment;
 import com.example.projetotcc.ui.listaFragment.ListaCategoriasFragment;
 import com.example.projetotcc.ui.editarPortifolio.EditarPortifolioFragment;
-import com.example.projetotcc.ui.localizacao.LocalizacaoFragment;
+import com.example.projetotcc.ui.mudarSenha.MudarSenhaFragment;
 import com.example.projetotcc.ui.pedidos.PedidosFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -42,12 +36,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
@@ -62,12 +53,9 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-
-import javax.annotation.Nullable;
 
 import dominio.entidade.Servico;
 import dominio.entidade.Usuario;
@@ -79,18 +67,14 @@ public class PaginaUsuario extends AppCompatActivity {
     public static RequestQueue requestQueue;
     public static Servico servico;
     public static RStar rStar;
-    private SQLiteDatabase conexao;
-    private DadosOpenHelper dadosOpenHelper;
-    private ManterLogadoRepositorio manterLogadoRepositorio;
     public static Servico servicop;
     public static String tipo;
     public static Usuario usuario;
+    public static CEP cep;
     public static int view;
-    private CallBacks callBacks;
     int i = 1;
     Intent it = null;
     private AppBarConfiguration mAppBarConfiguration;
-    private Mensagem mensagem;
     public static String layout;
     private FirebaseFirestore db;
     private TextView email;
@@ -99,7 +83,6 @@ public class PaginaUsuario extends AppCompatActivity {
     private Usuario destinatario;
 
     public static RecyclerView rv;
-    public static Servico servicoInfo;
     public static Toolbar toolbar;
 
     @Override
@@ -108,14 +91,12 @@ public class PaginaUsuario extends AppCompatActivity {
 
         servicop = new Servico();
         usuario = new Usuario();
-        mensagem = new Mensagem();
+        cep = new CEP();
         db = FirebaseFirestore.getInstance();
         rStar = new RStar(this);
 
         context = this;
 
-        callBacks = new CallBacks();
-        mensagem = new Mensagem();
         setContentView(R.layout.activity_pagina_usuario);
         ChatApplication application = (ChatApplication) getApplication();
         getApplication().registerActivityLifecycleCallbacks(application);
@@ -128,12 +109,12 @@ public class PaginaUsuario extends AppCompatActivity {
 
         View headerView = navigationView.getHeaderView(0);
 
-         email = (TextView) headerView.findViewById(R.id.ViewEmail);
-         nome = (TextView) headerView.findViewById(R.id.ViewNome);
-         imagem = (ImageView) headerView.findViewById(R.id.imageUserNav);
+        email = (TextView) headerView.findViewById(R.id.ViewEmail);
+        nome = (TextView) headerView.findViewById(R.id.ViewNome);
+        imagem = (ImageView) headerView.findViewById(R.id.imageUserNav);
         Logado();
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_categoria, R.id.nav_favoritos, R.id.nav_minhaLoja, R.id.nav_pedidos, R.id.nav_perfil, R.id.nav_localizacao, R.id.nav_lista, R.id.nav_editar_perfil, R.id.nav_endereco, R.id.nav_sair ).setDrawerLayout(drawer).build();
+                R.id.nav_home, R.id.nav_categoria, R.id.nav_favoritos, R.id.nav_minhaLoja, R.id.nav_pedidos, R.id.nav_perfil, R.id.nav_lista, R.id.nav_editar_perfil, R.id.nav_endereco, R.id.nav_sair ).setDrawerLayout(drawer).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -141,8 +122,6 @@ public class PaginaUsuario extends AppCompatActivity {
 
 
         updateToken();
-        callBacks = new CallBacks();
-        mensagem = new Mensagem();
         groupAdapter = new GroupAdapter();
 
 
@@ -158,7 +137,7 @@ public class PaginaUsuario extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 groupAdapter.clear();
                 if(!query.isEmpty()) {
-                getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new HomeFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new HomeFragment()).commit();
                     FindServicoHome(query);
                 }
                 return false;
@@ -274,11 +253,6 @@ public class PaginaUsuario extends AppCompatActivity {
         Logado();
     }
 
-    public void localizacao(View view) {
-        it = new Intent(this, Cadastro6.class);
-        this.startActivity(it);
-    }
-
     private void Logado() {
         if (FirebaseAuth.getInstance().getUid() == null) {
             Intent intent = new Intent(PaginaUsuario.this, MainActivity.class);
@@ -290,6 +264,7 @@ public class PaginaUsuario extends AppCompatActivity {
         {
             FindServico();
             FindUser();
+            FindEndereco();
         }
     }
 
@@ -321,26 +296,33 @@ public class PaginaUsuario extends AppCompatActivity {
                 });
 
     }
+    public void FindEndereco() {
+        db.collection("/endereco")
+                .document(FirebaseAuth.getInstance().getUid())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        cep = documentSnapshot.toObject(CEP.class);
+                    }
+                });
 
-
+    }
     public void CadastroProduto(View view) {
         it = new Intent(this, CadastroServico1.class);
         this.startActivity(it);
     }
     public void EditarPerfil(View view) {
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new EditarPerfilFragment()).commit(); }
-
+    public void MudarSenhaPerfil(View view) {
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new MudarSenhaFragment()).commit(); }
     public void Endereco(View view) {
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new EnderecoFragment()).commit(); }
-
-    public void Localizacao(View view) {
-        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new LocalizacaoFragment()).commit(); }
-
 
     public void editarPortifolio(View view) {
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new EditarPortifolioFragment()).commit(); }
 
-//CATEGORIAS
+    //CATEGORIAS
     public void findbyCategoriaAr(View view) {
         servico = new Servico();
         tipo = "Ar-condicinado";
@@ -415,88 +397,7 @@ public class PaginaUsuario extends AppCompatActivity {
                     }
                 });
     }
-    public void Finalizar(View view) {
-        final Usuario remetente = usuario;
-        final Usuario destinatario = InfoServicoFragment.user;
-        final Message message = new Message();
-        message.setDestinatarioID(destinatario.getId());
-        message.setRemetenteID(remetente.getId());
-        message.setTime(System.currentTimeMillis());
-        message.setText("Por Favor classifique o serviço selecionando de 0 a 5");
-        if (!message.getText().isEmpty()) {
-            FirebaseFirestore.getInstance().collection("/conversas")
-                    .document(remetente.getId())
-                    .collection(destinatario.getId())
-                    .add(message)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Log.d("Teste", documentReference.getId());
 
-                            Pedido pedido = new Pedido();
-                            pedido.setUuid(destinatario.getId());
-                            pedido.setUsername(destinatario.getUsername());
-                            pedido.setPhotoUrl(destinatario.getImageUrl());
-                            pedido.setTimestamp(message.getTime());
-                            pedido.setLastMessage(message.getText());
-
-                            FirebaseFirestore.getInstance().collection("/ultima-mensagem")
-                                    .document(remetente.getId())
-                                    .collection("pedidos")
-                                    .document(destinatario.getId())
-                                    .set(pedido);
-
-                            if (!destinatario.isOnline()) {
-                                Notification notification = new Notification();
-                                notification.setDestinatarioID(message.getDestinatarioID());
-                                notification.setRemetenteID(message.getRemetenteID());
-                                notification.setTime(message.getTime());
-                                notification.setText(message.getText());
-                                notification.setFromName(usuario.getUsername());
-
-                                FirebaseFirestore.getInstance().collection("/notifications")
-                                        .document(destinatario.getToken())
-                                        .set(notification);
-                            }
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.e("Teste", e.getMessage(), e);
-                        }
-                    });
-            FirebaseFirestore.getInstance().collection("/conversas")
-                    .document(destinatario.getId())
-                    .collection(remetente.getId())
-                    .add(message)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Log.d("Teste", documentReference.getId());
-
-                            Pedido pedido = new Pedido();
-                            pedido.setUuid(remetente.getId());
-                            pedido.setUsername(usuario.getUsername());
-                            pedido.setPhotoUrl(usuario.getImageUrl());
-                            pedido.setTimestamp(message.getTime());
-                            pedido.setLastMessage(message.getText());
-
-                            FirebaseFirestore.getInstance().collection("/ultima-mensagem")
-                                    .document(destinatario.getId())
-                                    .collection("pedidos")
-                                    .document(remetente.getId())
-                                    .set(pedido);
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.e("Teste", e.getMessage(), e);
-                        }
-                    });
-        }
-    }
     public void sendMensagem(View view) {
         String txt = ChatUsuarioFragment.editmessage.getText().toString();
 
@@ -774,6 +675,14 @@ public class PaginaUsuario extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        FirebaseFirestore.getInstance().collection("conversas")
+                                .document(FirebaseAuth.getInstance().getUid())
+                                .delete();
+                        FirebaseFirestore.getInstance().collection("conversas")
+                                .document(PedidosFragment.pedido.getUuid())
+                                .collection(FirebaseAuth.getInstance().getUid())
+                                .document()
+                                .delete();
                         rStar.DismissDialog();
                     }
                 });

@@ -4,7 +4,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,8 +21,6 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.example.projetotcc.controllers.SelecionarServico;
-import com.example.projetotcc.models.CallBacks;
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
 
@@ -53,8 +50,6 @@ public class ListaCategoriasFragment extends Fragment {
     public static GroupAdapter adapter;
     public static RecyclerView rv;
     public static Servico servico;
-    private static CallBacks callBacks;
-    private static SelecionarServico selecionarServico;
 
     private MainViewModel mViewModel;
 
@@ -62,8 +57,6 @@ public class ListaCategoriasFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        callBacks = new CallBacks();
-        selecionarServico = new SelecionarServico();
         adapter = new GroupAdapter();
 
         View view;

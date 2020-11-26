@@ -23,7 +23,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.projetotcc.LoadingDialog;
 import com.example.projetotcc.controllers.ValidarCadastroServico;
-import com.example.projetotcc.models.CadastroServicoModel;
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
 import dominio.entidade.Usuario;
@@ -38,7 +37,6 @@ public class CadastroServico1 extends AppCompatActivity {
     public static RequestQueue requestQueue;
     private int PICK_IMAGE_REQUEST = 1;
     public static Context context;
-    protected CadastroServicoModel cadastroServicoModel;
     private ValidarCadastroServico validarCadastroServico;
     private EditText descricao;
     private String image;
@@ -89,10 +87,9 @@ public class CadastroServico1 extends AppCompatActivity {
 
     public void CadastrarServico(View view) {
         final String nome = this.nome.getText().toString();
-        final String preco = this.preco.getText().toString();
         final String descricao = this.descricao.getText().toString();
         loadingDialog.StartActivityLogin();
-        validarCadastroServico.ValidarCadastroServico(nome, tipo, preco, descricao,filePath);
+        validarCadastroServico.ValidarCadastroServico(nome, tipo, descricao,filePath);
     }
 
     public void SelecionarImagem(View view) {

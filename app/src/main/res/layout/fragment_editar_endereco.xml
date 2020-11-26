@@ -22,20 +22,24 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/circle_border">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageEnderecoEdit"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_margin="9dp"
-                android:adjustViewBounds="true"
+                android:layout_marginStart="9dp"
+                android:layout_marginLeft="9dp"
+                android:layout_marginTop="9dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginRight="9dp"
+                android:layout_marginBottom="9dp"
                 android:background="@drawable/circle"
                 android:padding="3dp"
-                android:scaleType="centerInside"
                 android:src="@drawable/ic_perfil_usuario" />
 
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/nomePerfilServico"
+            android:id="@+id/nomePerfilEditEndereco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgUser"
@@ -48,7 +52,7 @@
 
 
         <TextView
-            android:id="@+id/ServicoPerfilServico"
+            android:id="@+id/ServicoPerfilEditEndereco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/nomePerfilServico"
@@ -92,8 +96,8 @@
                     android:textStyle="bold"
                     android:textSize="20sp" />
 
-                <Spinner
-                    android:id="@+id/spinnerEstado"
+                <EditText
+                    android:id="@+id/editEstado"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:background="#404040"/>
@@ -125,8 +129,8 @@
                     android:textStyle="bold"
                     android:textSize="20sp" />
 
-                <Spinner
-                    android:id="@+id/spinnerCidade"
+                <EditText
+                    android:id="@+id/editCidade"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:background="#404040"/>
@@ -138,6 +142,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/llllllll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/linlay4">
@@ -148,8 +153,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/linlay4"
-            android:orientation="horizontal"
             android:layout_marginTop="15dp"
+            android:orientation="horizontal"
             tools:ignore="NotSibling">
 
             <RelativeLayout
@@ -158,8 +163,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -172,10 +177,11 @@
                         android:layout_height="wrap_content"
                         android:text="Bairro"
                         android:textColor="@color/colorTextSecondary"
-                        android:textStyle="bold"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
 
-                    <TextView
+                    <EditText
+                        android:id="@+id/editBairroEndereco"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
@@ -200,8 +206,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -214,10 +220,11 @@
                         android:layout_height="wrap_content"
                         android:text="Rua"
                         android:textColor="@color/colorTextSecondary"
-                        android:textStyle="bold"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
 
-                    <TextView
+                    <EditText
+                        android:id="@+id/editRuaEndereco"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
@@ -250,8 +257,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -264,10 +271,11 @@
                         android:layout_height="wrap_content"
                         android:text="Número"
                         android:textColor="@color/colorTextSecondary"
-                        android:textStyle="bold"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
 
-                    <TextView
+                    <EditText
+                        android:id="@+id/editNumeroEndereco"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
@@ -292,8 +300,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -306,10 +314,11 @@
                         android:layout_height="wrap_content"
                         android:text="Acréscimo"
                         android:textColor="@color/colorTextSecondary"
-                        android:textStyle="bold"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
 
-                    <TextView
+                    <EditText
+                        android:id="@+id/editComplementoEndereco"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
@@ -332,51 +341,51 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_below="@id/linlay3"
             android:gravity="center"
-            android:orientation="vertical"
-            android:layout_below="@id/linlay3">
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/btnEditarLocal"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
-                android:background="@drawable/bg_btn"
-                android:gravity="center"
-                android:text="Salvar Localização"
                 android:layout_gravity="center"
-                android:textColor="@color/colorAccent"
-                android:textSize="18dp"
+                android:layout_marginLeft="-10dp"
+                android:background="@drawable/bg_btn"
                 android:drawableLeft="@drawable/ic_edit"
+                android:gravity="center"
                 android:paddingLeft="10dp"
-                android:layout_marginLeft="-10dp"/>
+                android:text="Salvar Localização"
+                android:textColor="@color/colorAccent"
+                android:textSize="18dp" />
 
             <TextView
                 android:layout_width="220dp"
                 android:layout_height="50dp"
-                android:background="@drawable/bg_btn"
-                android:gravity="center"
-                android:text="Mudar Senhar"
                 android:layout_gravity="center"
-                android:textColor="@color/colorAccent"
-                android:textSize="18dp"
-                android:drawableLeft="@drawable/ic_password"
-                android:paddingLeft="10dp"
                 android:layout_marginLeft="-10dp"
-                android:layout_marginTop="14dp"/>
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_btn"
+                android:drawableLeft="@drawable/ic_password"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:text="Mudar Senhar"
+                android:textColor="@color/colorAccent"
+                android:textSize="18dp" />
 
             <TextView
                 android:layout_width="240dp"
                 android:layout_height="50dp"
-                android:background="@drawable/bg_btn"
-                android:gravity="center"
-                android:text="Dados do Perfil"
                 android:layout_gravity="center"
-                android:textColor="@color/colorAccent"
-                android:textSize="18dp"
-                android:drawableLeft="@drawable/ic_person"
-                android:paddingLeft="10dp"
                 android:layout_marginLeft="-10dp"
-                android:layout_marginTop="14dp"/>
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_btn"
+                android:drawableLeft="@drawable/ic_person"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:text="Dados do Perfil"
+                android:textColor="@color/colorAccent"
+                android:textSize="18dp" />
 
         </LinearLayout>
 

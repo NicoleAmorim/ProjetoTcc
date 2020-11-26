@@ -53,7 +53,7 @@ public class EditarPortifolioFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_portifolio, container, false);
+        view = inflater.inflate(R.layout.fragment_editar_portifolio, container, false);
         servico = PaginaUsuario.servicop;
         image1 = view.findViewById(R.id.imagePortifolio1);
         image2 = view.findViewById(R.id.imagePortifolio2);

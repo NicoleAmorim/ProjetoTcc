@@ -2,6 +2,8 @@ package com.example.projetotcc.ui.categorias;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,10 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
 
 public class CategoriasFragment extends Fragment {
-
     private CategoriasViewModel mViewModel;
 
     public static CategoriasFragment newInstance() {
@@ -35,7 +37,5 @@ public class CategoriasFragment extends Fragment {
         mViewModel = ViewModelProviders.of(this).get(CategoriasViewModel.class);
         // TODO: Use the ViewModel
     }
-
-
 
 }

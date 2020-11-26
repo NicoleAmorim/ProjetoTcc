@@ -1,4 +1,4 @@
-package com.example.projetotcc.cep;
+package dominio.entidade;
 
 public class CEPException extends Exception {
     private String CEP;

@@ -1,6 +1,5 @@
 package com.example.projetotcc.ui.portifolio;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
 
+import com.example.projetotcc.adapterView.AdapterView;
+import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
 import com.example.projetotcc.ui.infoServico.InfoServicoFragment;
-import com.squareup.picasso.Picasso;
 
 import dominio.entidade.Servico;
 
@@ -27,8 +28,6 @@ public class PortifolioFragment extends Fragment {
     private ImageView image2;
     private ImageView image3;
     private ImageView image4;
-    private Uri filePath;
-    private boolean um = false, dois = false, tres = false, quatro = false;
 
     public static PortifolioFragment newInstance() {
         return new PortifolioFragment();
@@ -39,33 +38,22 @@ public class PortifolioFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_portifolio, container, false);
+        view = inflater.inflate(R.layout.fragment_editar_portifolio, container, false);
         servico = InfoServicoFragment.servico;
-        image1 = view.findViewById(R.id.imagePortifolio1);
-        image2 = view.findViewById(R.id.imagePortifolio2);
-        image3 = view.findViewById(R.id.imagePortifolio3);
-        image4 = view.findViewById(R.id.imagePortifolio4);
 
-        Picasso.get().load(servico.getImagemUrl()).into(image1);
-        try {
+        ViewPager mViewPager = (ViewPager) view.findViewById(R.id.pagerPortifolio);
 
-                Picasso.get().load(servico.getImagemUrl2()).into(image2);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
+        String[] mResources = {
+                servico.getImagemUrl(),
+                servico.getImagemUrl2(),
+                servico.getImagemUrl3(),
+                servico.getImagemUrl4()
+        };
 
-            Picasso.get().load(servico.getImagemUrl3()).into(image3);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-                Picasso.get().load(servico.getImagemUrl4()).into(image4);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        AdapterView adapterView = new AdapterView(PaginaUsuario.context, mResources);
+        mViewPager.setCurrentItem(0);
+        adapterView.setTimer(mViewPager,7, 6, 2);
+        mViewPager.setAdapter(adapterView);
         return view;
     }
 

@@ -1,8 +1,6 @@
 package com.example.projetotcc.ui.chatUsuario;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,9 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.RequestQueue;
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
-import com.example.projetotcc.RStar;
-import com.example.projetotcc.controllers.Mensagem;
-import com.example.projetotcc.models.CallBacks;
 import com.example.projetotcc.ui.infoServico.InfoServicoFragment;
 import com.example.projetotcc.ui.pedidos.PedidosFragment;
 import com.google.firebase.firestore.DocumentChange;
@@ -51,20 +46,12 @@ public class ChatUsuarioFragment extends Fragment {
 
     private ChatUsuarioViewModel mViewModel;
     public static GroupAdapter adapter;
-    private CallBacks callBacks;
     public static Usuario remetente;
 
     public static Usuario destinatario;
     public static EditText editmessage;
     public static Context context;
-    private DadosOpenHelper dadosOpenHelper;
-    private SQLiteDatabase conexao;
-    private Mensagem mensagem;
-    private ManterLogadoRepositorio manterLogadoRepositorio;
-    public static RequestQueue requestQueue;
     private RecyclerView rv;
-    private Button button;
-    boolean stop;
 
     public static ChatUsuarioFragment newInstance() {
         return new ChatUsuarioFragment();

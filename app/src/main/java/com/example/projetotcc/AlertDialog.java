@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.example.projetotcc.controllers.ValidarCadastroUsuario;
-import com.example.projetotcc.models.ValidarCadastroUsuarioModel;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import dominio.entidade.Usuario;
@@ -21,7 +20,6 @@ public class AlertDialog extends AppCompatActivity {
     public static Usuario usuario;
     public static Context context;
     private ValidarCadastroUsuario validarCadastroUsuario;
-    protected ValidarCadastroUsuarioModel cadastroUsuarioModel;
     protected Intent it = null;
 
     private Button mShowDialogBtn;

@@ -14,8 +14,6 @@ import com.example.projetotcc.PaginaUsuario;
 
 import dominio.entidade.Servico;
 import dominio.entidade.Usuario;
-import com.example.projetotcc.models.CadastroServicoModel;
-import com.example.projetotcc.models.CallBacks;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,27 +26,22 @@ import java.util.UUID;
 
 public class ValidarCadastroServico extends CadastroServico1 {
 
-    public void ValidarCadastroServico(String nome, String tipo, String preco, String descricao, Uri imagem) {
-        cadastroServicoModel = new CadastroServicoModel();
+    public void ValidarCadastroServico(String nome, String tipo, String descricao, Uri imagem) {
         if (tipo != "Tipo") {
             if (!nome.isEmpty()) {
-                if (!preco.isEmpty()) {
-                    if (!descricao.isEmpty()) {
-                        if (imagem != null) {
-                            Servico servico  = new Servico();
-                            servico.setDescricao(descricao);
-                            servico.setNome(nome);
-                            servico.setTipo(tipo);
-                            ServicoFireBase(servico, imagem);
+                if (!descricao.isEmpty()) {
+                    if (imagem != null) {
+                        Servico servico  = new Servico();
+                        servico.setDescricao(descricao);
+                        servico.setNome(nome);
+                        servico.setTipo(tipo);
+                        ServicoFireBase(servico, imagem);
 
-                        } else {
-                            Toast.makeText(Cadastro2.context, "Por favor escolha uma foto para seu perfil", Toast.LENGTH_SHORT).show();
-                        }
                     } else {
-                        Toast.makeText(Cadastro1.context, "Descrição está vazio", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Cadastro2.context, "Por favor escolha uma foto para seu perfil", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(Cadastro1.context, "Preço está vazio", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Cadastro1.context, "Descrição está vazio", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Toast.makeText(Cadastro1.context, " Nome está vazio", Toast.LENGTH_SHORT).show();
@@ -77,20 +70,20 @@ public class ValidarCadastroServico extends CadastroServico1 {
                                             @Override
                                             public void onSuccess(Void aVoid) {
 
-                                                                Intent it = new Intent(context, PaginaUsuario.class);
+                                                Intent it = new Intent(context, PaginaUsuario.class);
 
-                                                                it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                                                                context.startActivity(it);
-                                                            }
-                                                        })
-                                                        .addOnFailureListener(new OnFailureListener() {
-                                                            @Override
-                                                            public void onFailure(@NonNull Exception e) {
-                                                                Log.i("Teste", e.getMessage());
-                                                                loadingDialog.DismissDialog();
-                                                            }
-                                                        });
+                                                context.startActivity(it);
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.i("Teste", e.getMessage());
+                                                loadingDialog.DismissDialog();
+                                            }
+                                        });
                             }
                         });
                     }
@@ -103,17 +96,5 @@ public class ValidarCadastroServico extends CadastroServico1 {
                     }
                 });
     }
-    private void Servico(String nome, String preco, String descricao, String tipo, Usuario usuario, String imagem) {
-        cadastroServicoModel.CadastrarServico(new CallBacks.VolleyCallback() {
-            @Override
-            public void onSuccess(String result) {
 
-                Intent it = new Intent(CadastroServico1.context, PaginaUsuario.class);
-
-                it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                context.startActivity(it);
-            }
-        }, nome, preco, descricao, tipo, usuario, imagem);
-    }
 }

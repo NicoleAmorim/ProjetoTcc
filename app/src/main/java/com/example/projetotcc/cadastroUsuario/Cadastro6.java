@@ -2,8 +2,10 @@ package com.example.projetotcc.cadastroUsuario;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -13,10 +15,14 @@ import android.widget.EditText;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.projetotcc.LoadingDialog;
 import com.example.projetotcc.R;
 import com.example.projetotcc.androidMask.MaskEditTextChangedListener;
-import com.example.projetotcc.cep.CEP;
-import com.example.projetotcc.cep.CEPException;
+import com.example.projetotcc.controllers.ValidarCadastroUsuario;
+
+import dominio.entidade.CEP;
+import dominio.entidade.CEPException;
+import dominio.entidade.Usuario;
 
 import org.json.JSONException;
 
@@ -27,72 +33,71 @@ public class Cadastro6 extends AppCompatActivity implements Button.OnClickListen
     private Button btnBuscar;
 
     private EditText txtCEP;
-    private EditText txtLogradouro;
+    private EditText txtRua;
     private EditText txtComplemento;
     private EditText txtBairro;
     private EditText txtEstado;
+    private EditText txtCidade;
+    private EditText txtNumero;
+    public static Context context;
+    public static LoadingDialog loadingDialog;
+    public static Usuario usuario;
+    protected Intent it = null;
 
     private CEP vCEP;
+    private ValidarCadastroUsuario validarCadastroUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_6);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        // define
-        //this.vCEP = null;
 
-        // referência
         this.btnBuscar = (Button) findViewById(R.id.btnBuscar);
         this.txtCEP = (EditText) findViewById(R.id.txtCEP);
-        this.txtLogradouro = (EditText) findViewById(R.id.txtLogradouro);
+        this.txtCidade = (EditText) findViewById(R.id.txtLogradouro);
+        this.txtRua = (EditText) findViewById(R.id.txtRua);
         this.txtComplemento = (EditText) findViewById(R.id.txtComplemento);
         this.txtBairro = (EditText) findViewById(R.id.txtBairro);
         this.txtEstado = (EditText) findViewById(R.id.txtEstado);
+        this.txtNumero = (EditText) findViewById(R.id.txtNumero);
 
-        // cria a máscara
         MaskEditTextChangedListener maskCEP = new MaskEditTextChangedListener("#####-###", this.txtCEP);
 
-        // adiciona a máscara no objeto
         this.txtCEP.addTextChangedListener(maskCEP);
 
-        // define o evento de clique
         this.btnBuscar.setOnClickListener(this);
+        loadingDialog = new LoadingDialog(this);
+        validarCadastroUsuario = new ValidarCadastroUsuario();
+        context = this;
     }
 
     @Override
     public void onClick(View view) {
-        // evento para buscar um cep
         if (view == this.btnBuscar) {
             ConnectivityManager connMgr = (ConnectivityManager)
                     getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
-                // limpa
                 this.txtBairro.setText("");
                 this.txtComplemento.setText("");
                 this.txtEstado.setText("");
-                this.txtLogradouro.setText("");
+                this.txtCidade.setText("");
+                this.txtRua.setText("");
 
-                // cep
                 String cep = this.txtCEP.getText().toString();
 
-                // verifica se o CEP é válido
                 Pattern pattern = Pattern.compile("^[0-9]{5}-[0-9]{3}$");
                 Matcher matcher = pattern.matcher(cep);
 
                 if (matcher.find()) {
                     new Cadastro6.DownloadCEPTask().execute(cep);
                 } else {
-                    //JOptionPane.showMessageDialog(null, "Favor informar um CEP válido!", "Aviso!", JOptionPane.WARNING_MESSAGE);
                     new AlertDialog.Builder(this)
                             .setTitle("Aviso!")
                             .setMessage("Favor informar um CEP válido!")
                             .setPositiveButton(R.string.msgOk, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    // nada
                                 }
                             })
                             .setIcon(android.R.drawable.ic_dialog_alert)
@@ -105,13 +110,26 @@ public class Cadastro6 extends AppCompatActivity implements Button.OnClickListen
                         .setPositiveButton(R.string.msgOk, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // nada
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
             }
         }
+    }
+    public void Cadastrar(View view)
+    {
+        CEP cep = new CEP();
+        Uri imagem = Cadastro5.filePath;
+        loadingDialog.StartActivityLogin();
+        cep.setNumero(txtNumero.getText().toString());
+        cep.setCEP(txtCEP.getText().toString());
+        cep.setBairro(txtBairro.getText().toString());
+        cep.setComplemento(txtComplemento.getText().toString());
+        cep.setCidade(txtCidade.getText().toString());
+        cep.setEstado(txtEstado.getText().toString());
+        cep.setRua(txtRua.getText().toString());
+        validarCadastroUsuario.ValidarCadastro6FireBase(cep, imagem);
     }
 
     private class DownloadCEPTask extends AsyncTask<String, Void, CEP> {
@@ -137,7 +155,8 @@ public class Cadastro6 extends AppCompatActivity implements Button.OnClickListen
                 txtBairro.setText(result.getBairro());
                 txtComplemento.setText(result.getComplemento());
                 txtEstado.setText(result.getEstado());
-                txtLogradouro.setText(result.getLogradouro());
+                txtCidade.setText(result.getCidade());
+                txtRua.setText(result.getRua());
             }
         }
     }

@@ -226,7 +226,7 @@
         tools:ignore="RtlCompat" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/txtRua"
         android:layout_width="88dp"
         android:layout_height="48dp"
         android:layout_marginStart="112dp"
@@ -343,6 +343,7 @@
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="40dp"
         android:background="@color/colorAccent"
+        android:onClick="Cadastrar"
         android:text="@string/btn_cadastrando"
         android:textColor="@color/grey"
         android:textStyle="bold"

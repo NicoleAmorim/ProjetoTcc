@@ -24,7 +24,7 @@
             android:background="@drawable/circle_border">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ImagemEditarPerfil"
+                android:id="@+id/ImagemEditarSenhaPerfil"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginStart="9dp"
@@ -39,14 +39,13 @@
 
         </RelativeLayout>
 
-        <EditText
+        <TextView
             android:id="@+id/NomeEditarSenha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgUser"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15sp"
-            android:drawableRight="@drawable/ic_edit_dark"
             android:fontFamily="sans-serif-light"
             android:inputType="textShortMessage"
             android:text="Joey Tribbiani"
@@ -80,7 +79,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/numA"
+                    android:id="@+id/Navaliacao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -119,7 +118,7 @@
                 android:orientation="vertical">
 
                 <RatingBar
-                    android:id="@+id/estrelasE"
+                    android:id="@+id/estrelasSenha"
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -164,19 +163,18 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email"
+                    android:text="@string/txt_senha"
                     android:textColor="@color/colorRatingActive"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/EmailEditarPerfil"
+                    android:id="@+id/SenhaEditarPerfil"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/ic_edit"
                     android:fontFamily="sans-serif-light"
                     android:inputType="textWebEmailAddress"
-                    android:text="joey@sharenofood.com"
                     android:textColor="@color/colorAccent"
                     android:textSize="18sp" />
 
@@ -197,18 +195,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Telefone"
+                    android:text="@string/txt_consenha"
                     android:textColor="@color/colorRatingActive"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/TelefoneEditarPerfil"
+                    android:id="@+id/ConfSenhaEditarPerfil"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/ic_edit"
                     android:fontFamily="sans-serif-light"
-                    android:text="(+11) 950714002"
                     android:textColor="@color/colorAccent"
                     android:textSize="18sp" />
 
@@ -228,20 +225,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/btnEditarPerfil"
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="-10dp"
-                    android:background="@drawable/bg_btn"
-                    android:drawableLeft="@drawable/ic_edit"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:text="Editar Perfil"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="18dp" />
-
-                <TextView
+                    android:id="@+id/mudarSenhabtn"
                     android:layout_width="200dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
@@ -250,23 +234,8 @@
                     android:background="@drawable/bg_btn"
                     android:drawableLeft="@drawable/ic_password"
                     android:gravity="center"
-                    android:onClick="MudarSenhaPerfil"
                     android:paddingLeft="10dp"
                     android:text="Mudar Senhar"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="18dp" />
-
-                <TextView
-                    android:layout_width="240dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="-10dp"
-                    android:layout_marginTop="14dp"
-                    android:background="@drawable/bg_btn"
-                    android:drawableLeft="@drawable/ic_location"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:text="Dados da Localização"
                     android:textColor="@color/colorAccent"
                     android:textSize="18dp" />
 
