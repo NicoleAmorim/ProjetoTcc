@@ -124,7 +124,7 @@ public class EditarPortifolioFragment extends Fragment {
 
     public void MudarImagem1(Uri imagem)
     {
-        String filename = servico.getNome();
+        String filename = servico.getImagem();
         final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/servico/" + filename);
         ref.putFile(imagem)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -150,7 +150,7 @@ public class EditarPortifolioFragment extends Fragment {
     }
     public void MudarImagem2(Uri imagem)
     {
-        String filename = servico.getNome();
+        String filename = servico.getImagem();
         final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/servico/" + filename+"2");
         ref.putFile(imagem)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -176,7 +176,7 @@ public class EditarPortifolioFragment extends Fragment {
     }
     public void MudarImagem3(Uri imagem)
     {
-        String filename = servico.getNome();
+        String filename = servico.getImagem();
         final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/servico/" + filename+"3");
         ref.putFile(imagem)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -203,7 +203,7 @@ public class EditarPortifolioFragment extends Fragment {
     }
     public void MudarImagem4(Uri imagem)
     {
-        String filename = servico.getNome();
+        String filename = servico.getImagem();
         final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/servico/" + filename+"4");
         ref.putFile(imagem)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

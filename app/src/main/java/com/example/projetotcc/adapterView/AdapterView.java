@@ -34,7 +34,7 @@ public class AdapterView extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return mResources.length;
+       return 4;
     }
 
     @Override

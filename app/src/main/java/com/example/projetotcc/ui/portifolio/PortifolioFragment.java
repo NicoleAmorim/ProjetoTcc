@@ -38,7 +38,7 @@ public class PortifolioFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_editar_portifolio, container, false);
+        view = inflater.inflate(R.layout.fragment_portifolio, container, false);
         servico = InfoServicoFragment.servico;
 
         ViewPager mViewPager = (ViewPager) view.findViewById(R.id.pagerPortifolio);

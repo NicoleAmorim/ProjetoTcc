@@ -14,6 +14,7 @@ public class Servico implements Parcelable {
    private String Tipo;
    private String descricao;
    private String nome;
+   private String imagem;
 
    public Servico() {
    }
@@ -31,6 +32,7 @@ public class Servico implements Parcelable {
       Tipo = in.readString();
       descricao = in.readString();
       nome = in.readString();
+      imagem = in.readString();
    }
 
    public static final Creator<Servico> CREATOR = new Creator<Servico>() {
@@ -100,6 +102,7 @@ public class Servico implements Parcelable {
       dest.writeString(Tipo);
       dest.writeString(descricao);
       dest.writeString(nome);
+      dest.writeString(imagem);
    }
 
    public String getImagemUrl2() {
@@ -124,5 +127,13 @@ public class Servico implements Parcelable {
 
    public void setImagemUrl4(String imagemUrl4) {
       ImagemUrl4 = imagemUrl4;
+   }
+
+   public String getImagem() {
+      return imagem;
+   }
+
+   public void setImagem(String imagem) {
+      this.imagem = imagem;
    }
 }

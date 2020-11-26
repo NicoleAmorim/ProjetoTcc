@@ -61,7 +61,7 @@ public class ValidarCadastroServico extends CadastroServico1 {
                             @Override
                             public void onSuccess(Uri uri) {
                                 servico.setImagemUrl(String.valueOf(uri));
-                                servico.setNome(filename);
+                                servico.setImagem(filename);
                                 servico.setIDUser(FirebaseAuth.getInstance().getUid());
                                 FirebaseFirestore.getInstance().collection("servico")
                                         .document(servico.getIDUser())
