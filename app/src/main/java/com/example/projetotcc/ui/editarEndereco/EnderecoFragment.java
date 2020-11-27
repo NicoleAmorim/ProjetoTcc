@@ -29,7 +29,8 @@ import dominio.entidade.Usuario;
 public class EnderecoFragment extends Fragment {
 
     private EnderecoViewModel mViewModel;
-    private EditText nome, servico, rua, cidade, estado, bairro, numero, complemento;
+    private EditText rua, cidade, estado, bairro, numero, complemento;
+    private TextView nome, servico;
     private ImageView image;
     private Intent it;
     private Usuario usuario;
@@ -61,7 +62,12 @@ public class EnderecoFragment extends Fragment {
         TextView btnChat = view.findViewById(R.id.btnEditarLocal);
 
         nome.setText(usuario.getNome());
-        servico.setText(servico2.getTipo());
+        try {
+            servico.setText(servico2.getTipo());
+        } catch (Exception e) {
+            servico.setText("Usuário comum");
+            e.printStackTrace();
+        }
         rua.setText(cep.getRua());
         cidade.setText(cep.getCidade());
         estado.setText(cep.getEstado());

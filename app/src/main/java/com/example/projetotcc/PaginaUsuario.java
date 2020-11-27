@@ -1,10 +1,19 @@
 package com.example.projetotcc;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +21,7 @@ import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.example.projetotcc.cadastroServico.CadastroServico1;
@@ -23,7 +33,9 @@ import dominio.entidade.Pedido;
 
 import com.example.projetotcc.ui.chatUsuario.ChatUsuarioFragment;
 import com.example.projetotcc.ui.editarPerfil.EditarPerfilFragment;
+import com.example.projetotcc.ui.editarServico.EditarServicoFragment;
 import com.example.projetotcc.ui.endereco.EnderecoFragment;
+import com.example.projetotcc.ui.filtrar.FiltrarFragment;
 import com.example.projetotcc.ui.home.HomeFragment;
 import com.example.projetotcc.ui.infoServico.InfoServicoFragment;
 import com.example.projetotcc.ui.listaFragment.ListaCategoriasFragment;
@@ -32,11 +44,40 @@ import com.example.projetotcc.ui.mudarSenha.MudarSenhaFragment;
 import com.example.projetotcc.ui.pedidos.PedidosFragment;
 import com.example.projetotcc.ui.perfil.PerfilFragment;
 import com.example.projetotcc.ui.portifolio.PortifolioFragment;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.RectangularBounds;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
+import com.google.android.libraries.places.api.net.FetchPlaceResponse;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.navigation.NavigationView;
+import com.google.common.reflect.Parameter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -48,6 +89,7 @@ import com.squareup.picasso.Picasso;
 import com.xwray.groupie.GroupAdapter;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -57,6 +99,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Arrays;
 import java.util.List;
 
 import dominio.entidade.Servico;
@@ -74,6 +117,7 @@ public class PaginaUsuario extends AppCompatActivity {
     public static Usuario usuario;
     public static CEP cep;
     public static int view;
+    public static
     int i = 1;
     Intent it = null;
     private AppBarConfiguration mAppBarConfiguration;
@@ -92,22 +136,20 @@ public class PaginaUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         servicop = new Servico();
+        context = getApplicationContext();
         usuario = new Usuario();
         cep = new CEP();
         db = FirebaseFirestore.getInstance();
         rStar = new RStar(this);
-
-        context = this;
-
         setContentView(R.layout.activity_pagina_usuario);
         ChatApplication application = (ChatApplication) getApplication();
         getApplication().registerActivityLifecycleCallbacks(application);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
+
 
         View headerView = navigationView.getHeaderView(0);
 
@@ -316,6 +358,8 @@ public class PaginaUsuario extends AppCompatActivity {
     }
     public void EditarPerfil(View view) {
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new EditarPerfilFragment()).commit(); }
+    public void EditarServico(View view) {
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new EditarServicoFragment()).commit(); }
     public void Perfil(View view) {
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new PerfilFragment()).commit(); }
     public void MudarSenhaPerfil(View view) {
@@ -326,6 +370,10 @@ public class PaginaUsuario extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new com.example.projetotcc.ui.editarEndereco.EnderecoFragment()).commit(); }
     public void editarPortifolio(View view) {
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new EditarPortifolioFragment()).commit(); }
+    public void irFiltro(View view) {
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new FiltrarFragment()).commit(); }
+    public void filtrar(View view) {
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new ListaCategoriasFragment()).commit(); }
 
     //CATEGORIAS
     public void findbyCategoriaAr(View view) {

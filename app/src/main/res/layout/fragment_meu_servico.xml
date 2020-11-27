@@ -276,7 +276,7 @@
                     android:background="@drawable/bg_btn"
                     android:drawableLeft="@drawable/ic_chat"
                     android:gravity="center"
-                    android:onClick="CadastroProduto"
+                    android:onClick="EditarServico"
                     android:paddingLeft="10dp"
                     android:text="Editar Serviço"
                     android:textColor="@color/colorAccent"

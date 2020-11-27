@@ -63,7 +63,12 @@ public class EnderecoFragment extends Fragment {
         image = view.findViewById(R.id.imageEndereco);
 
         nome.setText(usuario.getNome());
-        servico.setText(servico2.getTipo());
+        try {
+            servico.setText(servico2.getTipo());
+        } catch (Exception e) {
+            servico.setText("Usuário comum");
+            e.printStackTrace();
+        }
         rua.setText(cep.getRua());
         cidade.setText(cep.getCidade());
         estado.setText(cep.getEstado());

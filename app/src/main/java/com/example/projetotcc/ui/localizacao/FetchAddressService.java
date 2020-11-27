@@ -1,4 +1,4 @@
-package com.example.projetotcc.localizacao;
+package com.example.projetotcc.ui.localizacao;
 
 import android.app.IntentService;
 import android.content.Intent;

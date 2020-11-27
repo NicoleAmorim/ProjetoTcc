@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:id="@+id/RGUF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <RadioButton
+                    android:id="@+id/radioBA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="BA" />
+
+                <RadioButton
+                    android:id="@+id/radioPA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pará" />
+
+                <RadioButton
+                    android:id="@+id/radioRS"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="RS" />
+
+                <RadioButton
+                    android:id="@+id/radioSC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SC" />
+
+                <RadioButton
+                    android:id="@+id/radioGO"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="GO" />
+
+                <RadioButton
+                    android:id="@+id/radioSP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SP" />
+
+                <RadioButton
+                    android:id="@+id/radioAM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="AM" />
+
+                <RadioButton
+                    android:id="@+id/radioPE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="PE" />
+
+                <RadioButton
+                    android:id="@+id/radioCE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CE" />
+
+                <RadioButton
+                    android:id="@+id/radioPB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="PB" />
+
+                <RadioButton
+                    android:id="@+id/radioAC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="AC" />
+
+                <RadioButton
+                    android:id="@+id/radioAL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="AL" />
+
+                <RadioButton
+                    android:id="@+id/radioAP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="AP" />
+
+                <RadioButton
+                    android:id="@+id/radioES"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ES" />
+
+                <RadioButton
+                    android:id="@+id/radioMA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="MA" />
+
+                <RadioButton
+                    android:id="@+id/radioMT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="MT" />
+
+                <RadioButton
+                    android:id="@+id/radioMG"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="MG" />
+
+                <RadioButton
+                    android:id="@+id/radioPR"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="PR" />
+
+                <RadioButton
+                    android:id="@+id/radioPI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="PI" />
+
+                <RadioButton
+                    android:id="@+id/radioRJ"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="RJ" />
+
+                <RadioButton
+                    android:id="@+id/radioRN"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="RN" />
+
+                <RadioButton
+                    android:id="@+id/radioRO"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="RO" />
+
+                <RadioButton
+                    android:id="@+id/radioRR"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="RR" />
+
+                <RadioButton
+                    android:id="@+id/radioSE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SE" />
+
+                <RadioButton
+                    android:id="@+id/radioTO"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TO" />
+
+                <RadioButton
+                    android:id="@+id/radioDF"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="DF" />
+
+
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/btn"
+                android:layout_width="355dp"
+                android:layout_height="53dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="28dp"
+                android:background="@color/colorAccent"
+                android:onClick="filtrar"
+                android:text="@string/btn_filtrar"
+                android:textColor="@color/grey"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

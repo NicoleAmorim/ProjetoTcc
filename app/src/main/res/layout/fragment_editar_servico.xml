@@ -226,7 +226,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/btnEditarPerfil"
+                    android:id="@+id/btnEditarServico"
                     android:layout_width="180dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
