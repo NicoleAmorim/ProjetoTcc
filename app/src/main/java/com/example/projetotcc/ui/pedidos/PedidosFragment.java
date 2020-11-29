@@ -3,7 +3,6 @@ package com.example.projetotcc.ui.pedidos;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,19 +21,14 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projetotcc.LoadingDialog;
-import com.example.projetotcc.Notification;
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
-import com.example.projetotcc.RStar;
+import com.example.projetotcc.ui.categorias.CategoriasFragment;
 import com.example.projetotcc.ui.chatUsuario.ChatUsuarioFragment;
-import com.example.projetotcc.ui.home.HomeFragment;
 import com.example.projetotcc.ui.infoServico.InfoServicoFragment;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -51,7 +44,6 @@ import com.xwray.groupie.ViewHolder;
 import java.util.List;
 
 import database.DadosOpenHelperDestinatario;
-import dominio.entidade.Message;
 import dominio.entidade.Pedido;
 import dominio.entidade.Usuario;
 import dominio.repositorio.ManterLogadoRepositorio;
@@ -120,7 +112,7 @@ public class PedidosFragment extends Fragment {
                 PedidosFragment.PedidoItem pedidoItem = (PedidosFragment.PedidoItem) item;
                 pedido = new Pedido();
                 pedido = pedidoItem.pedido;
-                    new AlertDialog.Builder(PaginaUsuario.context)
+                    new AlertDialog.Builder(PaginaUsuario.getContext)
                             .setTitle("Finalizar Servico")
                             .setMessage("Tem certeza que deseja finalizar o serviço?")
                             .setPositiveButton("sim", new DialogInterface.OnClickListener() {
@@ -141,17 +133,32 @@ public class PedidosFragment extends Fragment {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        List<DocumentChange> documentChanges = queryDocumentSnapshots.getDocumentChanges();
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            List<DocumentChange> documentChanges = queryDocumentSnapshots.getDocumentChanges();
 
-                        if (documentChanges != null) {
-                            for (DocumentChange doc: documentChanges) {
-                                if (doc.getType() == DocumentChange.Type.ADDED) {
-                                    final Pedido pedido = doc.getDocument().toObject(Pedido.class);
-                                    adapter.add(new PedidoItem(pedido));
+                            if (documentChanges != null) {
+                                for (DocumentChange doc : documentChanges) {
+                                    if (doc.getType() == DocumentChange.Type.ADDED) {
+                                        final Pedido pedido = doc.getDocument().toObject(Pedido.class);
+                                        adapter.add(new PedidoItem(pedido));
+                                    }
                                 }
                             }
+                        }else
+                        {
+                            new AlertDialog.Builder(PaginaUsuario.getContext)
+                                    .setTitle("Pedidos Vazio")
+                                    .setMessage("Nenhum serviço solicitado, solicite algo que necessite!")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new CategoriasFragment()).commit();
+
+                                        } }).setIcon(R.drawable.ic_chat) .show();
                         }
                     }
+
                 });
     }
     private class PedidoItem extends Item<ViewHolder> {

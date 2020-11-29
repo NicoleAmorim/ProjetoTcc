@@ -207,7 +207,7 @@ public class ListaCategoriasFragment extends Fragment {
                 });
     }
     public static class ServicoItem extends Item<ViewHolder> {
-        private final Servico servico;
+        public final Servico servico;
         private final Usuario usuario;
         private final Favoritos favoritos;
 

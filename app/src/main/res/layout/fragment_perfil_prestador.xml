@@ -70,6 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rellay1"
+        android:background="#FFFFFF"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -288,6 +289,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="-10dp"
                     android:layout_marginTop="14dp"
+                    android:layout_marginBottom="50dp"
                     android:background="@drawable/bg_btn"
                     android:drawableLeft="@drawable/ic_album"
                     android:gravity="center"

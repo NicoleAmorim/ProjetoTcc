@@ -75,6 +75,7 @@ public class ChatUsuarioFragment extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(PaginaUsuario.context));
         rv.getRecycledViewPool().clear();
         adapter.clear();
+        Procurar();
         rv.setAdapter(adapter);
         return view;
     }
@@ -83,7 +84,7 @@ public class ChatUsuarioFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(ChatUsuarioViewModel.class);
-        Procurar();
+
         // TODO: Use the ViewModel
     }
     public static class MessageItem extends Item<ViewHolder> {
@@ -125,6 +126,8 @@ public class ChatUsuarioFragment extends Fragment {
         FirebaseFirestore.getInstance().collection("/conversas")
                 .document(fromId)
                 .collection(toId)
+                .document("mensagem")
+                .collection("m")
                 .orderBy("time", Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override

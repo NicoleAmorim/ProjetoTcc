@@ -115,7 +115,7 @@ public class PerfilFragment extends Fragment {
                                 avaliacao.setText(String.valueOf(i));
                             } catch (Exception exception) {
                                 exception.printStackTrace();
-                                ratingBar.setNumStars(0);
+                                ratingBar.setVisibility(View.INVISIBLE);
                                 avaliacao.setText("0");
                             }
                         }

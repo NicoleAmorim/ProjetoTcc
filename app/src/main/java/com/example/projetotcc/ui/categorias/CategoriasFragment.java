@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
+import com.example.projetotcc.ui.listaFragment.ListaCategoriasFragment;
 
 public class CategoriasFragment extends Fragment {
     private CategoriasViewModel mViewModel;
@@ -28,6 +29,7 @@ public class CategoriasFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        ListaCategoriasFragment.UF = "";
         return inflater.inflate(R.layout.fragment_categorias, container, false);
     }
 
@@ -35,7 +37,6 @@ public class CategoriasFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(CategoriasViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 }
