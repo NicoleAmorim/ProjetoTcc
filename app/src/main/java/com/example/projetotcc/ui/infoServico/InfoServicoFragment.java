@@ -110,6 +110,7 @@ public class InfoServicoFragment extends Fragment {
                                         tell.setText(String.valueOf(user.getTel()));
                                         email.setText(user.getEmail());
                                         descricao.setText(servico.getDescricao());
+                                        R(user.getId());
                                         Picasso.get().load(user.getImageUrl()).into(imageView);
                                     }
                                 });
@@ -138,10 +139,10 @@ public class InfoServicoFragment extends Fragment {
                     }
                 });
     }
-    private void R()
+    private void R(String id)
     {
         FirebaseFirestore.getInstance().collection("/avaliacao")
-                .document(FirebaseAuth.getInstance().getUid())
+                .document(id)
                 .collection("R")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -152,7 +153,8 @@ public class InfoServicoFragment extends Fragment {
                             int d = 0;
                             for (DocumentChange doc: documentChanges) {
                                 if (doc.getType() == DocumentChange.Type.ADDED) {
-                                    PaginaUsuario.Rating rating = new PaginaUsuario.Rating();
+                                    PaginaUsuario.Rating rating;
+                                    rating = new PaginaUsuario.Rating();
                                     rating =  doc.getDocument().toObject(PaginaUsuario.Rating.class);
                                     d+= rating.getRating();
                                     i++;
