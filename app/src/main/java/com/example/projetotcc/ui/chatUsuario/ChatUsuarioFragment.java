@@ -23,11 +23,13 @@ import com.android.volley.RequestQueue;
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
 import com.example.projetotcc.ui.infoServico.InfoServicoFragment;
+import com.example.projetotcc.ui.listaFragment.ListaCategoriasFragment;
 import com.example.projetotcc.ui.pedidos.PedidosFragment;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
@@ -37,10 +39,8 @@ import com.xwray.groupie.ViewHolder;
 
 import java.util.List;
 
-import database.DadosOpenHelper;
 import dominio.entidade.Message;
 import dominio.entidade.Usuario;
-import dominio.repositorio.ManterLogadoRepositorio;
 
 public class ChatUsuarioFragment extends Fragment {
 
@@ -50,6 +50,7 @@ public class ChatUsuarioFragment extends Fragment {
 
     public static Usuario destinatario;
     public static EditText editmessage;
+    public static ListenerRegistration registration;
     public static Context context;
     private RecyclerView rv;
 
@@ -72,11 +73,9 @@ public class ChatUsuarioFragment extends Fragment {
         }
         PaginaUsuario.toolbar.setTitle(destinatario.getNome());
         adapter = new GroupAdapter();
-        rv.setLayoutManager(new LinearLayoutManager(PaginaUsuario.context));
-        rv.getRecycledViewPool().clear();
-        adapter.clear();
-        Procurar();
         rv.setAdapter(adapter);
+        rv.setLayoutManager(new LinearLayoutManager(PaginaUsuario.context));
+        Procurar();
         return view;
     }
 
@@ -122,14 +121,8 @@ public class ChatUsuarioFragment extends Fragment {
         private void Procurar() {
         String fromId = PaginaUsuario.usuario.getId();
         String toId = destinatario.getId();
-        adapter.clear();
-        FirebaseFirestore.getInstance().collection("/conversas")
-                .document(fromId)
-                .collection(toId)
-                .document("mensagem")
-                .collection("m")
-                .orderBy("time", Query.Direction.ASCENDING)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+            Query query = FirebaseFirestore.getInstance().collection("/conversas").document(fromId).collection(toId).document("mensagem").collection("m").orderBy("time", Query.Direction.ASCENDING);
+            registration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         List<DocumentChange> documentChanges = queryDocumentSnapshots.getDocumentChanges();
@@ -138,8 +131,9 @@ public class ChatUsuarioFragment extends Fragment {
                                     if (doc.getType() == DocumentChange.Type.ADDED) {
                                         Message message = doc.getDocument().toObject(Message.class);
                                         adapter.add(new ChatUsuarioFragment.MessageItem(message));
+                                        adapter.notifyDataSetChanged();
                                         rv.smoothScrollToPosition(adapter.getItemCount());
-                                        Log.i("teste", String.valueOf(-adapter.getItemCount()));
+                                        Log.i("teste", String.valueOf(adapter.getItemCount()));
 
                                     }
                             }

@@ -248,7 +248,7 @@
                 <TextView
                     android:id="@+id/DescricaoPerfilServico"
                     android:layout_width="wrap_content"
-                    android:layout_height="63dp"
+                    android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="Faço serviços de encanação por um preço acessível"
                     android:textColor="@color/colorAccent"

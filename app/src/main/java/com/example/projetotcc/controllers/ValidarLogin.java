@@ -7,8 +7,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.projetotcc.MainActivity;
-import database.DadosOpenHelper;
-import dominio.repositorio.ManterLogadoRepositorio;
 import com.example.projetotcc.PaginaUsuario;
 import dominio.entidade.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;

@@ -11,9 +11,8 @@ import com.example.projetotcc.cadastroUsuario.Cadastro1;
 import com.example.projetotcc.cadastroUsuario.Cadastro2;
 import com.example.projetotcc.cadastroUsuario.Cadastro3;
 import com.example.projetotcc.cadastroUsuario.Cadastro5;
-import database.DadosOpenHelper;
 import dominio.entidade.CEP;
-import dominio.repositorio.ManterLogadoRepositorio;
+
 import com.example.projetotcc.PaginaUsuario;
 import dominio.entidade.Usuario;
 

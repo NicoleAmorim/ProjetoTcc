@@ -131,6 +131,7 @@ public class PaginaUsuario extends AppCompatActivity {
     private TextView nome;
     private ImageView imagem;
     private Usuario destinatario;
+    private DrawerLayout drawer;
 
     public static RecyclerView rv;
     public static Toolbar toolbar;
@@ -151,7 +152,7 @@ public class PaginaUsuario extends AppCompatActivity {
         getApplication().registerActivityLifecycleCallbacks(application);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
 
@@ -594,6 +595,11 @@ public class PaginaUsuario extends AppCompatActivity {
                         }
                     });
         }
+        try{
+        ChatUsuarioFragment.registration.remove();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new ChatUsuarioFragment()).commit();    }
 
 
@@ -603,16 +609,19 @@ public class PaginaUsuario extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
-        new AlertDialog.Builder(PaginaUsuario.context)
-                .setTitle("Sair")
-                .setMessage("Tem certeza que deseja sair?")
-                .setPositiveButton("sim", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finishAffinity();
-
-                    } }).setNegativeButton("não", null) .show();
+        if(drawer.isOpen())
+        {
+            new AlertDialog.Builder(PaginaUsuario.getContext)
+                    .setTitle("Sair")
+                    .setMessage("Deseja sair ?")
+                    .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            System.exit(0);
+                        } }).setNegativeButton("Não", null).setIcon(R.drawable.ic_sair_64).show();
+        }else{
+            drawer.open();
+        }
     }
     public static class Rating
     {

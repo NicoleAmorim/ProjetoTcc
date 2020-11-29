@@ -18,8 +18,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.projetotcc.LoadingDialog;
 import com.example.projetotcc.controllers.ValidarCadastroUsuario;
-import database.DadosOpenHelper;
-import dominio.repositorio.ManterLogadoRepositorio;
 import com.example.projetotcc.R;
 import dominio.entidade.Usuario;
 

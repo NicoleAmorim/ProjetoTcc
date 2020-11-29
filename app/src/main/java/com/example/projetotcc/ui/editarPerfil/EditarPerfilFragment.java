@@ -32,6 +32,9 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.FileNotFoundException;
@@ -99,44 +102,63 @@ public class EditarPerfilFragment extends Fragment {
     }
     public void Editar()
     {
-        AuthCredential authCredential = EmailAuthProvider.getCredential(usuario.getEmail(), usuario.getSenha());
-        Log.i("Teste", String.valueOf(authCredential));
-        usuario.setEmail(email.getText().toString());
-        FirebaseAuth.getInstance().getCurrentUser().reauthenticate(authCredential);
-        FirebaseAuth.getInstance().getCurrentUser().updateEmail(usuario.getEmail())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+        String filename = FirebaseAuth.getInstance().getUid();
+        final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/users/" + filename);
+        ref.putFile(imagem)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.i("Teste", "foi");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.i("Teste", e.getMessage());
-                    }
-                });
-        usuario.setNome(nome.getText().toString());
-        usuario.setTel(telefone.getText().toString());
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                AuthCredential authCredential = EmailAuthProvider.getCredential(usuario.getEmail(), usuario.getSenha());
+                                Log.i("Teste", String.valueOf(authCredential));
+                                usuario.setEmail(email.getText().toString());
+                                FirebaseAuth.getInstance().getCurrentUser().reauthenticate(authCredential);
+                                FirebaseAuth.getInstance().getCurrentUser().updateEmail(usuario.getEmail())
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.i("Teste", "foi");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.i("Teste", e.getMessage());
+                                            }
+                                        });
+                                usuario.setNome(nome.getText().toString());
+                                usuario.setTel(telefone.getText().toString());
+                                usuario.setImageUrl(String.valueOf(uri));
 
-        FirebaseFirestore.getInstance().collection("users")
-                .document(usuario.getId())
-                .set(usuario)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
+                                FirebaseFirestore.getInstance().collection("users")
+                                        .document(usuario.getId())
+                                        .set(usuario)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
 
-                        it = new Intent(PaginaUsuario.context, PaginaUsuario.class);
+                                                it = new Intent(PaginaUsuario.context, PaginaUsuario.class);
 
-                        it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                        PaginaUsuario.context.startActivity(it);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.i("Teste", e.getMessage());
+                                                PaginaUsuario.context.startActivity(it);
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.i("Teste", e.getMessage());
+                                            }
+                                        });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e("Teste", e.getMessage(), e);
+                            }
+                        });
                     }
                 });
     }

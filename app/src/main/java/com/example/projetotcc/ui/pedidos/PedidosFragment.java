@@ -43,17 +43,13 @@ import com.xwray.groupie.ViewHolder;
 
 import java.util.List;
 
-import database.DadosOpenHelperDestinatario;
 import dominio.entidade.Pedido;
 import dominio.entidade.Usuario;
-import dominio.repositorio.ManterLogadoRepositorio;
 
 public class PedidosFragment extends Fragment {
 
     private PedidosViewModel mViewModel;
     public static GroupAdapter adapter;
-    private ManterLogadoRepositorio manterLogadoRepositorio;
-    private DadosOpenHelperDestinatario dadosOpenHelper;
     private SQLiteDatabase conexao;
     private Drawable drawablegreen, drawablered;
     private RecyclerView recyclerView;
@@ -97,6 +93,11 @@ public class PedidosFragment extends Fragment {
                                 usuario = new Usuario();
                                 usuario = documentSnapshot.toObject(Usuario.class);
                                 Log.i("teste", usuario.getId());
+                                try {
+                                    ChatUsuarioFragment.registration.remove();
+                                } catch (Exception exception) {
+                                    exception.printStackTrace();
+                                }
                                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
