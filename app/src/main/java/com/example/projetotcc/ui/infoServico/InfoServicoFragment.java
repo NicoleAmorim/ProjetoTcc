@@ -46,7 +46,7 @@ public class InfoServicoFragment extends Fragment {
     public static Usuario user;
     public static boolean validar;
     protected Intent it;
-    private CEP cep;
+    public static CEP cep;
     private RatingBar ratingBar;
 
 

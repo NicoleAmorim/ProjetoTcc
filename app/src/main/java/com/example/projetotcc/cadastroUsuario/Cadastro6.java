@@ -88,7 +88,6 @@ public class Cadastro6 extends AppCompatActivity implements Button.OnClickListen
 
                 Pattern pattern = Pattern.compile("^[0-9]{5}-[0-9]{3}$");
                 Matcher matcher = pattern.matcher(cep);
-
                 if (matcher.find()) {
                     new Cadastro6.DownloadCEPTask().execute(cep);
                 } else {

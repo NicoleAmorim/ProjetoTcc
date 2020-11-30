@@ -80,6 +80,7 @@
             android:layout_weight="1"
             android:background="@color/colorAccent"
             android:gravity="center"
+            android:onClick="DisplayTrack"
             android:paddingTop="5dp"
             android:paddingBottom="5dp">
 

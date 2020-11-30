@@ -51,6 +51,7 @@ public class FiltrarFragment extends Fragment {
     public static RecyclerView rv;
     public static Servico servico;
     public static String resposta;
+    public static String UF;
 
     private MainViewModel mViewModel;
 
@@ -67,7 +68,7 @@ public class FiltrarFragment extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton button = (RadioButton) group.findViewById(checkedId);
-                ListaCategoriasFragment.UF = button.getText().toString();
+                UF = button.getText().toString();
 
                 disableAllOptions(group);
             }

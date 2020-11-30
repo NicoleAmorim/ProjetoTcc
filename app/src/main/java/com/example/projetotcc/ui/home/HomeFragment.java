@@ -32,26 +32,12 @@ public class HomeFragment extends Fragment {
         ViewPager mViewPager = (ViewPager) view.findViewById(R.id.pager);
 
         int[] mResources = {
-                R.drawable.marceneiro,
-                R.drawable.prestador_selected_background,
-                R.drawable.prestador_background,
-                R.drawable.prestador_selected_background,
-                R.drawable.prestador_background,
-                R.drawable.prestador_selected_background
+                R.drawable.woman
         };
 
         AdapterView2 adapterView = new AdapterView2(PaginaUsuario.context, mResources);
         mViewPager.setCurrentItem(0);
-        adapterView.setTimer(mViewPager,7, 6, 2);
         mViewPager.setAdapter(adapterView);
-        try {
-            groupAdapter.clear();
-            rv = (RecyclerView) view.findViewById(R.id.RecyclerHome);
-            rv.setAdapter(groupAdapter);
-            rv.setLayoutManager(new LinearLayoutManager(PaginaUsuario.context));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return view;
     }
 

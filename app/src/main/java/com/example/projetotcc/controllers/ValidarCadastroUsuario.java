@@ -23,10 +23,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.InputMismatchException;
 import java.util.UUID;
@@ -76,11 +79,16 @@ public class ValidarCadastroUsuario extends Cadastro6 {
                         dig11 = '0';
                     else dig11 = (char) (r + 48);
 
-                    if ((dig10 == cpf.charAt(9)) && (dig11 == cpf.charAt(10)))
+                    if ((dig10 == cpf.charAt(9)) && (dig11 == cpf.charAt(10))) {
                         cpf = imprimeCPF(cpf);
-                    usuario.setNome(nome + " " + sobrenome);
-                    usuario.setCpf(cpf);
-                    return true;
+                        usuario.setNome(nome + " " + sobrenome);
+                        usuario.setCpf(cpf);
+                        return true;
+                    }
+                    else
+                    {
+                        Toast.makeText(Cadastro1.context, " CPF invalido", Toast.LENGTH_SHORT).show();
+                    }
 
                 } catch (InputMismatchException erro) {
                     Toast.makeText(Cadastro1.context, " CPF invalido", Toast.LENGTH_SHORT).show();
@@ -286,6 +294,26 @@ public class ValidarCadastroUsuario extends Cadastro6 {
                     }
                 });
     }
+    boolean vcpf;
+    private boolean ProcurarCPF(String cpfF) {
 
+        FirebaseFirestore.getInstance().collection("/users")
+                .whereEqualTo("cpf", cpfF)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                       if(queryDocumentSnapshots.isEmpty())
+                       {
+                           vcpf = true;
+                       }
+                       else
+                       {
+                           vcpf = false;
+                       }
+                    }
+                });
+        return vcpf;
+    }
 }
 

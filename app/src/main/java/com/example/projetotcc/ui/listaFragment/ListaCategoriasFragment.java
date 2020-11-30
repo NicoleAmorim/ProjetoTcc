@@ -66,9 +66,13 @@ public class ListaCategoriasFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_lista, container, false);
         rv = view.findViewById(R.id.recyclerListaPrestador);
+        UF = FiltrarFragment.UF;
        try {
            if(!UF.isEmpty()) {
                FindServicobyUF(UF);
+           }else
+           {
+               FindServico();
            }
        } catch (Exception e) {
            e.printStackTrace();
