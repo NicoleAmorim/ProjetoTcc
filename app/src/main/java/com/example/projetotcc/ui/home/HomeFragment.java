@@ -29,15 +29,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_inicio, container, false);
-        ViewPager mViewPager = (ViewPager) view.findViewById(R.id.pager);
 
-        int[] mResources = {
-                R.drawable.woman
-        };
-
-        AdapterView2 adapterView = new AdapterView2(PaginaUsuario.context, mResources);
-        mViewPager.setCurrentItem(0);
-        mViewPager.setAdapter(adapterView);
         return view;
     }
 

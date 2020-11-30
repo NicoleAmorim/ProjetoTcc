@@ -820,7 +820,7 @@ public class PaginaUsuario extends AppCompatActivity {
     public void DisplayTrack(View view){
 
         try {
-            Uri uri = Uri.parse("https://www.google.co.in/maps/dir/" + cep.getCidade()+","+cep.getEstado() + "/" + InfoServicoFragment.cep.getEstado()+","+InfoServicoFragment.cep.getCidade());
+            Uri uri = Uri.parse("https://www.google.co.in/maps/dir/" + cep.getCidade()+","+cep.getEstado() + "/" + InfoServicoFragment.cep.getCidade()+","+InfoServicoFragment.cep.getEstado());
             Intent intent = new Intent(Intent.ACTION_VIEW,uri);
             intent.setPackage("com.google.android.apps.maps");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
