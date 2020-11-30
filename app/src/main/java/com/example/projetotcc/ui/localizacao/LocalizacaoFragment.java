@@ -3,6 +3,7 @@ package com.example.projetotcc.ui.localizacao;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -10,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -17,6 +19,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -72,15 +76,13 @@ import java.util.List;
 
 import static com.example.projetotcc.PaginaUsuario.context;
 
-public class LocalizacaoFragment extends Fragment implements OnMapReadyCallback {
+public class LocalizacaoFragment extends Fragment{
+
+    EditText etSource, etDestination;
+    Button btTrack;
 
     public static SupportMapFragment mapFragment;
     private LocalizacaoViewModel mViewModel;
-    public static FusedLocationProviderClient client;
-    public static AddressResultReceiver resultReceiver;
-    public static GoogleMap mMap;
-    public static PlacesClient placesClient;
-    public static AutocompleteSessionToken token;
     public static EnderecoFragment newInstance() {
         return new EnderecoFragment();
     }
@@ -92,243 +94,46 @@ public class LocalizacaoFragment extends Fragment implements OnMapReadyCallback 
         View view;
         view = inflater.inflate(R.layout.fragment_maps, container, false);
 
-        mapFragment = (SupportMapFragment) getChildFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        //Pesquisa pela Localização
+        etSource = view.findViewById(R.id.et_source);
+        etDestination = view.findViewById(R.id.et_destination);
+        btTrack = view.findViewById(R.id.bt_track);
 
-        client = LocationServices.getFusedLocationProviderClient(PaginaUsuario.context);
-        resultReceiver = new AddressResultReceiver(null);
+        btTrack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String sSource = etSource.getText().toString().trim();
+                String sDestination = etDestination.getText().toString().trim();
 
+                if (sSource.equals("") && sDestination.equals("")) {
 
-        String apiKey = Constants.API_PLACES_KEY;
-
-        Places.initialize(context, apiKey);
-        placesClient = Places.createClient(context);
-        token = AutocompleteSessionToken.newInstance();
+                    Toast.makeText(context.getApplicationContext(), "Digite as duas localizações", Toast.LENGTH_LONG)
+                            .show();
+                } else {
+                    DisplayTrack(sSource, sDestination);
+                }
+            }
+        });
         return view;
 
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(LocalizacaoViewModel.class);
-        // TODO: Use the ViewModel
-    }
+    //Pesquisa pela Localização
+    private void DisplayTrack(String sSource, String sDestination){
 
-    @Override
-    @SuppressLint("MissingPermission")
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        mMap.setMinZoomPreference(6.0f);
-        mMap.setMaxZoomPreference(20.0f);
-        if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
-                        PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
-            mMap.getUiSettings().setMyLocationButtonEnabled(true);
-        } else {
-            Toast.makeText(context, "Permita que o aplicativo encontre sua localização", Toast.LENGTH_LONG).show();
+        try {
+            Uri uri = Uri.parse("https://www.google.co.in/maps/dir/" + sSource + "/" + sDestination);
+            Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+            intent.setPackage("com.google.android.apps.maps");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+        catch(ActivityNotFoundException e){
+            Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.maps");
+            Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
     }
-    @Override
-    public void onResume() {
-        super.onResume();
-        int errorCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context);
-        switch (errorCode) {
-            case ConnectionResult.SERVICE_MISSING:
-            case ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED:
-            case ConnectionResult.SERVICE_DISABLED:
-                Log.d("Teste", "show dialog");
-                GoogleApiAvailability.getInstance().getErrorDialog((Activity) context, errorCode,
-                        0, new DialogInterface.OnCancelListener() {
-                            @Override
-                            public void onCancel(DialogInterface dialog) {
-                                getActivity().finish();
-                            }
-                        }).show();
-                break;
 
-            case ConnectionResult.SUCCESS:
-                Log.d("Teste", "Google Play Services up-to-date");
-                break;
-        }
-
-        if (ActivityCompat.checkSelfPermission(context,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        client.getLastLocation()
-                .addOnSuccessListener(new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            Log.i("Teste", location.getLatitude() + " " + location.getLongitude());
-
-                            LatLng origin = new LatLng(location.getLatitude(), location.getLongitude());
-                            mMap.addMarker(new MarkerOptions().position(origin).title("Estou aqui"));
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 14));
-                            mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
-                                @Override
-                                public void onCameraIdle() {
-                                    FindAutocompletePredictionsRequest predictionsRequest = FindAutocompletePredictionsRequest.builder()
-                                            .setCountry("BR")
-                                            .setTypeFilter(TypeFilter.ESTABLISHMENT)
-                                            .setSessionToken(token)
-                                            .setLocationRestriction(RectangularBounds.newInstance(
-                                                    mMap.getProjection().getVisibleRegion().latLngBounds
-                                            ))
-                                            .setQuery("posto")
-                                            .build();
-
-
-                                    placesClient.findAutocompletePredictions(predictionsRequest)
-                                            .addOnCompleteListener(new OnCompleteListener<FindAutocompletePredictionsResponse>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<FindAutocompletePredictionsResponse> task) {
-                                                    if (task.isSuccessful()) {
-                                                        FindAutocompletePredictionsResponse result = task.getResult();
-
-                                                        if (result != null) {
-
-                                                            List<AutocompletePrediction> predictions = result.getAutocompletePredictions();
-
-                                                            for (AutocompletePrediction p : predictions) {
-
-                                                                Log.i("Teste Places", p.getFullText(null).toString());
-                                                                Log.i("Teste Places", p.getPlaceId());
-
-                                                                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
-                                                                FetchPlaceRequest request = FetchPlaceRequest.builder(p.getPlaceId(), fields)
-                                                                        .setSessionToken(token)
-                                                                        .build();
-
-                                                                placesClient.fetchPlace(request)
-                                                                        .addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
-                                                                            @Override
-                                                                            public void onSuccess(FetchPlaceResponse response) {
-                                                                                Place place = response.getPlace();
-                                                                                LatLng latLng = place.getLatLng();
-                                                                                mMap.addMarker(new MarkerOptions().position(latLng).title(place.getName()));
-                                                                            }
-                                                                        });
-
-                                                            }
-
-
-                                                        }
-
-                                                    } else {
-                                                        Log.i("Teste Places", task.getException().getMessage());
-
-                                                    }
-                                                }
-                                            });
-                                }
-                            });
-
-                            if (!Geocoder.isPresent()) {
-                                Log.i("Teste", "GeoCoder indisponivel");
-                                return;
-                            }
-
-                        } else {
-                            Log.i("Teste", "null");
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
-
-        final LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(15 * 1000);
-        locationRequest.setFastestInterval(5 * 1000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                .addLocationRequest(locationRequest);
-
-        SettingsClient settingsClient = LocationServices.getSettingsClient(context);
-        settingsClient.checkLocationSettings(builder.build())
-                .addOnSuccessListener(new OnSuccessListener<LocationSettingsResponse>() {
-                    @Override
-                    public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                        Log.i("Teste", locationSettingsResponse.getLocationSettingsStates().isNetworkLocationPresent() + "");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        if (e instanceof ResolvableApiException) {
-                            try {
-                                ResolvableApiException resolvable = (ResolvableApiException) e;
-                                resolvable.startResolutionForResult((Activity) PaginaUsuario.context, 10);
-                            } catch (IntentSender.SendIntentException e1) {
-                            }
-                        }
-                    }
-                });
-
-        final LocationCallback locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                if (locationResult == null) {
-                    Log.i("Teste2", "local is null");
-                    return;
-                }
-
-                for (Location location : locationResult.getLocations()) {
-                    Log.i("Teste2", location.getLatitude() + "");
-
-                    if (!Geocoder.isPresent()) {
-                        return;
-                    }
-
-                    //startIntentService(location);
-                }
-            }
-
-            @Override
-            public void onLocationAvailability(LocationAvailability locationAvailability) {
-                Log.i("Teste", locationAvailability.isLocationAvailable() + "");
-            }
-        };
-        client.requestLocationUpdates(locationRequest, locationCallback, null);
-    }
-
-    private void startIntentService(Location location) {
-        Intent intent = new Intent(context, FetchAddressService.class);
-        intent.putExtra(Constants.RECEIVER, resultReceiver);
-        intent.putExtra(Constants.LOCATION_DATA_EXTRA, location);
-        PaginaUsuario.context.startService(intent);
-    }
-
-    public class AddressResultReceiver extends ResultReceiver {
-
-        public AddressResultReceiver(Handler handler) {
-            super(handler);
-        }
-
-        @Override
-        protected void onReceiveResult(int resultCode, Bundle resultData) {
-            if (resultData == null) return;
-
-            final String addressOutput = resultData.getString(Constants.RESULT_DATA_KEY);
-
-            if (addressOutput != null) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(context, addressOutput, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        }
-    }
 }

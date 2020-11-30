@@ -22,7 +22,7 @@
     <string name="txt_Login">FAÇA SEU LOGIN</string>
     <string name="F_pass">Esqueci minha senha</string>
     <string name="btn_entrar">Entrar</string>
-    <string name="btn_cadastrando">CANDASTRAR</string>
+    <string name="btn_cadastrando">CADASTRAR</string>
     <string name="btn_irCadastro">Faça seu cadastro</string>
     <string name="title_activity_pag_login">PagLogin</string>
     <string name="tipo_cliente">Cliente:</string>
@@ -80,4 +80,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="localizacao_atual">Localização Atual</string>
     <string name="btn_filtrar">FILTRAR</string>
+    <string name="destino">Destino</string>
+    <string name="procurar_rota">Procurar rota</string>
+    <string name="vizualizar_rota">Vizualizar Rota</string>
 </resources>
