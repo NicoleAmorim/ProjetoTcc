@@ -28,6 +28,7 @@ import com.example.projetotcc.R;
 import com.example.projetotcc.ui.editarPerfil.EditarPerfilFragment;
 import com.example.projetotcc.ui.home.HomeFragment;
 import com.example.projetotcc.ui.infoServico.InfoServicoFragment;
+import com.example.projetotcc.ui.listaFragment.ListaCategoriasFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -75,6 +76,7 @@ public class FavoritosFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(FavoritosViewModel.class);
+
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(PaginaUsuario.context));
 
@@ -85,6 +87,7 @@ public class FavoritosFragment extends Fragment {
                 FavoritosFragment.ServicoItem servicoItem = (FavoritosFragment.ServicoItem) item;
                 servico = new Servico();
                 servico = servicoItem.servico;
+                ListaCategoriasFragment.servico = servico;
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

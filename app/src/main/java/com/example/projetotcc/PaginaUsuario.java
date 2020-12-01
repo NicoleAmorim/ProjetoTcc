@@ -223,8 +223,8 @@ public class PaginaUsuario extends AppCompatActivity {
                     }).setIcon(R.drawable.ic_sair_64).show();
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            FirebaseFirestore.getInstance().collection("/servico")
-                    .whereGreaterThanOrEqualTo("nome", message)
+            FirebaseFirestore.getInstance().collection("servico")
+                    .whereEqualTo("nome", message)
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {

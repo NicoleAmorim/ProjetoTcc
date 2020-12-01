@@ -66,6 +66,11 @@ public class ListaCategoriasFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_lista, container, false);
         rv = view.findViewById(R.id.recyclerListaPrestador);
+        try {
+            PaginaUsuario.toolbar.setTitle(PaginaUsuario.tipo);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         UF = FiltrarFragment.UF;
        try {
            if(!UF.isEmpty()) {

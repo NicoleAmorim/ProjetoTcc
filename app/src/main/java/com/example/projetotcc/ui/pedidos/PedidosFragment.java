@@ -172,12 +172,12 @@ public class PedidosFragment extends Fragment {
 
         @Override
         public void bind(@NonNull ViewHolder viewHolder, int position) {
-            TextView username = viewHolder.itemView.findViewById(R.id.Nomeusuariopedido);
+            final TextView username = viewHolder.itemView.findViewById(R.id.Nomeusuariopedido);
             TextView message = viewHolder.itemView.findViewById(R.id.Ultimotextopedido);
             final ImageView online = viewHolder.itemView.findViewById(R.id.onlinePedido);
             ImageView imgPhoto = viewHolder.itemView.findViewById(R.id.imageUsuarioPedido);
 
-            username.setText(pedido.getUsername());
+
             message.setText(pedido.getLastMessage());
             Picasso.get()
                     .load(pedido.getPhotoUrl())
@@ -189,6 +189,7 @@ public class PedidosFragment extends Fragment {
                                                 public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                                                     usuario = new Usuario();
                                                     usuario = value.toObject(Usuario.class);
+                                                    username.setText(usuario.getNome());
                                                     if (usuario.isOnline()) {
                                                         Log.e("Teste", usuario.getNome());
 
