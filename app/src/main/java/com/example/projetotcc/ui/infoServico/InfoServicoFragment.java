@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -18,12 +19,15 @@ import androidx.lifecycle.ViewModelProviders;
 import com.android.volley.RequestQueue;
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
+import com.example.projetotcc.ui.chatUsuario.ChatUsuarioFragment;
 import com.example.projetotcc.ui.favoritos.FavoritosFragment;
 import com.example.projetotcc.ui.listaFragment.ListaCategoriasFragment;
 import com.example.projetotcc.ui.pesquisar.HomeFragment;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,6 +38,8 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import dominio.entidade.CEP;
+import dominio.entidade.Message;
+import dominio.entidade.Pedido;
 import dominio.entidade.Servico;
 import dominio.entidade.Usuario;
 
@@ -48,6 +54,7 @@ public class InfoServicoFragment extends Fragment {
     protected Intent it;
     public static CEP cep;
     private RatingBar ratingBar;
+    private TextView send;
 
 
     public static InfoServicoFragment newInstance() {
@@ -62,6 +69,14 @@ public class InfoServicoFragment extends Fragment {
         user = new Usuario();
         cep = new CEP();
         servico = ListaCategoriasFragment.servico;
+        send = view.findViewById(R.id.solicitarBtn);
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Solicitar();
+            }
+        });
     try {
         Log.i("teste", servico.getIDUser());
     } catch (Exception e) {
@@ -171,4 +186,84 @@ public class InfoServicoFragment extends Fragment {
                     }
                 });
     }
+    public  void Solicitar()
+    {
+        final Usuario remetente = PaginaUsuario.usuario;
+        final Usuario destinatario = InfoServicoFragment.user;
+        final Message message = new Message();
+        message.setDestinatarioID(destinatario.getId());
+        message.setRemetenteID(remetente.getId());
+        message.setTime(System.currentTimeMillis());
+        message.setText("Gostaria de solicitar seu serviço de "+ InfoServicoFragment.servico.getTipo());
+        if (!message.getText().isEmpty()) {
+            FirebaseFirestore.getInstance().collection("/conversas")
+                    .document(remetente.getId())
+                    .collection(destinatario.getId())
+                    .document("mensagem")
+                    .collection("m")
+                    .add(message)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d("Teste", documentReference.getId());
+
+                            Pedido pedido = new Pedido();
+                            pedido.setUuid(destinatario.getId());
+                            pedido.setUsername(destinatario.getUsername());
+                            pedido.setPhotoUrl(destinatario.getImageUrl());
+                            pedido.setTimestamp(message.getTime());
+                            pedido.setLastMessage(message.getText());
+
+                            FirebaseFirestore.getInstance().collection("/ultima-mensagem")
+                                    .document(remetente.getId())
+                                    .collection("pedidos")
+                                    .document(destinatario.getId())
+                                    .set(pedido);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("Teste", e.getMessage(), e);
+                        }
+                    });
+
+            FirebaseFirestore.getInstance().collection("/conversas")
+                    .document(destinatario.getId())
+                    .collection(remetente.getId())
+                    .document("mensagem")
+                    .collection("m")
+                    .add(message)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d("Teste", documentReference.getId());
+
+                            Pedido pedido = new Pedido();
+                            pedido.setUuid(remetente.getId());
+                            pedido.setUsername(PaginaUsuario.usuario.getUsername());
+                            pedido.setPhotoUrl(PaginaUsuario.usuario.getImageUrl());
+                            pedido.setTimestamp(message.getTime());
+                            pedido.setLastMessage(message.getText());
+
+                            FirebaseFirestore.getInstance().collection("/ultima-mensagem")
+                                    .document(destinatario.getId())
+                                    .collection("pedidos")
+                                    .document(remetente.getId())
+                                    .set(pedido);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("Teste", e.getMessage(), e);
+                        }
+                    });
+        }
+        try{
+            ChatUsuarioFragment.registration.remove();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new ChatUsuarioFragment()).commit();    }
 }

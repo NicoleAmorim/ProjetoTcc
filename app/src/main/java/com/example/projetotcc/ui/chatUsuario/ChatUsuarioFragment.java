@@ -25,7 +25,11 @@ import com.example.projetotcc.R;
 import com.example.projetotcc.ui.infoServico.InfoServicoFragment;
 import com.example.projetotcc.ui.listaFragment.ListaCategoriasFragment;
 import com.example.projetotcc.ui.pedidos.PedidosFragment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -40,6 +44,7 @@ import com.xwray.groupie.ViewHolder;
 import java.util.List;
 
 import dominio.entidade.Message;
+import dominio.entidade.Pedido;
 import dominio.entidade.Usuario;
 
 public class ChatUsuarioFragment extends Fragment {
@@ -53,6 +58,7 @@ public class ChatUsuarioFragment extends Fragment {
     public static ListenerRegistration registration;
     public static Context context;
     private RecyclerView rv;
+    private Button send;
 
     public static ChatUsuarioFragment newInstance() {
         return new ChatUsuarioFragment();
@@ -66,6 +72,13 @@ public class ChatUsuarioFragment extends Fragment {
         editmessage = view.findViewById(R.id.editMsgm);
         rv = view.findViewById(R.id.recyclerChatUser);
         remetente = PaginaUsuario.usuario;
+        send = view.findViewById(R.id.btnSendMessage);
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMensagem();
+            }
+        });
         if(InfoServicoFragment.validar == true) {
             destinatario = InfoServicoFragment.user;
         } else {
@@ -139,5 +152,86 @@ public class ChatUsuarioFragment extends Fragment {
                             }
                         }
                 });
+    }
+
+    public void sendMensagem() {
+        String txt = ChatUsuarioFragment.editmessage.getText().toString();
+
+        ChatUsuarioFragment.editmessage.setText(null);
+        destinatario = ChatUsuarioFragment.destinatario;
+        final String idRementente = FirebaseAuth.getInstance().getUid();
+        final String idDestino = destinatario.getId();
+        long timestamp = System.currentTimeMillis();
+
+        final Message message = new Message();
+        message.setDestinatarioID(idDestino);
+        message.setRemetenteID(idRementente);
+        message.setTime(timestamp);
+        message.setText(txt);
+        if (!message.getText().isEmpty()) {
+            FirebaseFirestore.getInstance().collection("/conversas")
+                    .document(idRementente)
+                    .collection(idDestino)
+                    .document("mensagem")
+                    .collection("m")
+                    .add(message)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d("Teste", documentReference.getId());
+
+                            Pedido pedido = new Pedido();
+                            pedido.setUuid(idDestino);
+                            pedido.setUsername(destinatario.getUsername());
+                            pedido.setPhotoUrl(destinatario.getImageUrl());
+                            pedido.setTimestamp(message.getTime());
+                            pedido.setLastMessage(message.getText());
+
+                            FirebaseFirestore.getInstance().collection("/ultima-mensagem")
+                                    .document(idRementente)
+                                    .collection("pedidos")
+                                    .document(idDestino)
+                                    .set(pedido);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("Teste", e.getMessage(), e);
+                        }
+                    });
+
+            FirebaseFirestore.getInstance().collection("/conversas")
+                    .document(idDestino)
+                    .collection(idRementente)
+                    .document("mensagem")
+                    .collection("m")
+                    .add(message)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d("Teste", documentReference.getId());
+
+                            Pedido pedido = new Pedido();
+                            pedido.setUuid(idRementente);
+                            pedido.setUsername(PaginaUsuario.usuario.getUsername());
+                            pedido.setPhotoUrl(PaginaUsuario.usuario.getImageUrl());
+                            pedido.setTimestamp(message.getTime());
+                            pedido.setLastMessage(message.getText());
+
+                            FirebaseFirestore.getInstance().collection("/ultima-mensagem")
+                                    .document(idDestino)
+                                    .collection("pedidos")
+                                    .document(idRementente)
+                                    .set(pedido);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("Teste", e.getMessage(), e);
+                        }
+                    });
+        }
     }
 }

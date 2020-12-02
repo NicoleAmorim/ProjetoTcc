@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
@@ -26,6 +27,7 @@ import com.example.projetotcc.R;
 import com.example.projetotcc.ui.categorias.CategoriasFragment;
 import com.example.projetotcc.ui.chatUsuario.ChatUsuarioFragment;
 import com.example.projetotcc.ui.infoServico.InfoServicoFragment;
+import com.example.projetotcc.ui.listaFragment.ListaCategoriasFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
@@ -44,6 +46,7 @@ import com.xwray.groupie.ViewHolder;
 import java.util.List;
 
 import dominio.entidade.Pedido;
+import dominio.entidade.Servico;
 import dominio.entidade.Usuario;
 
 public class PedidosFragment extends Fragment {
@@ -55,6 +58,7 @@ public class PedidosFragment extends Fragment {
     private RecyclerView recyclerView;
     public static Pedido pedido;
     public static Usuario usuario;
+    public static FragmentActivity application;
 
     @Nullable
     @Override
@@ -64,6 +68,7 @@ public class PedidosFragment extends Fragment {
         drawablered = getResources().getDrawable(R.color.red);
         drawablegreen = getResources().getDrawable(R.color.green);
         adapter = new GroupAdapter();
+        application = getActivity();
 
 
         recyclerView = (RecyclerView) view.findViewById(R.id.RecyclerPedidos);
@@ -176,7 +181,26 @@ public class PedidosFragment extends Fragment {
             TextView message = viewHolder.itemView.findViewById(R.id.Ultimotextopedido);
             final ImageView online = viewHolder.itemView.findViewById(R.id.onlinePedido);
             ImageView imgPhoto = viewHolder.itemView.findViewById(R.id.imageUsuarioPedido);
+            imgPhoto.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    FirebaseFirestore.getInstance().collection("/servico")
+                            .document(pedido.getUuid())
+                            .get()
+                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    ListaCategoriasFragment.servico  = documentSnapshot.toObject(Servico.class);
+                                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
+                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                                    fragmentTransaction.replace(R.id.nav_host_fragment, new InfoServicoFragment()).commit();
+                                }
+                            });
+                    return false;
+                }
+            });
 
             message.setText(pedido.getLastMessage());
             Picasso.get()
@@ -201,6 +225,25 @@ public class PedidosFragment extends Fragment {
                                                     }
                                                 }
                                             });
+            FirebaseFirestore.getInstance().collection("/users")
+                    .document(pedido.getUuid())
+                    .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                            usuario = new Usuario();
+                            usuario = value.toObject(Usuario.class);
+                            username.setText(usuario.getNome());
+                            if (usuario.isOnline()) {
+                                Log.e("Teste", usuario.getNome());
+
+                                online.setImageDrawable(drawablegreen);
+                            } else {
+                                Log.e("Teste", usuario.getNome());
+
+                                online.setImageDrawable(drawablered);
+                            }
+                        }
+                    });
         }
 
         @Override
@@ -208,4 +251,5 @@ public class PedidosFragment extends Fragment {
             return R.layout.item_pedidos;
         }
     }
+
 }

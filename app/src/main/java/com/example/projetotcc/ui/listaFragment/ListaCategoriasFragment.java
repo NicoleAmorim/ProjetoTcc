@@ -26,10 +26,12 @@ import com.example.projetotcc.MainActivity;
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
 
+import dominio.entidade.CEP;
 import dominio.entidade.Favoritos;
 import dominio.entidade.Servico;
 import dominio.entidade.Usuario;
 
+import com.example.projetotcc.ui.categorias.CategoriasFragment;
 import com.example.projetotcc.ui.filtrar.FiltrarFragment;
 import com.example.projetotcc.ui.infoServico.InfoServicoFragment;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -73,7 +75,7 @@ public class ListaCategoriasFragment extends Fragment {
         }
         UF = FiltrarFragment.UF;
        try {
-           if(!UF.isEmpty()) {
+           if(UF != "") {
                FindServicobyUF(UF);
            }else
            {
@@ -114,7 +116,7 @@ public class ListaCategoriasFragment extends Fragment {
 
     private void FindServico() {
         FirebaseFirestore.getInstance().collection("servico")
-                .whereEqualTo("tipo", PaginaUsuario.tipo)
+                .whereEqualTo("tipo", CategoriasFragment.tipo)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -156,19 +158,10 @@ public class ListaCategoriasFragment extends Fragment {
                 });
     }
 
-    private void FindServicobyUF(String UF) {
-        FirebaseFirestore.getInstance().collection("endereco")
-                .whereEqualTo("estado", UF)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        if (!queryDocumentSnapshots.isEmpty()) {
-                            if (e != null) {
-                                Log.e("Teste", e.getMessage(), e);
-                                return;
-                            }
+    private void FindServicobyUF(final String UF) {
+
                             FirebaseFirestore.getInstance().collection("servico")
-                                    .whereEqualTo("tipo", PaginaUsuario.tipo)
+                                    .whereEqualTo("tipo", CategoriasFragment.tipo)
                                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                         @Override
                                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -176,45 +169,58 @@ public class ListaCategoriasFragment extends Fragment {
                                                 Log.e("Teste", e.getMessage(), e);
                                                 return;
                                             }
+
                                             List<DocumentSnapshot> docs = queryDocumentSnapshots.getDocuments();
                                             adapter.clear();
-                                            for (DocumentSnapshot doc : docs) {
+
+                                            for (final DocumentSnapshot doc : docs) {
                                                 final Servico servico = doc.toObject(Servico.class);
                                                 String uid = FirebaseAuth.getInstance().getUid();
                                                 if (servico.getIDUser().equals(uid))
                                                     continue;
-                                                FirebaseFirestore.getInstance().collection("/users")
+                                                FirebaseFirestore.getInstance().collection("endereco")
                                                         .document(servico.getIDUser())
                                                         .get()
                                                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                                             @Override
-                                                            public void onSuccess(final DocumentSnapshot documentSnapshotUser) {
-                                                                FirebaseFirestore.getInstance().collection("/favoritos")
-                                                                        .document(FirebaseAuth.getInstance().getUid())
-                                                                        .collection("servico")
-                                                                        .document(servico.getIDUser())
-                                                                        .get()
-                                                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                                            @Override
-                                                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                                                Usuario usuario = documentSnapshotUser.toObject(Usuario.class);
-                                                                                Favoritos favoritos = documentSnapshot.toObject(Favoritos.class);
-                                                                                adapter.add(new ServicoItem(servico, usuario, favoritos));
-                                                                                adapter.notifyDataSetChanged();
-                                                                            }
-                                                                        });
+                                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                    CEP cep = documentSnapshot.toObject(CEP.class);
+                                                                    try {
+                                                                        Log.e("Teste", cep.getEstado() +" "+ UF);
+                                                                    } catch (Exception exception) {
+                                                                        exception.printStackTrace();
+                                                                    }
+                                                                if(cep.getEstado().equals(UF)) {
+                                                                    FirebaseFirestore.getInstance().collection("/users")
+                                                                            .document(servico.getIDUser())
+                                                                            .get()
+                                                                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                                @Override
+                                                                                public void onSuccess(final DocumentSnapshot documentSnapshotUser) {
+                                                                                    FirebaseFirestore.getInstance().collection("/favoritos")
+                                                                                            .document(FirebaseAuth.getInstance().getUid())
+                                                                                            .collection("servico")
+                                                                                            .document(servico.getIDUser())
+                                                                                            .get()
+                                                                                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                                                @Override
+                                                                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                                                    Usuario usuario = documentSnapshotUser.toObject(Usuario.class);
+                                                                                                    Favoritos favoritos = documentSnapshot.toObject(Favoritos.class);
+                                                                                                    adapter.add(new ServicoItem(servico, usuario, favoritos));
+                                                                                                    adapter.notifyDataSetChanged();
+                                                                                                }
+                                                                                            });
+                                                                                }
+                                                                            });
+                                                                }
                                                             }
                                                         });
                                             }
                                         }
-                                    });
-                        }
-                        else{
-                            Toast.makeText(PaginaUsuario.context, "0 resultados encontrados", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
+                                        });
+
+                                    }
     public static class ServicoItem extends Item<ViewHolder> {
         public final Servico servico;
         private final Usuario usuario;
