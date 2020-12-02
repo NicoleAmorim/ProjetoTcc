@@ -162,10 +162,11 @@ public class ChatUsuarioFragment extends Fragment {
         final String idRementente = FirebaseAuth.getInstance().getUid();
         final String idDestino = destinatario.getId();
         long timestamp = System.currentTimeMillis();
-
+        final Pedido pedidos = new Pedido();;
         final Message message = new Message();
         message.setDestinatarioID(idDestino);
         message.setRemetenteID(idRementente);
+        message.setServidor(true);
         message.setTime(timestamp);
         message.setText(txt);
         if (!message.getText().isEmpty()) {
@@ -182,6 +183,14 @@ public class ChatUsuarioFragment extends Fragment {
 
                             Pedido pedido = new Pedido();
                             pedido.setUuid(idDestino);
+                            try {
+                                pedidos.setServidor(!PedidosFragment.pedido.isServidor());
+                                pedido.setServidor(PedidosFragment.pedido.isServidor());
+                            } catch (Exception exception) {
+                                pedido.setServidor(false);
+                                pedidos.setServidor(true);
+                                exception.printStackTrace();
+                            }
                             pedido.setUsername(destinatario.getUsername());
                             pedido.setPhotoUrl(destinatario.getImageUrl());
                             pedido.setTimestamp(message.getTime());
@@ -212,18 +221,17 @@ public class ChatUsuarioFragment extends Fragment {
                         public void onSuccess(DocumentReference documentReference) {
                             Log.d("Teste", documentReference.getId());
 
-                            Pedido pedido = new Pedido();
-                            pedido.setUuid(idRementente);
-                            pedido.setUsername(PaginaUsuario.usuario.getUsername());
-                            pedido.setPhotoUrl(PaginaUsuario.usuario.getImageUrl());
-                            pedido.setTimestamp(message.getTime());
-                            pedido.setLastMessage(message.getText());
+                            pedidos.setUuid(idRementente);
+                            pedidos.setUsername(PaginaUsuario.usuario.getUsername());
+                            pedidos.setPhotoUrl(PaginaUsuario.usuario.getImageUrl());
+                            pedidos.setTimestamp(message.getTime());
+                            pedidos.setLastMessage(message.getText());
 
                             FirebaseFirestore.getInstance().collection("/ultima-mensagem")
                                     .document(idDestino)
                                     .collection("pedidos")
                                     .document(idRementente)
-                                    .set(pedido);
+                                    .set(pedidos);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

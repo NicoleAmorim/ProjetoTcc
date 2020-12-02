@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
+import com.example.projetotcc.RStar;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthCredential;
@@ -236,8 +237,8 @@ public class EditarPerfilFragment extends Fragment {
                             int d = 0;
                             for (DocumentChange doc: documentChanges) {
                                 if (doc.getType() == DocumentChange.Type.ADDED) {
-                                    PaginaUsuario.Rating rating = new PaginaUsuario.Rating();
-                                    rating =  doc.getDocument().toObject(PaginaUsuario.Rating.class);
+                                    RStar.Rating rating = new RStar.Rating();
+                                    rating =  doc.getDocument().toObject(RStar.Rating.class);
                                     d+= rating.getRating();
                                     i++;
                                 }

@@ -21,9 +21,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
+import com.example.projetotcc.adapterView.AdapterView;
+import com.example.projetotcc.adapterView.AdapterViewPedidos;
 import com.example.projetotcc.ui.categorias.CategoriasFragment;
 import com.example.projetotcc.ui.chatUsuario.ChatUsuarioFragment;
 import com.example.projetotcc.ui.infoServico.InfoServicoFragment;
@@ -52,7 +55,7 @@ import dominio.entidade.Usuario;
 public class PedidosFragment extends Fragment {
 
     private PedidosViewModel mViewModel;
-    public static GroupAdapter adapter;
+    public static GroupAdapter adapter, adapter2;
     private SQLiteDatabase conexao;
     private Drawable drawablegreen, drawablered;
     private RecyclerView recyclerView;
@@ -68,12 +71,13 @@ public class PedidosFragment extends Fragment {
         drawablered = getResources().getDrawable(R.color.red);
         drawablegreen = getResources().getDrawable(R.color.green);
         adapter = new GroupAdapter();
+        adapter2 = new GroupAdapter();
         application = getActivity();
+        ViewPager mViewPager = (ViewPager) view.findViewById(R.id.pagerPedidos);
 
-
-        recyclerView = (RecyclerView) view.findViewById(R.id.RecyclerPedidos);
-        recyclerView.setLayoutManager(new LinearLayoutManager(PaginaUsuario.context));
-        recyclerView.setAdapter(adapter);
+        AdapterViewPedidos adapterView = new AdapterViewPedidos(PaginaUsuario.context, adapter, adapter2);
+        mViewPager.setCurrentItem(0);
+        mViewPager.setAdapter(adapterView);
         return view;
     }
 
@@ -112,21 +116,50 @@ public class PedidosFragment extends Fragment {
                         });
             }
         });
-        adapter.setOnItemLongClickListener(new OnItemLongClickListener() {
+        adapter2.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(@NonNull Item item, @NonNull View view) {
+                PedidosFragment.PedidoItem pedidoItem = (PedidosFragment.PedidoItem) item;
+                pedido = new Pedido();
+                pedido = pedidoItem.pedido;
+                FirebaseFirestore.getInstance().collection("/users")
+                        .document(pedido.getUuid())
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                usuario = new Usuario();
+                                usuario = documentSnapshot.toObject(Usuario.class);
+                                Log.i("teste", usuario.getId());
+                                try {
+                                    ChatUsuarioFragment.registration.remove();
+                                } catch (Exception exception) {
+                                    exception.printStackTrace();
+                                }
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                                fragmentTransaction.replace(R.id.nav_host_fragment, new ChatUsuarioFragment()).commit();
+                            }
+                        });
+            }
+        });
+        adapter2.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(@NonNull Item item, @NonNull View view) {
                 PedidosFragment.PedidoItem pedidoItem = (PedidosFragment.PedidoItem) item;
                 pedido = new Pedido();
                 pedido = pedidoItem.pedido;
-                    new AlertDialog.Builder(PaginaUsuario.getContext)
-                            .setTitle("Finalizar Servico")
-                            .setMessage("Tem certeza que deseja finalizar o serviço?")
-                            .setPositiveButton("sim", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    PaginaUsuario.rStar.StartRat();
-                                }
-                            }).setNegativeButton("não", null).show();
+                new AlertDialog.Builder(PaginaUsuario.getContext)
+                        .setTitle("Finalizar Servico")
+                        .setMessage("Tem certeza que deseja finalizar o serviço?")
+                        .setPositiveButton("sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                PaginaUsuario.rStar.StartRat();
+                            }
+                        }).setNegativeButton("não", null).show();
                 return false;
             }
         });
@@ -146,7 +179,12 @@ public class PedidosFragment extends Fragment {
                                 for (DocumentChange doc : documentChanges) {
                                     if (doc.getType() == DocumentChange.Type.ADDED) {
                                         final Pedido pedido = doc.getDocument().toObject(Pedido.class);
-                                        adapter.add(new PedidoItem(pedido));
+                                        if(pedido.isServidor() == true) {
+                                            adapter.add(new PedidoItem(pedido));
+                                        }else
+                                        {
+                                            adapter2.add(new PedidoItem(pedido));
+                                        }
                                     }
                                 }
                             }

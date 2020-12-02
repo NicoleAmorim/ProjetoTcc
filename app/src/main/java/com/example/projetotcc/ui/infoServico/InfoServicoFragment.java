@@ -1,5 +1,7 @@
 package com.example.projetotcc.ui.infoServico;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +22,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.android.volley.RequestQueue;
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
+import com.example.projetotcc.RStar;
 import com.example.projetotcc.ui.chatUsuario.ChatUsuarioFragment;
 import com.example.projetotcc.ui.favoritos.FavoritosFragment;
 import com.example.projetotcc.ui.listaFragment.ListaCategoriasFragment;
@@ -55,6 +59,7 @@ public class InfoServicoFragment extends Fragment {
     public static CEP cep;
     private RatingBar ratingBar;
     private TextView send;
+    private RelativeLayout quantidade;
 
 
     public static InfoServicoFragment newInstance() {
@@ -70,6 +75,7 @@ public class InfoServicoFragment extends Fragment {
         cep = new CEP();
         servico = ListaCategoriasFragment.servico;
         send = view.findViewById(R.id.solicitarBtn);
+        quantidade = view.findViewById(R.id.QntddAvaliacoes);
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,15 +174,27 @@ public class InfoServicoFragment extends Fragment {
                             int d = 0;
                             for (DocumentChange doc: documentChanges) {
                                 if (doc.getType() == DocumentChange.Type.ADDED) {
-                                    PaginaUsuario.Rating rating;
-                                    rating = new PaginaUsuario.Rating();
-                                    rating =  doc.getDocument().toObject(PaginaUsuario.Rating.class);
+                                    RStar.Rating rating;
+                                    rating = new RStar.Rating();
+                                    rating =  doc.getDocument().toObject(RStar.Rating.class);
                                     d+= rating.getRating();
                                     i++;
                                 }
 
                             }
                             try {
+                                final int finalI = i;
+                                quantidade.setOnLongClickListener(new View.OnLongClickListener() {
+                                   @Override
+                                   public boolean onLongClick(View v) {
+                                       new AlertDialog.Builder(PaginaUsuario.getContext)
+                                               .setTitle("NÚMERO DE AVALIAÇÕES")
+                                               .setMessage(String.valueOf(finalI))
+                                               .show();
+                                       return false;
+                                   }
+                               });
+
                                 ratingBar.setNumStars(d / i);
                             } catch (Exception exception) {
                                 exception.printStackTrace();
@@ -194,6 +212,7 @@ public class InfoServicoFragment extends Fragment {
         message.setDestinatarioID(destinatario.getId());
         message.setRemetenteID(remetente.getId());
         message.setTime(System.currentTimeMillis());
+        message.setServidor(false);
         message.setText("Gostaria de solicitar seu serviço de "+ InfoServicoFragment.servico.getTipo());
         if (!message.getText().isEmpty()) {
             FirebaseFirestore.getInstance().collection("/conversas")
@@ -209,6 +228,7 @@ public class InfoServicoFragment extends Fragment {
 
                             Pedido pedido = new Pedido();
                             pedido.setUuid(destinatario.getId());
+                            pedido.setServidor(false);
                             pedido.setUsername(destinatario.getUsername());
                             pedido.setPhotoUrl(destinatario.getImageUrl());
                             pedido.setTimestamp(message.getTime());
@@ -241,6 +261,7 @@ public class InfoServicoFragment extends Fragment {
 
                             Pedido pedido = new Pedido();
                             pedido.setUuid(remetente.getId());
+                            pedido.setServidor(true);
                             pedido.setUsername(PaginaUsuario.usuario.getUsername());
                             pedido.setPhotoUrl(PaginaUsuario.usuario.getImageUrl());
                             pedido.setTimestamp(message.getTime());

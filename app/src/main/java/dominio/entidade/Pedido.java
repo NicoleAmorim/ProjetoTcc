@@ -3,6 +3,7 @@ package dominio.entidade;
 public class Pedido {
 
         private String uuid;
+        private boolean servidor;
         private String username;
         private String lastMessage;
         private long timestamp;
@@ -48,4 +49,11 @@ public class Pedido {
             this.photoUrl = photoUrl;
         }
 
+    public boolean isServidor() {
+        return servidor;
+    }
+
+    public void setServidor(boolean servidor) {
+        this.servidor = servidor;
+    }
 }

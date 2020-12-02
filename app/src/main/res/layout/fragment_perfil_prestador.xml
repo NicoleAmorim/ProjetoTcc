@@ -114,6 +114,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/QntddAvaliacoes"
             android:layout_width="match_parent"
             android:layout_height="61dp"
             android:layout_gravity="center"

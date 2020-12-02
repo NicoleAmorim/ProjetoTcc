@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
@@ -21,6 +22,7 @@ import static com.example.projetotcc.PaginaUsuario.usuario;
 public class RStar {
     private Activity activity;
     private AlertDialog dialog;
+    private ImageView r1, r2, r3, r4, r5;
 
     public RStar(Activity myActivity){
         activity = myActivity;
@@ -30,7 +32,44 @@ public class RStar {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         LayoutInflater inflater = activity.getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.item_rating, null));
+        View view = inflater.inflate(R.layout.item_rating, null);
+        builder.setView(view);
+        r1 = view.findViewById(R.id.R1);
+        r2 = view.findViewById(R.id.R2);
+        r3 = view.findViewById(R.id.R3);
+        r4 = view.findViewById(R.id.R4);
+        r5 = view.findViewById(R.id.R5);
+
+        r1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                R1();
+            }
+        });
+        r2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                R2();
+            }
+        });
+        r3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                R3();
+            }
+        });
+        r4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                R4();
+            }
+        });
+        r5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                R5();
+            }
+        });
 
         builder.setCancelable(false);
 
@@ -41,8 +80,8 @@ public class RStar {
     public void DismissDialog(){
         dialog.dismiss();
     }
-    public  void R1(View view) {
-        PaginaUsuario.Rating rating = new PaginaUsuario.Rating();
+    public  void R1() {
+        Rating rating = new Rating();
         rating.setRating(1);
         FirebaseFirestore.getInstance().collection("avaliacao")
                 .document(PedidosFragment.pedido.getUuid())
@@ -77,8 +116,8 @@ public class RStar {
                     }
                 });
     }
-    public  void R2(View view) {
-        PaginaUsuario.Rating rating = new PaginaUsuario.Rating();
+    public  void R2() {
+        Rating rating = new Rating();
         rating.setRating(2);
         FirebaseFirestore.getInstance().collection("avaliacao")
                 .document(PedidosFragment.pedido.getUuid())
@@ -113,8 +152,8 @@ public class RStar {
                     }
                 });
     }
-    public  void R3(View view) {
-        PaginaUsuario.Rating rating = new PaginaUsuario.Rating();
+    public  void R3() {
+        Rating rating = new Rating();
         rating.setRating(3);
         FirebaseFirestore.getInstance().collection("avaliacao")
                 .document(PedidosFragment.pedido.getUuid())
@@ -149,8 +188,8 @@ public class RStar {
                     }
                 });
     }
-    public  void R4(View view) {
-        PaginaUsuario.Rating rating = new PaginaUsuario.Rating();
+    public  void R4() {
+        Rating rating = new Rating();
         rating.setRating(4);
         FirebaseFirestore.getInstance().collection("avaliacao")
                 .document(PedidosFragment.pedido.getUuid())
@@ -185,8 +224,8 @@ public class RStar {
                     }
                 });
     }
-    public  void R5(View view) {
-        PaginaUsuario.Rating rating = new PaginaUsuario.Rating();
+    public  void R5() {
+        Rating rating = new Rating();
         rating.setRating(5);
         FirebaseFirestore.getInstance().collection("avaliacao")
                 .document(PedidosFragment.pedido.getUuid())
@@ -200,20 +239,7 @@ public class RStar {
                                 .document(FirebaseAuth.getInstance().getUid())
                                 .collection(PedidosFragment.pedido.getUuid())
                                 .document("mensagem")
-                                .delete()
-                                .addOnSuccessListener(new OnSuccessListener()
-                                {
-                                    @Override
-                                    public void onSuccess(Object o) {
-                                        Log.e("Teste", o.toString());
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.e("Teste", e.getMessage(), e);
-                                    }
-                                });
+                                .delete();
                         FirebaseFirestore.getInstance().collection("conversas")
                                 .document(PedidosFragment.pedido.getUuid())
                                 .collection(FirebaseAuth.getInstance().getUid())
@@ -233,5 +259,17 @@ public class RStar {
                         rStar.DismissDialog();
                     }
                 });
+    }
+    public static class Rating
+    {
+        private int rating;
+
+        public int getRating() {
+            return rating;
+        }
+
+        public void setRating(int rating) {
+            this.rating = rating;
+        }
     }
 }

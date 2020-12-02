@@ -4,6 +4,7 @@ public class Message {
     private String text;
     private String ID;
     private long time;
+    private boolean servidor;
     private String remetenteID;
     private String destinatarioID;
 
@@ -42,4 +43,12 @@ public class Message {
     public String getID() { return ID; }
 
     public void setID(String ID) { this.ID = ID; }
+
+    public boolean isServidor() {
+        return servidor;
+    }
+
+    public void setServidor(boolean servidor) {
+        this.servidor = servidor;
+    }
 }
