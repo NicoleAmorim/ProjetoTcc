@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
+import com.example.projetotcc.ui.chatUsuario.ChatUsuarioFragment;
 import com.example.projetotcc.ui.editarPerfil.EditarPerfilFragment;
 import com.example.projetotcc.ui.home.HomeFragment;
 import com.example.projetotcc.ui.infoServico.InfoServicoFragment;
@@ -69,6 +70,11 @@ public class FavoritosFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_favoritos, container, false);
         rv = view.findViewById(R.id.favoritosRecycler);
+        try {
+            ChatUsuarioFragment.registration2.remove();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         return view;
     }
 

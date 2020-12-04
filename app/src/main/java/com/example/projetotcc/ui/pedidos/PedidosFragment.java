@@ -74,7 +74,11 @@ public class PedidosFragment extends Fragment {
         adapter2 = new GroupAdapter();
         application = getActivity();
         ViewPager mViewPager = (ViewPager) view.findViewById(R.id.pagerPedidos);
-
+        try {
+            ChatUsuarioFragment.registration2.remove();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         AdapterViewPedidos adapterView = new AdapterViewPedidos(PaginaUsuario.context, adapter, adapter2);
         mViewPager.setCurrentItem(0);
         mViewPager.setAdapter(adapterView);
@@ -207,7 +211,7 @@ public class PedidosFragment extends Fragment {
     }
     private class PedidoItem extends Item<ViewHolder> {
 
-        private final Pedido pedido;
+        private Pedido pedido;
 
         private PedidoItem(Pedido pedido) {
             this.pedido = pedido;
@@ -217,6 +221,7 @@ public class PedidosFragment extends Fragment {
         public void bind(@NonNull ViewHolder viewHolder, int position) {
             final TextView username = viewHolder.itemView.findViewById(R.id.Nomeusuariopedido);
             final TextView message = viewHolder.itemView.findViewById(R.id.Ultimotextopedido);
+            final TextView quantidade = viewHolder.itemView.findViewById(R.id.Qmensagem);
             final ImageView online = viewHolder.itemView.findViewById(R.id.onlinePedido);
             ImageView imgPhoto = viewHolder.itemView.findViewById(R.id.imageUsuarioPedido);
             imgPhoto.setOnLongClickListener(new View.OnLongClickListener() {
@@ -252,8 +257,6 @@ public class PedidosFragment extends Fragment {
                                                     usuario = new Usuario();
                                                     usuario = value.toObject(Usuario.class);
                                                     username.setText(usuario.getNome());
-
-                                                        message.setText(pedido.getLastMessage());
                                                     if (usuario.isOnline()) {
                                                         Log.e("Teste", usuario.getNome());
 
@@ -265,22 +268,32 @@ public class PedidosFragment extends Fragment {
                                                     }
                                                 }
                                             });
-            FirebaseFirestore.getInstance().collection("/users")
+            FirebaseFirestore.getInstance().collection("/ultima-mensagem")
+                    .document(FirebaseAuth.getInstance().getUid())
+                    .collection("pedidos")
                     .document(pedido.getUuid())
                     .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                         @Override
                         public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                            usuario = new Usuario();
-                            usuario = value.toObject(Usuario.class);
-                            username.setText(usuario.getNome());
-                            if (usuario.isOnline()) {
-                                Log.e("Teste", usuario.getNome());
-
-                                online.setImageDrawable(drawablegreen);
-                            } else {
-                                Log.e("Teste", usuario.getNome());
-
-                                online.setImageDrawable(drawablered);
+                            pedido = value.toObject(Pedido.class);
+                            message.setText(pedido.getLastMessage());
+                        }
+                    });
+            FirebaseFirestore.getInstance().collection("/noti")
+                    .document(FirebaseAuth.getInstance().getUid())
+                    .collection(pedido.getUuid())
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            if (!value.isEmpty()) {
+                                List<DocumentChange> documentChanges = value.getDocumentChanges();
+                                int i = 0;
+                                for (DocumentChange doc : documentChanges) {
+                                    i++;
+                                }
+                                quantidade.setText(String.valueOf(i));
+                            }else{
+                                quantidade.setVisibility(View.INVISIBLE);
                             }
                         }
                     });

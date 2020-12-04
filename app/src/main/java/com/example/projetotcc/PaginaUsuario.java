@@ -32,6 +32,7 @@ import com.example.projetotcc.cadastroServico.CadastroServico1;
 import dominio.entidade.CEP;
 import dominio.entidade.Favoritos;
 import dominio.entidade.Message;
+import dominio.entidade.Notification;
 import dominio.entidade.Pedido;
 
 import com.example.projetotcc.ui.chatUsuario.ChatUsuarioFragment;
@@ -88,6 +89,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
@@ -126,6 +128,7 @@ public class PaginaUsuario extends AppCompatActivity {
     public static
     int i = 1;
     Intent it = null;
+    private ListenerRegistration registration;
     private AppBarConfiguration mAppBarConfiguration;
     public static String layout;
     private FirebaseFirestore db;
@@ -135,6 +138,7 @@ public class PaginaUsuario extends AppCompatActivity {
     private DrawerLayout drawer;
 
     public static RecyclerView rv;
+    private MenuItem itemMensagem;
     public static Toolbar toolbar;
 
     @Override
@@ -157,8 +161,6 @@ public class PaginaUsuario extends AppCompatActivity {
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
-
-
         View headerView = navigationView.getHeaderView(0);
 
         email = (TextView) headerView.findViewById(R.id.ViewEmail);
@@ -171,23 +173,86 @@ public class PaginaUsuario extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-
-
         updateToken();
         groupAdapter = new GroupAdapter();
-
 
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.pagina_usuario, menu);
         MenuItem item = menu.findItem(R.id.app_bar_search);
+        itemMensagem = menu.findItem(R.id.app_bar_message);
         SearchView searchView = (SearchView) item.getActionView();
+        FirebaseFirestore.getInstance().collection("/ultima-mensagem")
+                .document(FirebaseAuth.getInstance().getUid())
+                .collection("pedidos")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            List<DocumentChange> documentChanges = queryDocumentSnapshots.getDocumentChanges();
+
+                            if (documentChanges != null) {
+                                ListenerRegistration r = null;
+                                try {
+                                    r.remove();
+                                } catch (Exception exception) {
+                                    exception.printStackTrace();
+                                }
+                                for (DocumentChange doc : documentChanges) {
+                                    Pedido pedido = doc.getDocument().toObject(Pedido.class);
+                                    r = FirebaseFirestore.getInstance().collection("/noti")
+                                            .document(FirebaseAuth.getInstance().getUid())
+                                            .collection(pedido.getUuid())
+                                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                    {
+                                                            List<DocumentChange> documentChanges = value.getDocumentChanges();
+                                                            for (DocumentChange doc : documentChanges) {
+                                                                if (doc.getType() == DocumentChange.Type.ADDED) {
+                                                                    Notification notification = doc.getDocument().toObject(Notification.class);
+                                                                    try {
+                                                                        if (notification.getFromName().equals(FirebaseAuth.getInstance().getUid())) {
+                                                                            itemMensagem.setIcon(R.drawable.ic_messagem_noti);
+                                                                        } else {
+                                                                            itemMensagem.setIcon(R.drawable.ic_messagem);
+                                                                        }
+                                                                    } catch (Exception exception) {
+                                                                        exception.printStackTrace();
+                                                                        itemMensagem.setIcon(R.drawable.ic_messagem);
+                                                                    }
+                                                                }else{
+                                                                    itemMensagem.setIcon(R.drawable.ic_messagem);
+                                                                }
+                                                            }
+
+                                                    }
+                                                }
+                                            });
+                                }
+                            }
+                        }
+                    }
+                });
+        itemMensagem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                itemMensagem.setIcon(R.drawable.ic_messagem);
+                getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new PedidosFragment()).commit();
+                return false;
+            }
+        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 groupAdapter.clear();
+                try {
+                    registration.remove();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
                 if(!query.isEmpty()) {
                     getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new HomeFragment()).commit();
                     FindServicoHome(query);
@@ -223,7 +288,7 @@ public class PaginaUsuario extends AppCompatActivity {
                     }).setIcon(R.drawable.ic_sair_64).show();
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            FirebaseFirestore.getInstance().collection("servico")
+            registration = FirebaseFirestore.getInstance().collection("servico")
                     .whereEqualTo("nome", message)
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override

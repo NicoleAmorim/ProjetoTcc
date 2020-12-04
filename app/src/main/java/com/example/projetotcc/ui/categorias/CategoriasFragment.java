@@ -20,6 +20,7 @@ import android.widget.Button;
 
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
+import com.example.projetotcc.ui.chatUsuario.ChatUsuarioFragment;
 import com.example.projetotcc.ui.filtrar.FiltrarFragment;
 import com.example.projetotcc.ui.listaFragment.ListaCategoriasFragment;
 
@@ -111,6 +112,8 @@ public class CategoriasFragment extends Fragment {
                 findbyCategoriaAr();
             }
         });
+
+        ChatUsuarioFragment.registration2.remove();
         return view;
     }
 

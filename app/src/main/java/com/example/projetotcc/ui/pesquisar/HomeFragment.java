@@ -18,6 +18,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
+import com.example.projetotcc.ui.chatUsuario.ChatUsuarioFragment;
 import com.example.projetotcc.ui.home.HomeViewModel;
 import com.example.projetotcc.ui.infoServico.InfoServicoFragment;
 import com.example.projetotcc.ui.listaFragment.ListaCategoriasFragment;
@@ -43,6 +44,11 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.RecyclerHome);
 
         recyclerView.setAdapter(groupAdapter);
+        try {
+            ChatUsuarioFragment.registration2.remove();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         recyclerView.setLayoutManager(new LinearLayoutManager(PaginaUsuario.context));
 
         groupAdapter.setOnItemClickListener(new OnItemClickListener() {

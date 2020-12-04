@@ -51,6 +51,7 @@ import java.util.List;
 
 import dominio.entidade.CEP;
 import dominio.entidade.Message;
+import dominio.entidade.Notification;
 import dominio.entidade.Pedido;
 import dominio.entidade.Usuario;
 
@@ -62,7 +63,7 @@ public class ChatUsuarioFragment extends Fragment {
 
     public static Usuario destinatario;
     public static EditText editmessage;
-    public static ListenerRegistration registration;
+    public static ListenerRegistration registration, registration2;
     public static Context context;
     private RecyclerView rv;
     private Button send;
@@ -190,14 +191,14 @@ public class ChatUsuarioFragment extends Fragment {
     }
 
         private void Procurar() {
-        String fromId = PaginaUsuario.usuario.getId();
-        String toId = destinatario.getId();
-            Query query = FirebaseFirestore.getInstance().collection("/conversas").document(fromId).collection(toId).document("mensagem").collection("m").orderBy("time", Query.Direction.ASCENDING);
+        final String fromId = PaginaUsuario.usuario.getId();
+        final String toId = destinatario.getId();
+            Query query = FirebaseFirestore.getInstance().collection("/conversas").document(fromId).collection(toId).orderBy("time", Query.Direction.ASCENDING);
             registration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        List<DocumentChange> documentChanges = queryDocumentSnapshots.getDocumentChanges();
 
+                        List<DocumentChange> documentChanges = queryDocumentSnapshots.getDocumentChanges();
                             for (DocumentChange doc: documentChanges) {
                                     if (doc.getType() == DocumentChange.Type.ADDED) {
                                             Message message = doc.getDocument().toObject(Message.class);
@@ -260,6 +261,21 @@ public class ChatUsuarioFragment extends Fragment {
                                     }
                             }
                 });
+            Query quer = FirebaseFirestore.getInstance().collection("/noti").document(fromId).collection(toId);
+            registration2 = quer.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshotsNoti, @Nullable FirebaseFirestoreException e) {
+                    List<DocumentChange> documentChange = queryDocumentSnapshotsNoti.getDocumentChanges();
+                    for (DocumentChange doc: documentChange) {
+                        FirebaseFirestore.getInstance()
+                                .collection("/noti")
+                                .document(fromId)
+                                .collection(toId)
+                                .document(doc.getDocument().getId())
+                                .delete();
+                    }
+                }
+            });
 
     }
 
@@ -282,14 +298,17 @@ public class ChatUsuarioFragment extends Fragment {
             FirebaseFirestore.getInstance().collection("/conversas")
                     .document(idRementente)
                     .collection(idDestino)
-                    .document("mensagem")
-                    .collection("m")
                     .add(message)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             Log.d("Teste", documentReference.getId());
-
+                            message.setID(documentReference.getId());
+                            FirebaseFirestore.getInstance().collection("/conversas")
+                                    .document(idRementente)
+                                    .collection(idDestino)
+                                    .document(documentReference.getId())
+                                    .set(message);
                             Pedido pedido = new Pedido();
                             pedido.setUuid(idDestino);
                             try {
@@ -322,13 +341,19 @@ public class ChatUsuarioFragment extends Fragment {
             FirebaseFirestore.getInstance().collection("/conversas")
                     .document(idDestino)
                     .collection(idRementente)
-                    .document("mensagem")
-                    .collection("m")
                     .add(message)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
+
                             Log.d("Teste", documentReference.getId());
+                            message.setID(documentReference.getId());
+                            FirebaseFirestore.getInstance().collection("/conversas")
+                                    .document(idDestino)
+                                    .collection(idRementente)
+                                    .document(documentReference.getId())
+                                    .set(message);
+
 
                             pedidos.setUuid(idRementente);
                             pedidos.setUsername(PaginaUsuario.usuario.getUsername());
@@ -341,6 +366,12 @@ public class ChatUsuarioFragment extends Fragment {
                                     .collection("pedidos")
                                     .document(idRementente)
                                     .set(pedidos);
+                            Notification notification = new Notification();
+                            notification.setFromName(destinatario.getId());
+                            FirebaseFirestore.getInstance().collection("/noti")
+                                    .document(idDestino)
+                                    .collection(idRementente)
+                                    .add(notification);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -349,6 +380,8 @@ public class ChatUsuarioFragment extends Fragment {
                             Log.e("Teste", e.getMessage(), e);
                         }
                     });
+
+
         }
     }
     public void sendLocal() {
@@ -369,8 +402,6 @@ public class ChatUsuarioFragment extends Fragment {
             FirebaseFirestore.getInstance().collection("/conversas")
                     .document(idRementente)
                     .collection(idDestino)
-                    .document("mensagem")
-                    .collection("m")
                     .add(message)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
@@ -396,6 +427,12 @@ public class ChatUsuarioFragment extends Fragment {
                                     .collection("pedidos")
                                     .document(idDestino)
                                     .set(pedido);
+                            Notification notification = new Notification();
+                            notification.setFromName(destinatario.getId());
+                            FirebaseFirestore.getInstance().collection("/noti")
+                                    .document(idDestino)
+                                    .collection(idRementente)
+                                    .add(notification);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -408,8 +445,6 @@ public class ChatUsuarioFragment extends Fragment {
             FirebaseFirestore.getInstance().collection("/conversas")
                     .document(idDestino)
                     .collection(idRementente)
-                    .document("mensagem")
-                    .collection("m")
                     .add(message)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override

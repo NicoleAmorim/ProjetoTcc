@@ -20,6 +20,7 @@ import dominio.entidade.Servico;
 import dominio.entidade.Usuario;
 
 import com.example.projetotcc.R;
+import com.example.projetotcc.ui.chatUsuario.ChatUsuarioFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,6 +43,11 @@ public class MinhaLojaFragment extends Fragment {
         servico = PaginaUsuario.servicop;
         cep = PaginaUsuario.cep;
         user = new Usuario();
+        try {
+            ChatUsuarioFragment.registration2.remove();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         View view;
 try {
     if (servico.getNome().isEmpty()) {

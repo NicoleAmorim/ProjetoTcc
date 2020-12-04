@@ -2,7 +2,7 @@ package dominio.entidade;
 
 import dominio.entidade.Message;
 
-public class Notification extends Message {
+public class Notification {
 
   private String fromName;
 

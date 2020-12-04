@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.projetotcc.adapterView.AdapterView2;
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
+import com.example.projetotcc.ui.chatUsuario.ChatUsuarioFragment;
 
 import static com.example.projetotcc.PaginaUsuario.groupAdapter;
 import static com.example.projetotcc.PaginaUsuario.rv;
@@ -29,7 +30,11 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_inicio, container, false);
-
+        try {
+            ChatUsuarioFragment.registration2.remove();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         return view;
     }
 

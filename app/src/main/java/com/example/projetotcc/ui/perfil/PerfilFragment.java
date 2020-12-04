@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
 import com.example.projetotcc.RStar;
+import com.example.projetotcc.ui.chatUsuario.ChatUsuarioFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -53,6 +54,11 @@ public class PerfilFragment extends Fragment {
 
         usuario = PaginaUsuario.usuario;
         servico = PaginaUsuario.servicop;
+        try {
+            ChatUsuarioFragment.registration2.remove();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         view = inflater.inflate(R.layout.fragment_perfil, container, false);
         nome = view.findViewById(R.id.nomePerfilServico);
         email = view.findViewById(R.id.emailPerfil);

@@ -8,12 +8,21 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.projetotcc.ui.pedidos.PedidosFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
 
 import static com.example.projetotcc.PaginaUsuario.getContext;
 import static com.example.projetotcc.PaginaUsuario.rStar;
@@ -23,6 +32,7 @@ public class RStar {
     private Activity activity;
     private AlertDialog dialog;
     private ImageView r1, r2, r3, r4, r5;
+    public static ListenerRegistration registration, registration2;
 
     public RStar(Activity myActivity){
         activity = myActivity;
@@ -74,6 +84,7 @@ public class RStar {
         builder.setCancelable(false);
 
         dialog = builder.create();
+
         dialog.show();
     }
 
@@ -91,16 +102,40 @@ public class RStar {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        FirebaseFirestore.getInstance().collection("conversas")
+                        registration = FirebaseFirestore.getInstance().collection("conversas")
                                 .document(FirebaseAuth.getInstance().getUid())
                                 .collection(PedidosFragment.pedido.getUuid())
-                                .document("mensagem")
-                                .delete();
-                        FirebaseFirestore.getInstance().collection("conversas")
+                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshotsNoti, @Nullable FirebaseFirestoreException e) {
+                                        List<DocumentChange> documentChange = queryDocumentSnapshotsNoti.getDocumentChanges();
+                                        for (DocumentChange doc : documentChange) {
+                                            FirebaseFirestore.getInstance()
+                                                    .collection("/conversas")
+                                                    .document(FirebaseAuth.getInstance().getUid())
+                                                    .collection(PedidosFragment.pedido.getUuid())
+                                                    .document(doc.getDocument().getId())
+                                                    .delete();
+                                        }
+                                    }
+                                });
+                        registration2 = FirebaseFirestore.getInstance().collection("conversas")
                                 .document(PedidosFragment.pedido.getUuid())
                                 .collection(FirebaseAuth.getInstance().getUid())
-                                .document("mensagem")
-                                .delete();
+                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshotsNoti, @Nullable FirebaseFirestoreException e) {
+                                        List<DocumentChange> documentChange = queryDocumentSnapshotsNoti.getDocumentChanges();
+                                        for (DocumentChange doc : documentChange) {
+                                            FirebaseFirestore.getInstance()
+                                                    .collection("/conversas")
+                                                    .document(FirebaseAuth.getInstance().getUid())
+                                                    .collection(FirebaseAuth.getInstance().getUid())
+                                                    .document(doc.getDocument().getId())
+                                                    .delete();
+                                        }
+                                    }
+                                });
                         FirebaseFirestore.getInstance().collection("ultima-mensagem")
                                 .document(PedidosFragment.pedido.getUuid())
                                 .collection("pedidos")
@@ -111,8 +146,9 @@ public class RStar {
                                 .collection("pedidos")
                                 .document(PedidosFragment.pedido.getUuid())
                                 .delete();
-                        PedidosFragment.application.getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new PedidosFragment()).commit();
                         rStar.DismissDialog();
+                        PedidosFragment.application.getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new PedidosFragment()).commit();
+
                     }
                 });
     }
@@ -127,16 +163,40 @@ public class RStar {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        FirebaseFirestore.getInstance().collection("conversas")
+                        registration = FirebaseFirestore.getInstance().collection("conversas")
                                 .document(FirebaseAuth.getInstance().getUid())
                                 .collection(PedidosFragment.pedido.getUuid())
-                                .document("mensagem")
-                                .delete();
-                        FirebaseFirestore.getInstance().collection("conversas")
+                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshotsNoti, @Nullable FirebaseFirestoreException e) {
+                                        List<DocumentChange> documentChange = queryDocumentSnapshotsNoti.getDocumentChanges();
+                                        for (DocumentChange doc : documentChange) {
+                                            FirebaseFirestore.getInstance()
+                                                    .collection("/conversas")
+                                                    .document(FirebaseAuth.getInstance().getUid())
+                                                    .collection(PedidosFragment.pedido.getUuid())
+                                                    .document(doc.getDocument().getId())
+                                                    .delete();
+                                        }
+                                    }
+                                });
+                        registration2 = FirebaseFirestore.getInstance().collection("conversas")
                                 .document(PedidosFragment.pedido.getUuid())
                                 .collection(FirebaseAuth.getInstance().getUid())
-                                .document("mensagem")
-                                .delete();
+                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshotsNoti, @Nullable FirebaseFirestoreException e) {
+                                        List<DocumentChange> documentChange = queryDocumentSnapshotsNoti.getDocumentChanges();
+                                        for (DocumentChange doc : documentChange) {
+                                            FirebaseFirestore.getInstance()
+                                                    .collection("/conversas")
+                                                    .document(FirebaseAuth.getInstance().getUid())
+                                                    .collection(FirebaseAuth.getInstance().getUid())
+                                                    .document(doc.getDocument().getId())
+                                                    .delete();
+                                        }
+                                    }
+                                });
                         FirebaseFirestore.getInstance().collection("ultima-mensagem")
                                 .document(PedidosFragment.pedido.getUuid())
                                 .collection("pedidos")
@@ -147,8 +207,8 @@ public class RStar {
                                 .collection("pedidos")
                                 .document(PedidosFragment.pedido.getUuid())
                                 .delete();
-                        PedidosFragment.application.getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new PedidosFragment()).commit();
                         rStar.DismissDialog();
+                        PedidosFragment.application.getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new PedidosFragment()).commit();
                     }
                 });
     }
@@ -163,16 +223,40 @@ public class RStar {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        FirebaseFirestore.getInstance().collection("conversas")
+                        registration = FirebaseFirestore.getInstance().collection("conversas")
                                 .document(FirebaseAuth.getInstance().getUid())
                                 .collection(PedidosFragment.pedido.getUuid())
-                                .document("mensagem")
-                                .delete();
-                        FirebaseFirestore.getInstance().collection("conversas")
+                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshotsNoti, @Nullable FirebaseFirestoreException e) {
+                                        List<DocumentChange> documentChange = queryDocumentSnapshotsNoti.getDocumentChanges();
+                                        for (DocumentChange doc : documentChange) {
+                                            FirebaseFirestore.getInstance()
+                                                    .collection("/conversas")
+                                                    .document(FirebaseAuth.getInstance().getUid())
+                                                    .collection(PedidosFragment.pedido.getUuid())
+                                                    .document(doc.getDocument().getId())
+                                                    .delete();
+                                        }
+                                    }
+                                });
+                        registration2 = FirebaseFirestore.getInstance().collection("conversas")
                                 .document(PedidosFragment.pedido.getUuid())
                                 .collection(FirebaseAuth.getInstance().getUid())
-                                .document("mensagem")
-                                .delete();
+                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshotsNoti, @Nullable FirebaseFirestoreException e) {
+                                        List<DocumentChange> documentChange = queryDocumentSnapshotsNoti.getDocumentChanges();
+                                        for (DocumentChange doc : documentChange) {
+                                            FirebaseFirestore.getInstance()
+                                                    .collection("/conversas")
+                                                    .document(FirebaseAuth.getInstance().getUid())
+                                                    .collection(FirebaseAuth.getInstance().getUid())
+                                                    .document(doc.getDocument().getId())
+                                                    .delete();
+                                        }
+                                    }
+                                });
                         FirebaseFirestore.getInstance().collection("ultima-mensagem")
                                 .document(PedidosFragment.pedido.getUuid())
                                 .collection("pedidos")
@@ -183,8 +267,9 @@ public class RStar {
                                 .collection("pedidos")
                                 .document(PedidosFragment.pedido.getUuid())
                                 .delete();
-                        PedidosFragment.application.getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new PedidosFragment()).commit();
                         rStar.DismissDialog();
+                        PedidosFragment.application.getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new PedidosFragment()).commit();
+
                     }
                 });
     }
@@ -199,16 +284,40 @@ public class RStar {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        FirebaseFirestore.getInstance().collection("conversas")
+                        registration = FirebaseFirestore.getInstance().collection("conversas")
                                 .document(FirebaseAuth.getInstance().getUid())
                                 .collection(PedidosFragment.pedido.getUuid())
-                                .document("mensagem")
-                                .delete();
-                        FirebaseFirestore.getInstance().collection("conversas")
+                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshotsNoti, @Nullable FirebaseFirestoreException e) {
+                                        List<DocumentChange> documentChange = queryDocumentSnapshotsNoti.getDocumentChanges();
+                                        for (DocumentChange doc : documentChange) {
+                                            FirebaseFirestore.getInstance()
+                                                    .collection("/conversas")
+                                                    .document(FirebaseAuth.getInstance().getUid())
+                                                    .collection(PedidosFragment.pedido.getUuid())
+                                                    .document(doc.getDocument().getId())
+                                                    .delete();
+                                        }
+                                    }
+                                });
+                        registration2 = FirebaseFirestore.getInstance().collection("conversas")
                                 .document(PedidosFragment.pedido.getUuid())
                                 .collection(FirebaseAuth.getInstance().getUid())
-                                .document("mensagem")
-                                .delete();
+                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshotsNoti, @Nullable FirebaseFirestoreException e) {
+                                        List<DocumentChange> documentChange = queryDocumentSnapshotsNoti.getDocumentChanges();
+                                        for (DocumentChange doc : documentChange) {
+                                            FirebaseFirestore.getInstance()
+                                                    .collection("/conversas")
+                                                    .document(FirebaseAuth.getInstance().getUid())
+                                                    .collection(FirebaseAuth.getInstance().getUid())
+                                                    .document(doc.getDocument().getId())
+                                                    .delete();
+                                        }
+                                    }
+                                });
                         FirebaseFirestore.getInstance().collection("ultima-mensagem")
                                 .document(PedidosFragment.pedido.getUuid())
                                 .collection("pedidos")
@@ -219,8 +328,9 @@ public class RStar {
                                 .collection("pedidos")
                                 .document(PedidosFragment.pedido.getUuid())
                                 .delete();
-                        PedidosFragment.application.getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new PedidosFragment()).commit();
                         rStar.DismissDialog();
+                        PedidosFragment.application.getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new PedidosFragment()).commit();
+
                     }
                 });
     }
@@ -235,16 +345,40 @@ public class RStar {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        FirebaseFirestore.getInstance().collection("conversas")
+                        registration = FirebaseFirestore.getInstance().collection("conversas")
                                 .document(FirebaseAuth.getInstance().getUid())
                                 .collection(PedidosFragment.pedido.getUuid())
-                                .document("mensagem")
-                                .delete();
-                        FirebaseFirestore.getInstance().collection("conversas")
+                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshotsNoti, @Nullable FirebaseFirestoreException e) {
+                                        List<DocumentChange> documentChange = queryDocumentSnapshotsNoti.getDocumentChanges();
+                                        for (DocumentChange doc : documentChange) {
+                                            FirebaseFirestore.getInstance()
+                                                    .collection("/conversas")
+                                                    .document(FirebaseAuth.getInstance().getUid())
+                                                    .collection(PedidosFragment.pedido.getUuid())
+                                                    .document(doc.getDocument().getId())
+                                                    .delete();
+                                        }
+                                    }
+                                });
+                        registration2 = FirebaseFirestore.getInstance().collection("conversas")
                                 .document(PedidosFragment.pedido.getUuid())
                                 .collection(FirebaseAuth.getInstance().getUid())
-                                .document("mensagem")
-                                .delete();
+                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshotsNoti, @Nullable FirebaseFirestoreException e) {
+                                        List<DocumentChange> documentChange = queryDocumentSnapshotsNoti.getDocumentChanges();
+                                        for (DocumentChange doc : documentChange) {
+                                            FirebaseFirestore.getInstance()
+                                                    .collection("/conversas")
+                                                    .document(FirebaseAuth.getInstance().getUid())
+                                                    .collection(FirebaseAuth.getInstance().getUid())
+                                                    .document(doc.getDocument().getId())
+                                                    .delete();
+                                        }
+                                    }
+                                });
                         FirebaseFirestore.getInstance().collection("ultima-mensagem")
                                 .document(PedidosFragment.pedido.getUuid())
                                 .collection("pedidos")
@@ -255,8 +389,9 @@ public class RStar {
                                 .collection("pedidos")
                                 .document(PedidosFragment.pedido.getUuid())
                                 .delete();
-                        PedidosFragment.application.getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new PedidosFragment()).commit();
                         rStar.DismissDialog();
+                        PedidosFragment.application.getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new PedidosFragment()).commit();
+
                     }
                 });
     }
