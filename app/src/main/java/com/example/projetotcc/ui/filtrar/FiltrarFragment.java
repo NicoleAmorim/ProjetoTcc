@@ -69,7 +69,7 @@ public class FiltrarFragment extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton button = (RadioButton) group.findViewById(checkedId);
                 UF = button.getText().toString();
-
+                Log.d("Teste", UF);
                 disableAllOptions(group);
             }
         });

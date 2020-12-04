@@ -1,19 +1,24 @@
 package com.example.projetotcc.controllers;
 
 import android.content.Intent;
+import android.media.MediaDrm;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.projetotcc.cadastroUsuario.Cadastro1;
 import com.example.projetotcc.cadastroUsuario.Cadastro2;
 import com.example.projetotcc.cadastroUsuario.Cadastro3;
+import com.example.projetotcc.cadastroUsuario.Cadastro4;
 import com.example.projetotcc.cadastroUsuario.Cadastro5;
 import dominio.entidade.CEP;
 
 import com.example.projetotcc.PaginaUsuario;
+
+import dominio.entidade.Servico;
 import dominio.entidade.Usuario;
 
 import com.example.projetotcc.cadastroUsuario.Cadastro6;
@@ -24,7 +29,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -32,6 +39,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.UUID;
 
 public class ValidarCadastroUsuario extends Cadastro6 {
@@ -79,17 +87,16 @@ public class ValidarCadastroUsuario extends Cadastro6 {
                         dig11 = '0';
                     else dig11 = (char) (r + 48);
 
-                    if ((dig10 == cpf.charAt(9)) && (dig11 == cpf.charAt(10))) {
-                        cpf = imprimeCPF(cpf);
-                        usuario.setNome(nome + " " + sobrenome);
-                        usuario.setCpf(cpf);
-                        return true;
-                    }
-                    else
-                    {
-                        Toast.makeText(Cadastro1.context, " CPF invalido", Toast.LENGTH_SHORT).show();
-                    }
+                        if ((dig10 == cpf.charAt(9)) && (dig11 == cpf.charAt(10))) {
+                            cpf = imprimeCPF(cpf);
+                            FindCPF(cpf);
+                                usuario.setNome(nome + " " + sobrenome);
+                                usuario.setCpf(cpf);
+                                return true;
 
+                        } else {
+                            Toast.makeText(Cadastro1.context, " CPF invalido", Toast.LENGTH_SHORT).show();
+                        }
                 } catch (InputMismatchException erro) {
                     Toast.makeText(Cadastro1.context, " CPF invalido", Toast.LENGTH_SHORT).show();
                 }
@@ -124,7 +131,7 @@ public class ValidarCadastroUsuario extends Cadastro6 {
         }
     }
 
-    public boolean ValidarCadastro3(String email, String user, String tell) {
+    public void ValidarCadastro3(String email, String user, String tell) {
         if (!email.isEmpty()) {
             if (!user.isEmpty()) {
                 if (tell != null || tell.isEmpty()) {
@@ -132,18 +139,15 @@ public class ValidarCadastroUsuario extends Cadastro6 {
                     usuario.setEmail(email);
                     usuario.setUsername(user);
                     usuario.setTel(tell);
-                    return true;
+                    FindEmail(email, tell);
                 } else {
                     Toast.makeText(Cadastro3.context, " Telefone está vazio", Toast.LENGTH_SHORT).show();
-                    return false;
                 }
             } else {
                 Toast.makeText(Cadastro3.context, " email está vazio", Toast.LENGTH_SHORT).show();
-                return false;
             }
         } else {
             Toast.makeText(Cadastro3.context, " Email está vazio", Toast.LENGTH_SHORT).show();
-            return false;
         }
     }
     public boolean ValidarCadastro4(String senha, String senhaC) {
@@ -156,20 +160,20 @@ public class ValidarCadastroUsuario extends Cadastro6 {
                         usuario.setSenha(senha);
                         return true;
                     } else {
-                        Toast.makeText(Cadastro3.context, "As senhas se diferem!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Cadastro4.context, "As senhas se diferem!", Toast.LENGTH_SHORT).show();
                         return false;
                     }
                 }
                 else {
-                    Toast.makeText(Cadastro3.context, "A senha tem que ter no minimo 6 caracteries", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Cadastro4.context, "A senha tem que ter no minimo 6 caracteries", Toast.LENGTH_SHORT).show();
                     return false;
                 }
             } else {
-                Toast.makeText(Cadastro3.context, "Confirmação de senha está vazio", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Cadastro4.context, "Confirmação de senha está vazio", Toast.LENGTH_SHORT).show();
                 return false;
             }
         } else {
-            Toast.makeText(Cadastro3.context, "Senha está vazio", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Cadastro4.context, "Senha está vazio", Toast.LENGTH_SHORT).show();
             return false;
         }
     }
@@ -294,26 +298,81 @@ public class ValidarCadastroUsuario extends Cadastro6 {
                     }
                 });
     }
-    boolean vcpf;
-    private boolean ProcurarCPF(String cpfF) {
-
-        FirebaseFirestore.getInstance().collection("/users")
-                .whereEqualTo("cpf", cpfF)
+    public void FindCPF(String cpf) {
+        final boolean[] cpfBoolean = new boolean[1];
+        FirebaseFirestore.getInstance().collection("users")
+                .whereEqualTo("cpf", cpf)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                       if(queryDocumentSnapshots.isEmpty())
-                       {
-                           vcpf = true;
-                       }
-                       else
-                       {
-                           vcpf = false;
-                       }
+                        if(queryDocumentSnapshots.isEmpty())
+                        {
+                            Log.e("CPF", "Vazio");
+                            it = new Intent(Cadastro1.context, Cadastro2.class);
+                            Cadastro1.context.startActivity(it);
+                        }else
+                        {
+                            Toast.makeText(Cadastro1.context, " CPF já cadastrado", Toast.LENGTH_SHORT).show();
+                            Log.e("CPF", "tem");
+                        }
                     }
-                });
-        return vcpf;
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("CPF: ", e.getMessage());
+
+            }
+        });
+    }
+
+    public void FindEmail(String email, final String tell) {
+        FirebaseFirestore.getInstance().collection("users")
+                .whereEqualTo("email", email)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if(queryDocumentSnapshots.isEmpty())
+                        {
+                            FindTell(tell);
+                        }else
+                        {
+                            Toast.makeText(Cadastro3.context, " Email já cadastrado", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("ERRO", e.getMessage());
+
+            }
+        });
+    }
+    public void FindTell(String tell) {
+        final boolean[] cpfBoolean = new boolean[1];
+        FirebaseFirestore.getInstance().collection("users")
+                .whereEqualTo("tel", tell)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if(queryDocumentSnapshots.isEmpty())
+                        {
+                            it = new Intent(Cadastro3.context, Cadastro4.class);
+                            Cadastro3.context.startActivity(it);
+                        }else
+                        {
+                            Toast.makeText(Cadastro3.context, " Telefone já cadastrado", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("ERRO", e.getMessage());
+
+            }
+        });
     }
 }
 

@@ -54,10 +54,7 @@ public class Cadastro3 extends AppCompatActivity {
         Email = email.getText().toString() + "";
         User = username.getText().toString() + "";
         if (matcher.find()) {
-            if (validarCadastroUsuario.ValidarCadastro3(Email, User, Tell)) {
-                it = new Intent(this, Cadastro4.class);
-                this.startActivity(it);
-            }
+            validarCadastroUsuario.ValidarCadastro3(Email, User, Tell);
         } else {
             Toast.makeText(this, " Telefone invalido", Toast.LENGTH_SHORT).show();
         }

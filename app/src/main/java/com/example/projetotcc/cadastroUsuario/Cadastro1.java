@@ -36,10 +36,6 @@ public class Cadastro1 extends AppCompatActivity {
         Sobrenome = sobrenome.getText().toString() + "";
         CPF = cpf.getText().toString() + "";
 
-        if(validarCadastroUsuario.ValidarCadastro1(Nome, Sobrenome, CPF))
-        {
-            it = new Intent(this, Cadastro2.class);
-            this.startActivity(it);
-        }
+        validarCadastroUsuario.ValidarCadastro1(Nome, Sobrenome, CPF);
     }
 }

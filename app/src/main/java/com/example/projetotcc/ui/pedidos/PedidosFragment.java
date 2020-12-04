@@ -216,7 +216,7 @@ public class PedidosFragment extends Fragment {
         @Override
         public void bind(@NonNull ViewHolder viewHolder, int position) {
             final TextView username = viewHolder.itemView.findViewById(R.id.Nomeusuariopedido);
-            TextView message = viewHolder.itemView.findViewById(R.id.Ultimotextopedido);
+            final TextView message = viewHolder.itemView.findViewById(R.id.Ultimotextopedido);
             final ImageView online = viewHolder.itemView.findViewById(R.id.onlinePedido);
             ImageView imgPhoto = viewHolder.itemView.findViewById(R.id.imageUsuarioPedido);
             imgPhoto.setOnLongClickListener(new View.OnLongClickListener() {
@@ -240,7 +240,7 @@ public class PedidosFragment extends Fragment {
                 }
             });
 
-            message.setText(pedido.getLastMessage());
+
             Picasso.get()
                     .load(pedido.getPhotoUrl())
                     .into(imgPhoto);
@@ -252,6 +252,8 @@ public class PedidosFragment extends Fragment {
                                                     usuario = new Usuario();
                                                     usuario = value.toObject(Usuario.class);
                                                     username.setText(usuario.getNome());
+
+                                                        message.setText(pedido.getLastMessage());
                                                     if (usuario.isOnline()) {
                                                         Log.e("Teste", usuario.getNome());
 

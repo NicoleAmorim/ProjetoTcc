@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Geocoder;
 import android.location.Location;
@@ -115,7 +116,6 @@ public class PaginaUsuario extends AppCompatActivity {
 
     public static GroupAdapter groupAdapter;
     public static Context context, getContext;
-    public static RequestQueue requestQueue;
     public static Servico servico;
     public static RStar rStar;
     public static Servico servicop;
@@ -132,7 +132,6 @@ public class PaginaUsuario extends AppCompatActivity {
     private TextView email;
     private TextView nome;
     private ImageView imagem;
-    private Usuario destinatario;
     private DrawerLayout drawer;
 
     public static RecyclerView rv;
@@ -154,6 +153,7 @@ public class PaginaUsuario extends AppCompatActivity {
         getApplication().registerActivityLifecycleCallbacks(application);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 

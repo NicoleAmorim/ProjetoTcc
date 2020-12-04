@@ -665,7 +665,7 @@
                         android:layout_marginEnd="73dp"
                         android:layout_marginRight="73dp"
                         android:layout_marginBottom="45dp"
-                        android:text=" --------------------- Espírito Santo"
+                        android:text=" ---------------- Espírito Santo"
                         android:textColor="@color/colorAccent"
                         android:textSize="15dp"
                         android:textStyle="bold" />
@@ -947,7 +947,7 @@
                         android:layout_marginEnd="73dp"
                         android:layout_marginRight="73dp"
                         android:layout_marginBottom="45dp"
-                        android:text=" --------------------- Rio de Janeiro"
+                        android:text=" ------------------- Rio de Janeiro"
                         android:textColor="@color/colorAccent"
                         android:textSize="15dp"
                         android:textStyle="bold" />
@@ -993,7 +993,7 @@
                         android:layout_marginEnd="73dp"
                         android:layout_marginRight="73dp"
                         android:layout_marginBottom="45dp"
-                        android:text=" --------------------- Rio Grande do Norte"
+                        android:text="------------ Rio Grande do Norte"
                         android:textColor="@color/colorAccent"
                         android:textSize="15dp"
                         android:textStyle="bold" />
@@ -1227,7 +1227,7 @@
                         android:layout_marginEnd="73dp"
                         android:layout_marginRight="73dp"
                         android:layout_marginBottom="45dp"
-                        android:text=" --------------------- Distrito Federal"
+                        android:text=" ---------------- Distrito Federal"
                         android:textColor="@color/colorAccent"
                         android:textSize="15dp"
                         android:textStyle="bold" />
