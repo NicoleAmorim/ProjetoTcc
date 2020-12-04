@@ -166,13 +166,13 @@ public class PaginaUsuario extends AppCompatActivity {
         email = (TextView) headerView.findViewById(R.id.ViewEmail);
         nome = (TextView) headerView.findViewById(R.id.ViewNome);
         imagem = (ImageView) headerView.findViewById(R.id.imageUserNav);
-        Logado();
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_categoria, R.id.nav_favoritos, R.id.nav_minhaLoja, R.id.nav_pedidos, R.id.nav_perfil, R.id.nav_lista, R.id.nav_editar_perfil, R.id.nav_endereco, R.id.nav_sair ).setDrawerLayout(drawer).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
+        Logado();
         updateToken();
         groupAdapter = new GroupAdapter();
 
@@ -183,31 +183,32 @@ public class PaginaUsuario extends AppCompatActivity {
         MenuItem item = menu.findItem(R.id.app_bar_search);
         itemMensagem = menu.findItem(R.id.app_bar_message);
         SearchView searchView = (SearchView) item.getActionView();
-        FirebaseFirestore.getInstance().collection("/ultima-mensagem")
-                .document(FirebaseAuth.getInstance().getUid())
-                .collection("pedidos")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        if (!queryDocumentSnapshots.isEmpty()) {
-                            List<DocumentChange> documentChanges = queryDocumentSnapshots.getDocumentChanges();
+        try {
+            FirebaseFirestore.getInstance().collection("/ultima-mensagem")
+                    .document(FirebaseAuth.getInstance().getUid())
+                    .collection("pedidos")
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                            if (!queryDocumentSnapshots.isEmpty()) {
+                                List<DocumentChange> documentChanges = queryDocumentSnapshots.getDocumentChanges();
 
-                            if (documentChanges != null) {
-                                ListenerRegistration r = null;
-                                try {
-                                    r.remove();
-                                } catch (Exception exception) {
-                                    exception.printStackTrace();
-                                }
-                                for (DocumentChange doc : documentChanges) {
-                                    Pedido pedido = doc.getDocument().toObject(Pedido.class);
-                                    r = FirebaseFirestore.getInstance().collection("/noti")
-                                            .document(FirebaseAuth.getInstance().getUid())
-                                            .collection(pedido.getUuid())
-                                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                                @Override
-                                                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                                    {
+                                if (documentChanges != null) {
+                                    ListenerRegistration r = null;
+                                    try {
+                                        r.remove();
+                                    } catch (Exception exception) {
+                                        exception.printStackTrace();
+                                    }
+                                    for (DocumentChange doc : documentChanges) {
+                                        Pedido pedido = doc.getDocument().toObject(Pedido.class);
+                                        r = FirebaseFirestore.getInstance().collection("/noti")
+                                                .document(FirebaseAuth.getInstance().getUid())
+                                                .collection(pedido.getUuid())
+                                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                        {
                                                             List<DocumentChange> documentChanges = value.getDocumentChanges();
                                                             for (DocumentChange doc : documentChanges) {
                                                                 if (doc.getType() == DocumentChange.Type.ADDED) {
@@ -222,23 +223,25 @@ public class PaginaUsuario extends AppCompatActivity {
                                                                         exception.printStackTrace();
                                                                         itemMensagem.setIcon(R.drawable.ic_messagem);
                                                                     }
-                                                                }else{
+                                                                } else {
                                                                     itemMensagem.setIcon(R.drawable.ic_messagem);
                                                                 }
                                                             }
 
+                                                        }
                                                     }
-                                                }
-                                            });
+                                                });
+                                    }
                                 }
                             }
                         }
-                    }
-                });
+                    });
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         itemMensagem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                itemMensagem.setIcon(R.drawable.ic_messagem);
                 getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new PedidosFragment()).commit();
                 return false;
             }
