@@ -83,8 +83,12 @@ public class ChatUsuarioFragment extends Fragment {
         remetente = PaginaUsuario.usuario;
         send = view.findViewById(R.id.btnSendMessage);
         local = view.findViewById(R.id.btnLocolizção);
-        if(PedidosFragment.pedido.isServidor()) {
-            local.setVisibility(View.INVISIBLE);
+        try {
+            if (PedidosFragment.pedido.isServidor()) {
+                local.setVisibility(View.INVISIBLE);
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
         local.setOnClickListener(new View.OnClickListener() {
             @Override

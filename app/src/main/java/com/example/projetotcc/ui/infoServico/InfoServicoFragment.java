@@ -218,8 +218,6 @@ public class InfoServicoFragment extends Fragment {
             FirebaseFirestore.getInstance().collection("/conversas")
                     .document(remetente.getId())
                     .collection(destinatario.getId())
-                    .document("mensagem")
-                    .collection("m")
                     .add(message)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
@@ -251,8 +249,6 @@ public class InfoServicoFragment extends Fragment {
             FirebaseFirestore.getInstance().collection("/conversas")
                     .document(destinatario.getId())
                     .collection(remetente.getId())
-                    .document("mensagem")
-                    .collection("m")
                     .add(message)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
