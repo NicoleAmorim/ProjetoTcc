@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -25,1234 +24,356 @@
                 android:id="@+id/RGUF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 app:layout_constraintBottom_toTopOf="@+id/radioGroup"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
 
-                <LinearLayout
+                <RadioButton
+                    android:id="@+id/radioBA"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="286dp"
+                    android:layout_marginRight="286dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="BA"
+                    android:textColor="@color/colorAccent" />
 
-                </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="114dp"
-                        android:layout_marginRight="114dp"
-                        android:layout_marginBottom="27dp"
-                        android:text=" --------------------- Bahia"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioBA"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="286dp"
-                        android:layout_marginRight="286dp"
-                        android:layout_marginBottom="20dp"
-                        android:text="BA"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-----------------
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioPA"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="24dp"
+                    android:text="PA"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="120dp"
-                        android:layout_marginRight="120dp"
-                        android:layout_marginBottom="35dp"
-                        android:text=" --------------------- Pará"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioPA"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="24dp"
-                        android:text="PA"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-
-----------------------------
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioRS"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="288dp"
+                    android:layout_marginRight="288dp"
+                    android:layout_marginBottom="24dp"
+                    android:text="RS"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="30dp"
-                        android:layout_marginRight="30dp"
-                        android:layout_marginBottom="33dp"
-                        android:text=" --------------------- Rio Grande do Sul"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioRS"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="288dp"
-                        android:layout_marginRight="288dp"
-                        android:layout_marginBottom="24dp"
-                        android:text="RS"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-------------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioSC"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="286dp"
+                    android:layout_marginRight="286dp"
+                    android:layout_marginBottom="44dp"
+                    android:text="SC"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="49dp"
-                        android:layout_marginRight="49dp"
-                        android:layout_marginBottom="44dp"
-                        android:text=" --------------------- Santa Catarina"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioSC"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="286dp"
-                        android:layout_marginRight="286dp"
-                        android:layout_marginBottom="44dp"
-                        android:text="SC"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                -------------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioGO"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="285dp"
+                    android:layout_marginRight="285dp"
+                    android:layout_marginBottom="23dp"
+                    android:text="GO"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="103dp"
-                        android:layout_marginRight="103dp"
-                        android:layout_marginBottom="31dp"
-                        android:text=" --------------------- Goiás"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioGO"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="285dp"
-                        android:layout_marginRight="285dp"
-                        android:layout_marginBottom="23dp"
-                        android:text="GO"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                ----------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioSP"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="288dp"
+                    android:layout_marginRight="288dp"
+                    android:layout_marginBottom="33dp"
+                    android:text="SP"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="69dp"
-                        android:layout_marginRight="69dp"
-                        android:layout_marginBottom="44dp"
-                        android:text=" --------------------- São Paulo"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioSP"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="288dp"
-                        android:layout_marginRight="288dp"
-                        android:layout_marginBottom="33dp"
-                        android:text="SP"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                ---------------------------
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioAM"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="282dp"
+                    android:layout_marginRight="282dp"
+                    android:layout_marginBottom="48dp"
+                    android:text="AM"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="62dp"
-                        android:layout_marginRight="62dp"
-                        android:layout_marginBottom="55dp"
-                        android:text=" --------------------- Amazonas"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioAM"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="282dp"
-                        android:layout_marginRight="282dp"
-                        android:layout_marginBottom="48dp"
-                        android:text="AM"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                ------------------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioPE"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="285dp"
+                    android:layout_marginRight="285dp"
+                    android:layout_marginBottom="24dp"
+                    android:text="PE"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="47dp"
-                        android:layout_marginRight="47dp"
-                        android:layout_marginBottom="34dp"
-                        android:text=" --------------------- Pernambuco"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioPE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="285dp"
-                        android:layout_marginRight="285dp"
-                        android:layout_marginBottom="24dp"
-                        android:text="PE"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                -----------------------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioCE"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="286dp"
+                    android:layout_marginRight="286dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="CE"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="91dp"
-                        android:layout_marginRight="91dp"
-                        android:layout_marginBottom="47dp"
-                        android:text=" --------------------- Ceará"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioCE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="286dp"
-                        android:layout_marginRight="286dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="CE"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                -----------------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioPB"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="PB"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="73dp"
-                        android:layout_marginRight="73dp"
-                        android:layout_marginBottom="45dp"
-                        android:text=" --------------------- Paraíba"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioPB"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="PB"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                ----------------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioAC"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="AC"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="73dp"
-                        android:layout_marginRight="73dp"
-                        android:layout_marginBottom="45dp"
-                        android:text=" --------------------- Acre"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioAC"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="AC"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                ------------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioAL"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="AL"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="73dp"
-                        android:layout_marginRight="73dp"
-                        android:layout_marginBottom="45dp"
-                        android:text=" --------------------- Alagoas"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioAL"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="AL"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                -------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioAP"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="AP"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="73dp"
-                        android:layout_marginRight="73dp"
-                        android:layout_marginBottom="45dp"
-                        android:text=" --------------------- Amapá"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioAP"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="AP"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                -------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioES"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="ES"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="73dp"
-                        android:layout_marginRight="73dp"
-                        android:layout_marginBottom="45dp"
-                        android:text=" ---------------- Espírito Santo"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioES"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="ES"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                -------------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioMA"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="MA"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="73dp"
-                        android:layout_marginRight="73dp"
-                        android:layout_marginBottom="45dp"
-                        android:text=" --------------------- Amapá"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioMA"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="MA"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
----------------------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioMT"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="MT"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="73dp"
-                        android:layout_marginRight="73dp"
-                        android:layout_marginBottom="45dp"
-                        android:text=" --------------------- Mato Grosso"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioMT"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="MT"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                -----------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioMG"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="MG"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="73dp"
-                        android:layout_marginRight="73dp"
-                        android:layout_marginBottom="45dp"
-                        android:text=" --------------------- Minas Gerais"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioMG"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="MG"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                -----------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioPR"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="PR"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="73dp"
-                        android:layout_marginRight="73dp"
-                        android:layout_marginBottom="45dp"
-                        android:text=" --------------------- Paraná"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioPR"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="PR"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                ---------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioPI"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="PI"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="73dp"
-                        android:layout_marginRight="73dp"
-                        android:layout_marginBottom="45dp"
-                        android:text=" --------------------- Piauí"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioPI"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="PI"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-----------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioRJ"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="RJ"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="73dp"
-                        android:layout_marginRight="73dp"
-                        android:layout_marginBottom="45dp"
-                        android:text=" ------------------- Rio de Janeiro"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioRJ"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="RJ"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                ----------------------
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioRN"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="RN"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="73dp"
-                        android:layout_marginRight="73dp"
-                        android:layout_marginBottom="45dp"
-                        android:text="------------ Rio Grande do Norte"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioRN"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="RN"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                ----------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioRO"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="RO"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="73dp"
-                        android:layout_marginRight="73dp"
-                        android:layout_marginBottom="45dp"
-                        android:text=" --------------------- Rondônia"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioRO"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="RO"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                ----------------------
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioRR"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="RR"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="73dp"
-                        android:layout_marginRight="73dp"
-                        android:layout_marginBottom="45dp"
-                        android:text=" --------------------- Roraima"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioRR"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="RR"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                ----------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioSE"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="SE"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="73dp"
-                        android:layout_marginRight="73dp"
-                        android:layout_marginBottom="45dp"
-                        android:text=" --------------------- Sergipe"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioSE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="SE"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                ----------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioTO"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="TO"
+                    android:textColor="@color/colorAccent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="73dp"
-                        android:layout_marginRight="73dp"
-                        android:layout_marginBottom="45dp"
-                        android:text=" --------------------- Tocantins"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioTO"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="TO"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                ----------------------
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/radioDF"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="73dp"
-                        android:layout_marginRight="73dp"
-                        android:layout_marginBottom="45dp"
-                        android:text=" ---------------- Distrito Federal"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radioDF"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="287dp"
-                        android:layout_marginRight="287dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="DF"
-                        android:textColor="@color/colorAccent" />
-
-                </RelativeLayout>
-                ----------------------
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="287dp"
+                    android:layout_marginRight="287dp"
+                    android:layout_marginBottom="41dp"
+                    android:text="DF"
+                    android:textColor="@color/colorAccent" />
 
             </RadioGroup>
 
             <Button
                 android:id="@+id/btn"
-                android:layout_width="355dp"
+                android:layout_width="match_parent"
                 android:layout_height="53dp"
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="5dp"

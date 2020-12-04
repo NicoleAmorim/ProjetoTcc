@@ -112,8 +112,10 @@ public class CategoriasFragment extends Fragment {
                 findbyCategoriaAr();
             }
         });
-
-        ChatUsuarioFragment.registration2.remove();
+        try{
+        ChatUsuarioFragment.registration2.remove();} catch (Exception exception) {
+            exception.printStackTrace();
+        }
         return view;
     }
 
