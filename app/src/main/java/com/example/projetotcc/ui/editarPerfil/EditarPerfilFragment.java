@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +24,8 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.projetotcc.PaginaUsuario;
 import com.example.projetotcc.R;
 import com.example.projetotcc.RStar;
+import com.example.projetotcc.androidMask.MaskEditTextChangedListener;
+import com.example.projetotcc.controllers.ValidarCadastroUsuario;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthCredential;
@@ -41,6 +44,8 @@ import com.squareup.picasso.Picasso;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import dominio.entidade.Usuario;
 
@@ -55,7 +60,10 @@ public class EditarPerfilFragment extends Fragment {
     private int PICK_IMAGE_REQUEST = 1;
     private Intent it;
     private TextView qtdd;
+    private Matcher matcher, m;
     private RatingBar ratingBar;
+    public static boolean Validar;
+    private ValidarCadastroUsuario validarCadastroUsuario;
 
     public static EditarPerfilFragment newInstance() {
         return new EditarPerfilFragment();
@@ -74,6 +82,7 @@ public class EditarPerfilFragment extends Fragment {
         TextView btnChat = view.findViewById(R.id.btnEditarPerfil);
         qtdd = view.findViewById(R.id.numA);
         ratingBar = view.findViewById(R.id.estrelasE);
+        validarCadastroUsuario = new ValidarCadastroUsuario();
 
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +100,9 @@ public class EditarPerfilFragment extends Fragment {
         email.setText(usuario.getEmail());
         telefone.setText(String.valueOf(usuario.getTel()));
         Picasso.get().load(usuario.getImageUrl()).into(image);
+        MaskEditTextChangedListener maskTell = new MaskEditTextChangedListener("(##) #####-####", telefone);
+
+        telefone.addTextChangedListener(maskTell);
         R();
         return view;
     }
@@ -104,108 +116,125 @@ public class EditarPerfilFragment extends Fragment {
     }
     public void Editar()
     {
-        try {
-            String filename = FirebaseAuth.getInstance().getUid();
-            final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/users/" + filename);
-            ref.putFile(imagem)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    AuthCredential authCredential = EmailAuthProvider.getCredential(usuario.getEmail(), usuario.getSenha());
-                                    Log.i("Teste", String.valueOf(authCredential));
-                                    usuario.setEmail(email.getText().toString());
-                                    FirebaseAuth.getInstance().getCurrentUser().reauthenticate(authCredential);
-                                    FirebaseAuth.getInstance().getCurrentUser().updateEmail(usuario.getEmail())
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Log.i("Teste", "foi");
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Log.i("Teste", e.getMessage());
-                                                }
-                                            });
-                                    usuario.setNome(nome.getText().toString());
-                                    usuario.setTel(telefone.getText().toString());
-                                    usuario.setImageUrl(String.valueOf(uri));
+        Pattern pattern = Pattern.compile("^\\([1-9]{2}\\)\\s9{0,1}[6-9]{1}[0-9]{3}\\-[0-9]{4}$");
+        Pattern p = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0]{5,10}+.com+$");
+        m = p.matcher(email.getText().toString());
+        matcher = pattern.matcher(telefone.getText().toString());
 
-                                    FirebaseFirestore.getInstance().collection("users")
-                                            .document(usuario.getId())
-                                            .set(usuario)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
+        if(m.find()) {
+            if (matcher.find()) {
+                validarCadastroUsuario.FindEmail(email.getText().toString(), telefone.getText().toString(), PaginaUsuario.context, false);
+                if(Validar) {
 
-                                                    it = new Intent(PaginaUsuario.context, PaginaUsuario.class);
+                    try {
+                        String filename = FirebaseAuth.getInstance().getUid();
+                        final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/users/" + filename);
+                        ref.putFile(imagem)
+                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                            @Override
+                                            public void onSuccess(Uri uri) {
+                                                AuthCredential authCredential = EmailAuthProvider.getCredential(usuario.getEmail(), usuario.getSenha());
+                                                Log.i("Teste", String.valueOf(authCredential));
+                                                usuario.setEmail(email.getText().toString());
+                                                FirebaseAuth.getInstance().getCurrentUser().reauthenticate(authCredential);
+                                                FirebaseAuth.getInstance().getCurrentUser().updateEmail(usuario.getEmail())
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Log.i("Teste", "foi");
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                Log.i("Teste", e.getMessage());
+                                                            }
+                                                        });
+                                                usuario.setNome(nome.getText().toString());
+                                                usuario.setTel(telefone.getText().toString());
+                                                usuario.setImageUrl(String.valueOf(uri));
 
-                                                    it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                FirebaseFirestore.getInstance().collection("users")
+                                                        .document(usuario.getId())
+                                                        .set(usuario)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
 
-                                                    PaginaUsuario.context.startActivity(it);
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Log.i("Teste", e.getMessage());
-                                                }
-                                            });
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.e("Teste", e.getMessage(), e);
-                                }
-                            });
-                        }
-                    });
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            AuthCredential authCredential = EmailAuthProvider.getCredential(usuario.getEmail(), usuario.getSenha());
-            Log.i("Teste", String.valueOf(authCredential));
-            usuario.setEmail(email.getText().toString());
-            FirebaseAuth.getInstance().getCurrentUser().reauthenticate(authCredential);
-            FirebaseAuth.getInstance().getCurrentUser().updateEmail(usuario.getEmail())
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.i("Teste", "foi");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.i("Teste", e.getMessage());
-                        }
-                    });
-            usuario.setNome(nome.getText().toString());
-            usuario.setTel(telefone.getText().toString());
+                                                                it = new Intent(PaginaUsuario.context, PaginaUsuario.class);
 
-            FirebaseFirestore.getInstance().collection("users")
-                    .document(usuario.getId())
-                    .set(usuario)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
+                                                                it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                            it = new Intent(PaginaUsuario.context, PaginaUsuario.class);
+                                                                PaginaUsuario.context.startActivity(it);
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                Log.i("Teste", e.getMessage());
+                                                            }
+                                                        });
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.e("Teste", e.getMessage(), e);
+                                            }
+                                        });
+                                    }
+                                });
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                        AuthCredential authCredential = EmailAuthProvider.getCredential(usuario.getEmail(), usuario.getSenha());
+                        Log.i("Teste", String.valueOf(authCredential));
+                        usuario.setEmail(email.getText().toString());
+                        FirebaseAuth.getInstance().getCurrentUser().reauthenticate(authCredential);
+                        FirebaseAuth.getInstance().getCurrentUser().updateEmail(usuario.getEmail())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.i("Teste", "foi");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.i("Teste", e.getMessage());
+                                    }
+                                });
+                        usuario.setNome(nome.getText().toString());
+                        usuario.setTel(telefone.getText().toString());
 
-                            it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        FirebaseFirestore.getInstance().collection("users")
+                                .document(usuario.getId())
+                                .set(usuario)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
 
-                            PaginaUsuario.context.startActivity(it);
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.i("Teste", e.getMessage());
-                        }
-                    });
+                                        it = new Intent(PaginaUsuario.context, PaginaUsuario.class);
+
+                                        it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                                        PaginaUsuario.context.startActivity(it);
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.i("Teste", e.getMessage());
+                                    }
+                                });
+                    }
+                }
+            } else {
+                Toast.makeText(PaginaUsuario.context, " Telefone invalido", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(PaginaUsuario.context, " Email invalido", Toast.LENGTH_SHORT).show();
         }
     }
     public void onActivityResult(int n, int n2, Intent intent) {

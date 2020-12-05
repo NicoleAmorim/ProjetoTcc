@@ -165,16 +165,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView31"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:text="@gmail.com"
-        android:textColor="#858585"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/emailUserCadastro"
-        app:layout_constraintEnd_toEndOf="@+id/emailUserCadastro"
-        app:layout_constraintHorizontal_bias="0.922"
-        app:layout_constraintStart_toStartOf="@+id/emailUserCadastro"
-        app:layout_constraintTop_toTopOf="@+id/emailUserCadastro" />
 </androidx.constraintlayout.widget.ConstraintLayout>

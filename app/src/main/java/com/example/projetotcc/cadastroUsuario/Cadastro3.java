@@ -24,7 +24,7 @@ public class Cadastro3 extends AppCompatActivity {
     private EditText email, username, tel;
     private  String Email, User;
     private String Tell;
-    private Matcher matcher;
+    private Matcher matcher, m;
     Intent it = null;
 
     @Override
@@ -48,15 +48,22 @@ public class Cadastro3 extends AppCompatActivity {
 
     public void Cadastrar(View view) {
         Tell = tel.getText().toString();
+        Email = email.getText().toString() + "";
 
         Pattern pattern = Pattern.compile("^\\([1-9]{2}\\)\\s9{0,1}[6-9]{1}[0-9]{3}\\-[0-9]{4}$");
+        Pattern p = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0]{5,10}+.com+$");
+        m = p.matcher(Email);
         matcher = pattern.matcher(Tell);
-        Email = email.getText().toString() + "";
+
         User = username.getText().toString() + "";
-        if (matcher.find()) {
-            validarCadastroUsuario.ValidarCadastro3(Email, User, Tell);
-        } else {
-            Toast.makeText(this, " Telefone invalido", Toast.LENGTH_SHORT).show();
+        if(m.find()) {
+            if (matcher.find()) {
+                validarCadastroUsuario.ValidarCadastro3(Email, User, Tell);
+            } else {
+                Toast.makeText(this, " Telefone invalido", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(this, " Email invalido", Toast.LENGTH_SHORT).show();
         }
 
     }

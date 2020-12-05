@@ -61,7 +61,7 @@
         android:layout_marginBottom="7dp"
         android:text="Nova Mensagem"
         android:textColor="#3C3C3C"
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/textView24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageUsuarioPedido"

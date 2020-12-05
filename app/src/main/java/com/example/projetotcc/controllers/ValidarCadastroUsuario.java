@@ -1,5 +1,6 @@
 package com.example.projetotcc.controllers;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaDrm;
 import android.net.Uri;
@@ -135,11 +136,10 @@ public class ValidarCadastroUsuario extends Cadastro6 {
         if (!email.isEmpty()) {
             if (!user.isEmpty()) {
                 if (tell != null || tell.isEmpty()) {
-                    email+= "@gmail.com";
                     usuario.setEmail(email);
                     usuario.setUsername(user);
                     usuario.setTel(tell);
-                    FindEmail(email, tell);
+                    FindEmail(email, tell, Cadastro3.context, true);
                 } else {
                     Toast.makeText(Cadastro3.context, " Telefone está vazio", Toast.LENGTH_SHORT).show();
                 }
@@ -299,7 +299,6 @@ public class ValidarCadastroUsuario extends Cadastro6 {
                 });
     }
     public void FindCPF(String cpf) {
-        final boolean[] cpfBoolean = new boolean[1];
         FirebaseFirestore.getInstance().collection("users")
                 .whereEqualTo("cpf", cpf)
                 .get()
@@ -326,7 +325,7 @@ public class ValidarCadastroUsuario extends Cadastro6 {
         });
     }
 
-    public void FindEmail(String email, final String tell) {
+    public void FindEmail(String email, final String tell, final Context context, final boolean i) {
         FirebaseFirestore.getInstance().collection("users")
                 .whereEqualTo("email", email)
                 .get()
@@ -335,10 +334,10 @@ public class ValidarCadastroUsuario extends Cadastro6 {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         if(queryDocumentSnapshots.isEmpty())
                         {
-                            FindTell(tell);
+                            FindTell(tell, context, i);
                         }else
                         {
-                            Toast.makeText(Cadastro3.context, " Email já cadastrado", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, " Email já cadastrado", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -349,7 +348,7 @@ public class ValidarCadastroUsuario extends Cadastro6 {
             }
         });
     }
-    public void FindTell(String tell) {
+    public void FindTell(String tell, final Context context, final boolean i) {
         final boolean[] cpfBoolean = new boolean[1];
         FirebaseFirestore.getInstance().collection("users")
                 .whereEqualTo("tel", tell)
@@ -359,11 +358,16 @@ public class ValidarCadastroUsuario extends Cadastro6 {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         if(queryDocumentSnapshots.isEmpty())
                         {
-                            it = new Intent(Cadastro3.context, Cadastro4.class);
-                            Cadastro3.context.startActivity(it);
+                            if(i) {
+                                it = new Intent(context, Cadastro4.class);
+                                context.startActivity(it);
+                            }else{
+
+                            }
+
                         }else
                         {
-                            Toast.makeText(Cadastro3.context, " Telefone já cadastrado", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, " Telefone já cadastrado", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
