@@ -102,7 +102,7 @@ public class RStar {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        registration = FirebaseFirestore.getInstance().collection("conversas")
+                        registration = FirebaseFirestore.getInstance().collection("/conversas")
                                 .document(FirebaseAuth.getInstance().getUid())
                                 .collection(PedidosFragment.pedido.getUuid())
                                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -119,7 +119,7 @@ public class RStar {
                                         }
                                     }
                                 });
-                        registration2 = FirebaseFirestore.getInstance().collection("conversas")
+                        registration2 = FirebaseFirestore.getInstance().collection("/conversas")
                                 .document(PedidosFragment.pedido.getUuid())
                                 .collection(FirebaseAuth.getInstance().getUid())
                                 .addSnapshotListener(new EventListener<QuerySnapshot>() {

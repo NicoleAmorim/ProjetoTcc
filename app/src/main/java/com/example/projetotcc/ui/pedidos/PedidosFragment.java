@@ -38,6 +38,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 import com.xwray.groupie.GroupAdapter;
@@ -59,6 +60,7 @@ public class PedidosFragment extends Fragment {
     private SQLiteDatabase conexao;
     private Drawable drawablegreen, drawablered;
     private RecyclerView recyclerView;
+    public static ListenerRegistration registration, registration2;
     public static Pedido pedido;
     public static Usuario usuario;
     public static FragmentActivity application;
@@ -161,6 +163,8 @@ public class PedidosFragment extends Fragment {
                         .setPositiveButton("sim", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                registration.remove();
+                                registration2.remove();
                                 PaginaUsuario.rStar.StartRat();
                             }
                         }).setNegativeButton("não", null).show();
@@ -268,35 +272,40 @@ public class PedidosFragment extends Fragment {
                                                     }
                                                 }
                                             });
-            FirebaseFirestore.getInstance().collection("/ultima-mensagem")
-                    .document(FirebaseAuth.getInstance().getUid())
-                    .collection("pedidos")
-                    .document(pedido.getUuid())
-                    .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                            pedido = value.toObject(Pedido.class);
-                            message.setText(pedido.getLastMessage());
-                        }
-                    });
-            FirebaseFirestore.getInstance().collection("/noti")
-                    .document(FirebaseAuth.getInstance().getUid())
-                    .collection(pedido.getUuid())
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                            if (!value.isEmpty()) {
-                                List<DocumentChange> documentChanges = value.getDocumentChanges();
-                                int i = 0;
-                                for (DocumentChange doc : documentChanges) {
-                                    i++;
+
+                registration = FirebaseFirestore.getInstance().collection("/ultima-mensagem")
+                        .document(FirebaseAuth.getInstance().getUid())
+                        .collection("pedidos")
+                        .document(pedido.getUuid())
+                        .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                pedido = value.toObject(Pedido.class);
+                                try {
+                                    message.setText(pedido.getLastMessage());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-                                quantidade.setText(String.valueOf(i));
-                            }else{
-                                quantidade.setVisibility(View.INVISIBLE);
                             }
-                        }
-                    });
+                        });
+                registration2 = FirebaseFirestore.getInstance().collection("/noti")
+                        .document(FirebaseAuth.getInstance().getUid())
+                        .collection(pedido.getUuid())
+                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                if (!value.isEmpty()) {
+                                    List<DocumentChange> documentChanges = value.getDocumentChanges();
+                                    int i = 0;
+                                    for (DocumentChange doc : documentChanges) {
+                                        i++;
+                                    }
+                                    quantidade.setText(String.valueOf(i));
+                                } else {
+                                    quantidade.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        });
         }
 
         @Override

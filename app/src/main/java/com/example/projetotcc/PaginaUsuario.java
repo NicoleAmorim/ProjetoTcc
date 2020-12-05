@@ -215,7 +215,7 @@ public class PaginaUsuario extends AppCompatActivity {
                                                                     Notification notification = doc.getDocument().toObject(Notification.class);
                                                                     try {
                                                                         if (notification.getFromName().equals(FirebaseAuth.getInstance().getUid())) {
-                                                                            itemMensagem.setIcon(R.drawable.ic_messagem_noti);
+                                                                            itemMensagem.setIcon(R.drawable.ic_messagem_not);
                                                                         } else {
                                                                             itemMensagem.setIcon(R.drawable.ic_messagem);
                                                                         }
