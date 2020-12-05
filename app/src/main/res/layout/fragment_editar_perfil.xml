@@ -267,6 +267,7 @@
                     android:background="@drawable/bg_btn"
                     android:drawableLeft="@drawable/ic_location"
                     android:gravity="center"
+                    android:onClick="Endereco"
                     android:paddingLeft="10dp"
                     android:text="Dados da Localização"
                     android:textColor="@color/colorAccent"
