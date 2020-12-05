@@ -23,6 +23,7 @@ import dominio.entidade.Servico;
 import dominio.entidade.Usuario;
 
 import com.example.projetotcc.cadastroUsuario.Cadastro6;
+import com.example.projetotcc.ui.editarPerfil.EditarPerfilFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -362,9 +363,8 @@ public class ValidarCadastroUsuario extends Cadastro6 {
                                 it = new Intent(context, Cadastro4.class);
                                 context.startActivity(it);
                             }else{
-
+                                EditarPerfilFragment.Validar = true;
                             }
-
                         }else
                         {
                             Toast.makeText(context, " Telefone já cadastrado", Toast.LENGTH_SHORT).show();

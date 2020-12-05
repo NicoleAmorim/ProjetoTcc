@@ -62,19 +62,19 @@ public class AdapterViewPedidos extends PagerAdapter {
         recyclerView.setLayoutManager(new LinearLayoutManager(PaginaUsuario.getContext));
         Log.i("teste", String.valueOf(position));
         if(position == 0) {
-            recyclerView.setAdapter(adapter1);
+            recyclerView.setAdapter(adapter2);
             try {
                 Log.i("teste", "p");
-                PaginaUsuario.toolbar.setTitle("Pedidos");
+                PaginaUsuario.toolbar.setTitle("Mensagens");
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
         }else if(position == 1)
         {
-            recyclerView.setAdapter(adapter2);
+            recyclerView.setAdapter(adapter1);
             try {
                 Log.i("teste", "s");
-                PaginaUsuario.toolbar.setTitle("Solicitações");
+                PaginaUsuario.toolbar.setTitle("Mensagens");
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

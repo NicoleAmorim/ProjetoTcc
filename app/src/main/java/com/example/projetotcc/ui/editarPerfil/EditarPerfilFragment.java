@@ -123,9 +123,21 @@ public class EditarPerfilFragment extends Fragment {
 
         if(m.find()) {
             if (matcher.find()) {
-                validarCadastroUsuario.FindEmail(email.getText().toString(), telefone.getText().toString(), PaginaUsuario.context, false);
-                if(Validar) {
+                if(telefone.getText().toString()+ "" == PaginaUsuario.usuario.getTel() && email.getText().toString() == PaginaUsuario.usuario.getEmail()+"")
+                {
+                    validarCadastroUsuario.FindEmail("i", "i", PaginaUsuario.context, false);
+                }
+                else if(telefone.getText().toString()+"" == PaginaUsuario.usuario.getTel())
+                {
+                    validarCadastroUsuario.FindEmail(email.getText().toString(), "i", PaginaUsuario.context, false);
+                }else if(email.getText().toString()+"" == PaginaUsuario.usuario.getEmail())
+                {
+                    validarCadastroUsuario.FindEmail("i", telefone.getText().toString(), PaginaUsuario.context, false);
+                }else{
+                    validarCadastroUsuario.FindEmail(email.getText().toString(), telefone.getText().toString(), PaginaUsuario.context, false);
+                }
 
+                if(Validar) {
                     try {
                         String filename = FirebaseAuth.getInstance().getUid();
                         final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/users/" + filename);
