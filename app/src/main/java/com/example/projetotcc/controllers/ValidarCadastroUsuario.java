@@ -186,7 +186,7 @@ public class ValidarCadastroUsuario extends Cadastro6 {
                 it = new Intent(Cadastro5.context, Cadastro6.class);
                 Cadastro5.context.startActivity(it);
             } else {
-                Toast.makeText(Cadastro2.context, "Por favor escolha uma foto para seu perfil", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Cadastro5.context, "Por favor escolha uma foto para seu perfil", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) { e.printStackTrace(); }
     }
@@ -214,25 +214,32 @@ public class ValidarCadastroUsuario extends Cadastro6 {
                                             }
                                         });
                                     } else {
-                                        Toast.makeText(Cadastro2.context, "número está vazio", Toast.LENGTH_SHORT).show();
+                                        Cadastro6.loadingDialog.DismissDialog();
+                                        Toast.makeText(Cadastro6.context, "número está vazio", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    Toast.makeText(Cadastro2.context, "cidade está vazio", Toast.LENGTH_SHORT).show();
+                                    Cadastro6.loadingDialog.DismissDialog();
+                                    Toast.makeText(Cadastro6.context, "cidade está vazio", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                Toast.makeText(Cadastro2.context, "rua está vazio", Toast.LENGTH_SHORT).show();
+                                Cadastro6.loadingDialog.DismissDialog();
+                                Toast.makeText(Cadastro6.context, "rua está vazio", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(Cadastro2.context, "UF está vazio", Toast.LENGTH_SHORT).show();
+                            Cadastro6.loadingDialog.DismissDialog();
+                            Toast.makeText(Cadastro6.context, "UF está vazio", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(Cadastro2.context, "complemento está vazio", Toast.LENGTH_SHORT).show();
+                        Cadastro6.loadingDialog.DismissDialog();
+                        Toast.makeText(Cadastro6.context, "complemento está vazio", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(Cadastro2.context, "bairro está vazio", Toast.LENGTH_SHORT).show();
+                    Cadastro6.loadingDialog.DismissDialog();
+                    Toast.makeText(Cadastro6.context, "bairro está vazio", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(Cadastro2.context, "CEP está vazio", Toast.LENGTH_SHORT).show();
+                Cadastro6.loadingDialog.DismissDialog();
+                Toast.makeText(Cadastro6.context, "CEP está vazio", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
